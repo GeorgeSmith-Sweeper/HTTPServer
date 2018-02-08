@@ -1,27 +1,34 @@
 package com.GeorgesServer.app;
 
 import static org.mockito.Mockito.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
+
+import java.io.IOException;
 
 public class ServerTest {
 
-    @InjectMocks
-    Server subject;
+    private EstablishesConnection mockedEstablishesConnection;
+    private Connections mockedConnections;
+    private int port;
+    private String publicFolderPath;
+    private RequestParser mockedRequestParser;
 
-    @Mock
-    EstablishesConnection establishesConnection;
-
+    @BeforeEach
+    public void setUp() {
+        mockedEstablishesConnection = mock(EstablishesConnection.class);
+        mockedConnections = mock(Connections.class);
+        port = 5000;
+        publicFolderPath = "";
+    }
+    
     @Test
-    void callingStartOnServerEstablishesAConnectionWithAPortNumber() {
-        String portNumber = "5000";
-        String folderPath = "";
+    public void startServerCallsTheCorrectMethods() throws IOException {
+        MyServer myServer = new MyServer(mockedEstablishesConnection, publicFolderPath);
+        myServer.start(port);
 
-        Server server = new Server(portNumber, folderPath);
-
-        server.start();
-
-
+        verify(mockedEstablishesConnection).connect(port);
+        verify(mockedRequestParser).parse(mockedConnections.getRequest());
     }
 }
