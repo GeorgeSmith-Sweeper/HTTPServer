@@ -19,13 +19,16 @@ public class ServerTest {
     public void setUp() {
         mockedEstablishesConnection = mock(EstablishesConnection.class);
         mockedConnections = mock(Connections.class);
+        mockedRequestParser = mock(RequestParser.class);
         port = 5000;
         publicFolderPath = "";
     }
     
     @Test
     public void startServerCallsTheCorrectMethods() throws IOException {
-        MyServer myServer = new MyServer(mockedEstablishesConnection, publicFolderPath);
+        MyServer myServer = new MyServer(mockedEstablishesConnection, mockedRequestParser, publicFolderPath);
+        when(mockedEstablishesConnection.connect(port)).thenReturn(mockedConnections);
+
         myServer.start(port);
 
         verify(mockedEstablishesConnection).connect(port);
