@@ -8,9 +8,10 @@ public class App {
         int port = Integer.parseInt(args[1]);
 
         // The following should go into a config
+        RequestHandler requestHandler = new RequestHandler();
         RequestParser requestParser = new RequestParser();
         EstablishesConnection establishesConnection = new EstablishesConnection();
-        MyServer server = new MyServer(establishesConnection, requestParser, publicFolderPath);
+        MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, publicFolderPath);
         server.start(port);
     }
 }

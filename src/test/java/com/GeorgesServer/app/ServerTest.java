@@ -11,13 +11,17 @@ public class ServerTest {
 
     private EstablishesConnection mockedEstablishesConnection;
     private Connections mockedConnections;
+    private RequestParser mockedRequestParser;
+    private ClientRequest mockedClientRequest;
+    private RequestHandler mockedRequestHandler;
     private int port;
     private String publicFolderPath;
-    private RequestParser mockedRequestParser;
 
     @BeforeEach
     public void setUp() {
         mockedEstablishesConnection = mock(EstablishesConnection.class);
+        mockedRequestHandler = mock(RequestHandler.class);
+        mockedClientRequest = mock(ClientRequest.class);
         mockedConnections = mock(Connections.class);
         mockedRequestParser = mock(RequestParser.class);
         port = 5000;
@@ -26,12 +30,19 @@ public class ServerTest {
     
     @Test
     public void startServerCallsTheCorrectMethods() throws IOException {
-        MyServer myServer = new MyServer(mockedEstablishesConnection, mockedRequestParser, publicFolderPath);
+        MyServer myServer = new MyServer(
+                mockedEstablishesConnection,
+                mockedRequestParser,
+                mockedRequestHandler,
+                publicFolderPath);
         when(mockedEstablishesConnection.connect(port)).thenReturn(mockedConnections);
+        when(mockedRequestParser.parse(mockedConnections.getRequest())).thenReturn(mockedClientRequest);
 
         myServer.start(port);
 
         verify(mockedEstablishesConnection).connect(port);
         verify(mockedRequestParser).parse(mockedConnections.getRequest());
+        verify(mockedRequestHandler).handle(mockedClientRequest);
     }
+
 }

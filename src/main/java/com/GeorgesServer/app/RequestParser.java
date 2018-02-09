@@ -4,7 +4,8 @@ import java.net.ServerSocket;
 
 public class RequestParser {
 
-    public void parse(ServerSocket request) {
-        // To Do
+    public ClientRequest parse(ServerSocket request) {
+        /* ToDo */
+        return null;
     }
 }
