@@ -6,10 +6,14 @@ import java.net.Socket;
 
 public class EstablishesConnection {
 
-    public Connections connect(int port) throws IOException {
+    public Connections connect(int port) {
         try (ServerSocket serverConnection = new ServerSocket(port);
              Socket clientConnection = serverConnection.accept()) {
-            return new Connections(serverConnection, clientConnection);
+             return new Connections(serverConnection, clientConnection);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
     }
 }

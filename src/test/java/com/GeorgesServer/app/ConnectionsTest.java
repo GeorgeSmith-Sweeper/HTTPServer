@@ -1,5 +1,5 @@
 package com.GeorgesServer.app;
 
-public class RequestParserTest {
+class ConnectionsTest {
     /* TODO */
 }
