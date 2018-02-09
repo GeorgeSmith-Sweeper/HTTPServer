@@ -14,7 +14,11 @@ public class Connections {
         this.clientConnection = clientConnection;
     }
 
-    public ServerSocket getRequest() {
+    public ServerSocket getIn() {
         return this.serverConnection;
+    }
+
+    public Socket getOut() {
+        return this.clientConnection;
     }
 }

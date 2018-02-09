@@ -9,9 +9,10 @@ public class App {
 
         // The following should go into a config
         RequestHandler requestHandler = new RequestHandler();
+        ResponseSender responseSender = new ResponseSender();
         RequestParser requestParser = new RequestParser();
         EstablishesConnection establishesConnection = new EstablishesConnection();
-        MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, publicFolderPath);
+        MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
         server.start(port);
     }
 }

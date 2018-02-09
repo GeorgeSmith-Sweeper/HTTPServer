@@ -14,8 +14,10 @@ public class ServerTest {
     private RequestParser mockedRequestParser;
     private ClientRequest mockedClientRequest;
     private RequestHandler mockedRequestHandler;
-    private int port;
+    private ResponseSender mockedResponseSender;
+    private String mockedServerResponse;
     private String publicFolderPath;
+    private int port;
 
     @BeforeEach
     public void setUp() {
@@ -24,8 +26,10 @@ public class ServerTest {
         mockedClientRequest = mock(ClientRequest.class);
         mockedConnections = mock(Connections.class);
         mockedRequestParser = mock(RequestParser.class);
-        port = 5000;
+        mockedResponseSender = mock(ResponseSender.class);
+        mockedServerResponse = "";
         publicFolderPath = "";
+        port = 5000;
     }
     
     @Test
@@ -34,15 +38,18 @@ public class ServerTest {
                 mockedEstablishesConnection,
                 mockedRequestParser,
                 mockedRequestHandler,
+                mockedResponseSender,
                 publicFolderPath);
         when(mockedEstablishesConnection.connect(port)).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getRequest())).thenReturn(mockedClientRequest);
+        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
+        when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
 
         myServer.start(port);
 
         verify(mockedEstablishesConnection).connect(port);
-        verify(mockedRequestParser).parse(mockedConnections.getRequest());
+        verify(mockedRequestParser).parse(mockedConnections.getIn());
         verify(mockedRequestHandler).handle(mockedClientRequest);
+        verify(mockedResponseSender).send(mockedServerResponse, mockedConnections.getOut());
     }
 
 }
