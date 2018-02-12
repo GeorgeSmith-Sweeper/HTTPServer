@@ -1,10 +1,8 @@
 package com.GeorgesServer.app;
 
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
@@ -14,18 +12,26 @@ import static org.mockito.Mockito.when;
 
 public class EstablishesConnectionTest {
     private EstablishesConnection subject;
-    private int validPortNumber = 5000;
-    private String invalidPortNumber = "invalid";
-    private ServerSocket mockedServerAccept;
-    private Socket mockedSocket;
+    private SocketFactory mockedSocketFactory;
+    private ServerSocket mockedServerSocket;
+    private Socket mockedClientSocket;
 
     @BeforeEach
     void setUp () {
-        subject = new EstablishesConnection();
-        mockedServerAccept = mock(ServerSocket.class);
-        mockedSocket = mock(Socket.class);
+        mockedSocketFactory = mock(SocketFactory.class);
+        mockedServerSocket = mock(ServerSocket.class);
+        mockedClientSocket = mock(Socket.class);
+        subject = new EstablishesConnection(mockedSocketFactory);
     }
 
     @Test
-    void establishesConnectionReturnsAConnectionsObject() throws IOException { /* TODO */ }
+    void establishesConnectionCreatesAnInputAndOutputConnection() {
+        int validPortNumber = 5000;
+        when(mockedSocketFactory.createSocket(validPortNumber)).thenReturn(mockedServerSocket);
+        when(mockedSocketFactory.createClientSocket(mockedServerSocket)).thenReturn(mockedClientSocket);
+
+        Connections result = subject.connect(validPortNumber);
+        assertTrue(result.getIn() != null);
+        assertTrue(result.getOut() != null);
+    }
 }
