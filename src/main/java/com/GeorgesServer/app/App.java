@@ -10,7 +10,8 @@ public class App {
         RequestHandler requestHandler = new RequestHandler();
         ResponseSender responseSender = new ResponseSender();
         RequestParser requestParser = new RequestParser();
-        EstablishesConnection establishesConnection = new EstablishesConnection();
+        SocketFactory socketFactory = new SocketFactory();
+        EstablishesConnection establishesConnection = new EstablishesConnection(socketFactory);
         MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
         server.start(port);
     }
