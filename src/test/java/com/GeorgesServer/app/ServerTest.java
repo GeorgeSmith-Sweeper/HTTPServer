@@ -5,8 +5,6 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
-
 public class ServerTest {
 
     private EstablishesConnection mockedEstablishesConnection;
@@ -33,7 +31,7 @@ public class ServerTest {
     }
     
     @Test
-    public void startServerCallsTheCorrectMethods() throws IOException {
+    public void startServerCallsTheCorrectMethods() {
         MyServer myServer = new MyServer(
                 mockedEstablishesConnection,
                 mockedRequestParser,
@@ -41,13 +39,13 @@ public class ServerTest {
                 mockedResponseSender,
                 publicFolderPath);
         when(mockedEstablishesConnection.connect(port)).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
+        when(mockedRequestParser.parse(mockedConnections.getOut())).thenReturn(mockedClientRequest);
         when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
 
         myServer.start(port);
 
         verify(mockedEstablishesConnection).connect(port);
-        verify(mockedRequestParser).parse(mockedConnections.getIn());
+        verify(mockedRequestParser).parse(mockedConnections.getOut());
         verify(mockedRequestHandler).handle(mockedClientRequest);
         verify(mockedResponseSender).send(mockedServerResponse, mockedConnections.getOut());
     }
