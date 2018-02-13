@@ -45,7 +45,7 @@ public class EstablishesConnectionTest {
 
         Connections result = subject.connect(validPortNumber);
 
-        assertTrue(result.getIn() != null);
+        assertTrue(result.getIn() instanceof BufferedReader);
         assertTrue(result.getOut() != null);
     }
 }
