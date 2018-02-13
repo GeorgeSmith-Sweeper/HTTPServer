@@ -1,6 +1,7 @@
 package com.GeorgesServer.app;
 
 import java.io.BufferedReader;
+import java.util.HashMap;
 
 public class RequestParser {
 
@@ -14,13 +15,17 @@ public class RequestParser {
         this.requestReader = requestReader;
     }
 
-    public ClientRequest parse(BufferedReader reader) {
+    public HashMap<String, String> parse(BufferedReader reader) {
         convertedRequest = requestReader.read(reader);
-//        System.out.println(convertedRequest);
         setMethod();
         setUrl();
         setHttpVersion();
-        return null;
+
+        HashMap<String, String> parsedRequest = new HashMap<>();
+        parsedRequest.put("Method", getMethod());
+        parsedRequest.put("Url", getUrl());
+        parsedRequest.put("HttpVersion", getHttpVersion());
+        return parsedRequest;
     }
 
     public void setMethod() {
