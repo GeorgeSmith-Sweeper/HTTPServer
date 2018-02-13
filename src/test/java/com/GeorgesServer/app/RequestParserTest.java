@@ -27,25 +27,33 @@ public class RequestParserTest {
 
     @Test
     void requestParserUtilizesRequestReaderToReadInputStreams() {
-        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("");
+        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP/1.1");
         subject.parse(mockedConnections.getOut());
 
         verify(mockedRequestReader).read(mockedConnections.getOut());
     }
 
     @Test
-    void requestParserCanParseTheMethodOfARequest() {
-        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP1.1");
+    void requestParserCanParseTheMethodOfARequestStartline() {
+        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP/1.1");
         subject.parse(mockedConnections.getOut());
 
         assertEquals("GET", subject.getMethod());
     }
 
     @Test
-    void requestParserCanParseTheURLOfARequest() {
-        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP1.1");
+    void requestParserCanParseTheURLOfARequestStartline() {
+        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP/1.1");
         subject.parse(mockedConnections.getOut());
 
-        assertEquals("GET", subject.getMethod());
+        assertEquals("/", subject.getUrl());
+    }
+
+    @Test
+    void requestParserCanParseTheHTTPVersionOfARequestStartline() {
+        when(mockedRequestReader.read(mockedConnections.getOut())).thenReturn("GET / HTTP/1.1");
+        subject.parse(mockedConnections.getOut());
+
+        assertEquals("HTTP/1.1", subject.getHttpVersion());
     }
 }
