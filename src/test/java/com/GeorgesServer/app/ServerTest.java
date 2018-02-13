@@ -39,13 +39,13 @@ public class ServerTest {
                 mockedResponseSender,
                 publicFolderPath);
         when(mockedEstablishesConnection.connect(port)).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getOut())).thenReturn(mockedClientRequest);
+        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
         when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
 
         myServer.start(port);
 
         verify(mockedEstablishesConnection).connect(port);
-        verify(mockedRequestParser).parse(mockedConnections.getOut());
+        verify(mockedRequestParser).parse(mockedConnections.getIn());
         verify(mockedRequestHandler).handle(mockedClientRequest);
         verify(mockedResponseSender).send(mockedServerResponse, mockedConnections.getOut());
     }

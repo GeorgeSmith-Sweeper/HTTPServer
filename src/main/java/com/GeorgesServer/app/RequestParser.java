@@ -1,6 +1,6 @@
 package com.GeorgesServer.app;
 
-import java.net.Socket;
+import java.io.BufferedReader;
 
 public class RequestParser {
 
@@ -14,8 +14,9 @@ public class RequestParser {
         this.requestReader = requestReader;
     }
 
-    public ClientRequest parse(Socket inStream) {
-        convertedRequest = requestReader.read(inStream);
+    public ClientRequest parse(BufferedReader reader) {
+        convertedRequest = requestReader.read(reader);
+//        System.out.println(convertedRequest);
         setMethod();
         setUrl();
         setHttpVersion();
