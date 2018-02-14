@@ -33,5 +33,4 @@ class RequestHandlerTest {
 
         assertEquals(expectedResponse, result);
     }
-
 }
