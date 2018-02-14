@@ -28,7 +28,7 @@ class RequestHandlerTest {
         clientRequest.put("Url", "/");
         clientRequest.put("HttpVersion", "HTTP/1.1");
 
-        String expectedResponse = "HTTP/1.1 200 OK";
+        String expectedResponse = "HTTP/1.1 200 OK\n";
         String result = subject.handle(clientRequest);
 
         assertEquals(expectedResponse, result);
