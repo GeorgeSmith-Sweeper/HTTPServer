@@ -33,4 +33,18 @@ class RequestHandlerTest {
 
         assertEquals(expectedResponse, result);
     }
+
+    @Test
+    void handlerFormatsAResponseWithAPostRequestWithNoBody() {
+        clientRequest.put("Method", "POST");
+        clientRequest.put("Url", "/form");
+        clientRequest.put("HttpVersion", "HTTP/1.1");
+        clientRequest.put("Content-Type", "application/x-www-form-urlencoded");
+        clientRequest.put("My", "Data");
+
+        String expectedResponse = "HTTP/1.1 200 OK\n";
+        String result = subject.handle(clientRequest);
+
+        assertEquals(expectedResponse, result);
+    }
 }
