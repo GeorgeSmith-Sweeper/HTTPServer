@@ -8,7 +8,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class EstablishesConnectionTest {
@@ -19,7 +21,7 @@ public class EstablishesConnectionTest {
     private InputStreamReader mockedInputStreamReader;
     private BufferedReader mockedBufferedReader;
     private OutputStream mockedOutputStream;
-    private OutputStreamWriter mockedOutputStreamWritter;
+    private OutputStreamWriter mockedOutputStreamWriter;
     private Socket mockedClientSocket;
 
     @BeforeEach
@@ -30,21 +32,21 @@ public class EstablishesConnectionTest {
         mockedInputStream = mock(InputStream.class);
         mockedInputStreamReader = mock(InputStreamReader.class);
         mockedOutputStream = mock(OutputStream.class);
-        mockedOutputStreamWritter = mock(OutputStreamWriter.class);
+        mockedOutputStreamWriter = mock(OutputStreamWriter.class);
         mockedBufferedReader = mock(BufferedReader.class);
         subject = new EstablishesConnection(mockedSocketFactory);
     }
 
     @Test
     void establishesConnectionCreatesAnInputAndOutputConnection() {
-        int validPortNumber = 5000;
+        int validPortNumber = 6000;
         when(mockedSocketFactory.createSocket(validPortNumber)).thenReturn(mockedServerSocket);
         when(mockedSocketFactory.createClientSocket(mockedServerSocket)).thenReturn(mockedClientSocket);
         when(mockedSocketFactory.createInputStream(mockedClientSocket)).thenReturn(mockedInputStream);
         when(mockedSocketFactory.createInputStreamReader(mockedInputStream)).thenReturn(mockedInputStreamReader);
         when(mockedSocketFactory.createBufferedReader(mockedInputStreamReader)).thenReturn(mockedBufferedReader);
         when(mockedSocketFactory.createOutPutStream(mockedClientSocket)).thenReturn(mockedOutputStream);
-        when(mockedSocketFactory.createOutputStreamWritter(mockedOutputStream)).thenReturn(mockedOutputStreamWritter);
+        when(mockedSocketFactory.createOutputStreamWriter(mockedOutputStream)).thenReturn(mockedOutputStreamWriter);
 
         Connections result = subject.connect(validPortNumber);
 

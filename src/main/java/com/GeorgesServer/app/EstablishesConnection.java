@@ -18,7 +18,7 @@ public class EstablishesConnection {
         Socket clientSocket = socketFactory.createClientSocket(serverSocket);
         InputStream inputStream = socketFactory.createInputStream(clientSocket);
         OutputStream outputStream = socketFactory.createOutPutStream(clientSocket);
-        OutputStreamWriter outputStreamWriter = socketFactory.createOutputStreamWritter(outputStream);
+        OutputStreamWriter outputStreamWriter = socketFactory.createOutputStreamWriter(outputStream);
         InputStreamReader inputStreamReader = socketFactory.createInputStreamReader(inputStream);
         BufferedReader bufferedReader = socketFactory.createBufferedReader(inputStreamReader);
 

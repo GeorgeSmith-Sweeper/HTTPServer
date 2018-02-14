@@ -7,6 +7,6 @@ public class RequestHandler {
         if (clientRequest.get("Method").equals("GET") && clientRequest.get("Url").equals("/")) {
             return clientRequest.get("HttpVersion") + " 200 OK" + "\n";
         }
-        return "";
+        return null;
     }
 }

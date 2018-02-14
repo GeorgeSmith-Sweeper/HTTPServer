@@ -7,6 +7,7 @@ public class ResponseSender {
     public void send (String response, OutputStreamWriter out) {
         try {
             out.write(response);
+            out.flush();
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -43,7 +43,7 @@ public class SocketFactory implements ISocketFactory {
         }
     }
 
-    public OutputStreamWriter createOutputStreamWritter(OutputStream outputStream) {
+    public OutputStreamWriter createOutputStreamWriter(OutputStream outputStream) {
         return new OutputStreamWriter(outputStream);
     }
 

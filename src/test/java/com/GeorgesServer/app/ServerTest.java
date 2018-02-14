@@ -29,7 +29,7 @@ public class ServerTest {
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = "";
         publicFolderPath = "";
-        port = 5000;
+        port = 6001;
     }
     
     @Test
