@@ -5,14 +5,14 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 public class ServerTest {
 
     private EstablishesConnection mockedEstablishesConnection;
     private Connections mockedConnections;
     private RequestParser mockedRequestParser;
-    private ClientRequest mockedClientRequest;
+    private HashMap mockedClientRequest;
     private RequestHandler mockedRequestHandler;
     private ResponseSender mockedResponseSender;
     private String mockedServerResponse;
@@ -23,17 +23,17 @@ public class ServerTest {
     public void setUp() {
         mockedEstablishesConnection = mock(EstablishesConnection.class);
         mockedRequestHandler = mock(RequestHandler.class);
-        mockedClientRequest = mock(ClientRequest.class);
+        mockedClientRequest = mock(HashMap.class);
         mockedConnections = mock(Connections.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = "";
         publicFolderPath = "";
-        port = 5000;
+        port = 6001;
     }
     
     @Test
-    public void startServerCallsTheCorrectMethods() throws IOException {
+    public void startServerCallsTheCorrectMethods() {
         MyServer myServer = new MyServer(
                 mockedEstablishesConnection,
                 mockedRequestParser,
@@ -51,5 +51,4 @@ public class ServerTest {
         verify(mockedRequestHandler).handle(mockedClientRequest);
         verify(mockedResponseSender).send(mockedServerResponse, mockedConnections.getOut());
     }
-
 }

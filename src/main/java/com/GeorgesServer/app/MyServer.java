@@ -1,6 +1,6 @@
 package com.GeorgesServer.app;
 
-import java.io.IOException;
+import java.util.HashMap;
 
 public class MyServer {
     private EstablishesConnection establishesConnection;
@@ -16,9 +16,9 @@ public class MyServer {
         this.responseSender = responseSender;
     }
 
-    public void start(int port) throws IOException {
+    public void start(int port) {
         Connections connections = establishesConnection.connect(port);
-        ClientRequest clientRequest = requestParser.parse(connections.getIn());
+        HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
         String serverResponse = requestHandler.handle(clientRequest);
         responseSender.send(serverResponse, connections.getOut());
     }
