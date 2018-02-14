@@ -1,24 +1,25 @@
 package com.GeorgesServer.app;
 
+import java.io.BufferedReader;
+import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Connections {
 
-    private ServerSocket serverConnection;
-    private Socket clientConnection;
+    private BufferedReader bufferedReader;
+    private OutputStreamWriter outputStreamWriter;
 
-    public Connections (ServerSocket serverConnection, Socket clientConnection) {
-
-        this.serverConnection = serverConnection;
-        this.clientConnection = clientConnection;
+    public Connections (BufferedReader bufferedReader, OutputStreamWriter outputStreamWriter) {
+        this.bufferedReader = bufferedReader;
+        this.outputStreamWriter = outputStreamWriter;
     }
 
-    public ServerSocket getIn() {
-        return this.serverConnection;
+    public BufferedReader getIn() {
+        return this.bufferedReader;
     }
 
-    public Socket getOut() {
-        return this.clientConnection;
+    public OutputStreamWriter getOut() {
+        return this.outputStreamWriter;
     }
 }
