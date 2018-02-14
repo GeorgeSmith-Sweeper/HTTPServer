@@ -1,9 +1,9 @@
 package com.GeorgesServer.app;
 
-import java.net.Socket;
+import java.io.OutputStreamWriter;
 
 public class ResponseSender {
-    public void send (String response, Socket out) {
+    public void send (String response, OutputStreamWriter out) {
         /* TODO */
     }
 }
