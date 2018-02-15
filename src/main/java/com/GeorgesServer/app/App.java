@@ -1,6 +1,9 @@
 package com.GeorgesServer.app;
 
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 public class App {
     public static void main(String args[]) {
 
@@ -11,15 +14,16 @@ public class App {
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
-        SocketFactory socketFactory = new SocketFactory();
 
-//        SocketMaker socketMaker = new SocketMaker();
-//        StreamMaker streamMaker = new StreamMaker();
-//        StreamConverters streamConverters = new StreamConverters();
+        EstablishesConnection establishesConnection;
+        MyServer server;
+        try (ServerSocket serverSocket = new ServerSocket(port)) {
+            establishesConnection = new EstablishesConnection(serverSocket);
+            server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
+            server.start(port);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-        EstablishesConnection establishesConnection = new EstablishesConnection(socketFactory);
-        MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
-        server.start(port);
     }
 }
