@@ -4,8 +4,8 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketFactory implements ISocketFactory {
-    @Override
+public class SocketFactory {
+
     public ServerSocket createSocket(int port) {
         try {
             return new ServerSocket(port);
@@ -15,7 +15,6 @@ public class SocketFactory implements ISocketFactory {
         }
     }
 
-    @Override
     public Socket createClientSocket(ServerSocket serverSocket) {
         try {
             return serverSocket.accept();
