@@ -13,6 +13,11 @@ public class App {
         RequestParser requestParser = new RequestParser(requestReader);
         SocketFactory socketFactory = new SocketFactory();
 
+//        SocketMaker socketMaker = new SocketMaker();
+//        StreamMaker streamMaker = new StreamMaker();
+//        StreamConverters streamConverters = new StreamConverters();
+
+
         EstablishesConnection establishesConnection = new EstablishesConnection(socketFactory);
         MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
         server.start(port);
