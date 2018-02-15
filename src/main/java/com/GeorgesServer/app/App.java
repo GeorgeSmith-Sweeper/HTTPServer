@@ -20,7 +20,7 @@ public class App {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
             establishesConnection = new EstablishesConnection(serverSocket);
             server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
-            server.start(port);
+            server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
