@@ -29,5 +29,6 @@ class ResponseSenderTest {
         subject.send(response, mockedOutPutStreamWriter);
 
         verify(mockedOutPutStreamWriter).write(response);
+        verify(mockedOutPutStreamWriter).flush();
     }
 }

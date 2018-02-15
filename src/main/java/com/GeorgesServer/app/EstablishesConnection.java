@@ -14,6 +14,13 @@ public class EstablishesConnection {
     }
 
     public Connections connect(int port) {
+//        socketMaker.makeSockets(port);
+//        streamMaker.makeStreams(socketMaker.getClientSocket());
+//        streamConverters.makeConverters(steamMakers.getOutPutStream(), streamMakers.getInputStream());
+//        makeBufferedReader.makeReader(streamConverters.getInputStreamReader());
+//
+
+
         ServerSocket serverSocket = socketFactory.createSocket(port);
         Socket clientSocket = socketFactory.createClientSocket(serverSocket);
         InputStream inputStream = socketFactory.createInputStream(clientSocket);

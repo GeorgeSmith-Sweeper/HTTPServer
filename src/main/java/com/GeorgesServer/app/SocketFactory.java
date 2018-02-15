@@ -6,6 +6,9 @@ import java.net.Socket;
 
 public class SocketFactory {
 
+    private ServerSocket serverSocket;
+    private Socket clientSocket;
+
     public ServerSocket createSocket(int port) {
         try {
             return new ServerSocket(port);

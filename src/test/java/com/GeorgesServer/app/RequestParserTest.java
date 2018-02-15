@@ -22,14 +22,6 @@ public class RequestParserTest {
     }
 
     @Test
-    void requestParserUtilizesRequestReaderToReadInputStreams() {
-        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
-        subject.parse(mockedConnections.getIn());
-
-        verify(mockedRequestReader).read(mockedConnections.getIn());
-    }
-
-    @Test
     void requestParserCanParseTheMethodOfARequestStartline() {
         when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
         subject.parse(mockedConnections.getIn());
