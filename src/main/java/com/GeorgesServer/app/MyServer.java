@@ -16,8 +16,8 @@ public class MyServer {
         this.responseSender = responseSender;
     }
 
-    public void start(int port) {
-        Connections connections = establishesConnection.connect(port);
+    public void start() {
+        Connections connections = establishesConnection.connect();
         HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
         String serverResponse = requestHandler.handle(clientRequest);
         responseSender.send(serverResponse, connections.getOut());

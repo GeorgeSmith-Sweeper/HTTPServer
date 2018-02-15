@@ -31,12 +31,11 @@ public class EstablishesConnectionTest {
 
     @Test
     void establishesConnectionCreatesAnInputAndOutputConnection() throws IOException {
-        int validPortNumber = 6000;
         when(mockedServerSocket.accept()).thenReturn(mockedClientSocket);
         when(mockedClientSocket.getInputStream()).thenReturn(mockedInputStream);
         when(mockedClientSocket.getOutputStream()).thenReturn(mockedOutputStream);
 
-        Connections result = subject.connect(validPortNumber);
+        Connections result = subject.connect();
 
         assertTrue(result.getIn() instanceof BufferedReader);
         assertTrue(result.getOut() instanceof OutputStreamWriter);

@@ -3,7 +3,6 @@ package com.GeorgesServer.app;
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.Buffer;
 
 public class EstablishesConnection {
 
@@ -14,7 +13,7 @@ public class EstablishesConnection {
         this.serverSocket = serverSocket;
     }
 
-    public Connections connect(int port) {
+    public Connections connect() {
 
         try {
             Socket clientSocket = this.serverSocket.accept();
