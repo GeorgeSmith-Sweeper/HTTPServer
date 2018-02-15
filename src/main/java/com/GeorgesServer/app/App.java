@@ -4,11 +4,6 @@ package com.GeorgesServer.app;
 public class App {
     public static void main(String args[]) {
 
-        if (args.length != 4) {
-            System.err.println("Usage: java -jar target/HttpServer-1.0-SNAPSHOT.jar -p <port number> -d <public folder>");
-            System.exit(1);
-        }
-
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
