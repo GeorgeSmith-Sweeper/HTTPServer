@@ -23,12 +23,22 @@ public class RequestParserTest {
 
     @Test
     void requestParserCanParseTheRequestStartline() {
-        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
+        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1\n");
         subject.parse(mockedConnections.getIn());
 
         assertEquals("GET", subject.getMethod());
         assertEquals("/", subject.getUrl());
         assertEquals("HTTP/1.1", subject.getHttpVersion());
-
     }
+
+
+    @Test
+    void extractStartLineCanGrabTheRequestStartline() {
+        String request = "GET / HTTP/1.1\nRandom: header";
+
+        String result = subject.extractStartLine(request);
+
+        assertEquals("GET / HTTP/1.1", result);
+    }
+
 }

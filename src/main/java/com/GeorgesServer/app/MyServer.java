@@ -22,8 +22,11 @@ public class MyServer {
 
     public void start() {
         Connections connections = establishesConnection.connect();
-        HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
-        String serverResponse = requestHandler.handle(clientRequest);
-        responseSender.send(serverResponse, connections.getOut());
+        while (true) {
+            HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
+            String serverResponse = requestHandler.handle(clientRequest);
+            if (serverResponse.isEmpty()) {break;}
+            responseSender.send(serverResponse, connections.getOut());
+        }
     }
 }

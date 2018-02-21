@@ -42,7 +42,7 @@ public class ServerTest {
                 publicFolderPath);
         when(mockedEstablishesConnection.connect()).thenReturn(mockedConnections);
         when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
-        when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
+        when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("");
 
         myServer.start();
 

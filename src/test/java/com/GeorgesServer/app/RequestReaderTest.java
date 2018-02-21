@@ -23,7 +23,7 @@ class RequestReaderTest {
     @Test
     void requestReaderReturnsAStringFromABufferedReader() throws IOException {
         String request = "GET / HTTP/1.1\n";
-        when(mockedBufferedReader.readLine()).thenReturn(request);
+        when(mockedBufferedReader.readLine()).thenReturn(request).thenReturn(null);
 
         String result = subject.read(mockedBufferedReader);
 
@@ -33,7 +33,7 @@ class RequestReaderTest {
     @Test
     void requestReaderReturnsMultipleLinesFromABufferedReader() throws IOException {
         String request = "GET / HTTP/1.1\nAnother: Thing";
-        when(mockedBufferedReader.readLine()).thenReturn(request);
+        when(mockedBufferedReader.readLine()).thenReturn(request).thenReturn(null);
 
         String result = subject.read(mockedBufferedReader);
 
