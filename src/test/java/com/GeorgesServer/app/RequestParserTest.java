@@ -22,26 +22,13 @@ public class RequestParserTest {
     }
 
     @Test
-    void requestParserCanParseTheMethodOfARequestStartline() {
+    void requestParserCanParseTheRequestStartline() {
         when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
         subject.parse(mockedConnections.getIn());
 
         assertEquals("GET", subject.getMethod());
-    }
-
-    @Test
-    void requestParserCanParseTheURLOfARequestStartline() {
-        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
-        subject.parse(mockedConnections.getIn());
-
         assertEquals("/", subject.getUrl());
-    }
-
-    @Test
-    void requestParserCanParseTheHTTPVersionOfARequestStartline() {
-        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
-        subject.parse(mockedConnections.getIn());
-
         assertEquals("HTTP/1.1", subject.getHttpVersion());
+
     }
 }
