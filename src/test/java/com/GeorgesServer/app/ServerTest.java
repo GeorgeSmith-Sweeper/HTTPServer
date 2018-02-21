@@ -27,7 +27,7 @@ public class ServerTest {
         mockedConnections = mock(Connections.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
-        mockedServerResponse = "";
+        mockedServerResponse = "Response";
         publicFolderPath = "";
         port = 6001;
     }
@@ -47,8 +47,8 @@ public class ServerTest {
         myServer.start();
 
         verify(mockedEstablishesConnection).connect();
-        verify(mockedRequestParser).parse(mockedConnections.getIn());
-        verify(mockedRequestHandler).handle(mockedClientRequest);
-        verify(mockedResponseSender).send(mockedServerResponse, mockedConnections.getOut());
+        verify(mockedRequestParser, atLeastOnce()).parse(mockedConnections.getIn());
+        verify(mockedRequestHandler, atLeastOnce()).handle(mockedClientRequest);
+        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedConnections.getOut());
     }
 }

@@ -8,7 +8,11 @@ public class MyServer {
     private RequestHandler requestHandler;
     private ResponseSender responseSender;
 
-    public MyServer(EstablishesConnection establishesConnection, RequestParser requestParser, RequestHandler requestHandler, ResponseSender responseSender, String publicFolderPath) {
+    public MyServer(EstablishesConnection establishesConnection,
+                    RequestParser requestParser,
+                    RequestHandler requestHandler,
+                    ResponseSender responseSender,
+                    String publicFolderPath) {
 
         this.establishesConnection = establishesConnection;
         this.requestParser = requestParser;
