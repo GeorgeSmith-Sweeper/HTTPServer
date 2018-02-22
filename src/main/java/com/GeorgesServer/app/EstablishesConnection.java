@@ -19,12 +19,10 @@ public class EstablishesConnection {
             Socket clientSocket = this.serverSocket.accept();
             InputStream inputStream = clientSocket.getInputStream();
             OutputStream outputStream = clientSocket.getOutputStream();
-
             InputStreamReader inReader = new InputStreamReader(inputStream);
             OutputStreamWriter outWriter = new OutputStreamWriter(outputStream);
             BufferedReader buffReader = new BufferedReader(inReader);
             return new Connections(buffReader, outWriter);
-
         } catch (IOException e) {
             e.printStackTrace();
             return null;
