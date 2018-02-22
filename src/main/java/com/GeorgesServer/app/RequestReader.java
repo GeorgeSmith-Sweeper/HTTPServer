@@ -10,13 +10,12 @@ public class RequestReader {
         String line;
         try {
             while (true) {
-                if ((line = reader.readLine()) != null) {
-                    sb.append(line);
+                if (reader.ready() && (line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
                 } else {
-                    break;
+                    return sb.toString();
                 }
             }
-            return sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
             return null;
