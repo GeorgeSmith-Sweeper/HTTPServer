@@ -17,13 +17,19 @@ public class App {
 
         EstablishesConnection establishesConnection;
         MyServer server;
-        try (ServerSocket serverSocket = new ServerSocket(port)) {
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
             establishesConnection = new EstablishesConnection(serverSocket);
-            server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
+            server = new MyServer(
+                    establishesConnection,
+                    requestParser,
+                    requestHandler,
+                    responseSender,
+                    publicFolderPath);
             server.start();
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 }
