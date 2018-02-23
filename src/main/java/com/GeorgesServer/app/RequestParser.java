@@ -17,9 +17,8 @@ public class RequestParser {
     public HashMap<String, String> parse(BufferedReader reader) {
         HashMap<String, String> parsedRequest = new HashMap<>();
         String request = requestReader.read(reader);
-        String startLine = extractStartLine(request);
 
-        parseRequestStartLine(startLine);
+        parseRequestStartLine(request);
         parsedRequest.put("Method", getMethod());
         parsedRequest.put("Url", getUrl());
         parsedRequest.put("HttpVersion", getHttpVersion());
@@ -27,16 +26,10 @@ public class RequestParser {
     }
 
     private void parseRequestStartLine(String request) {
-        System.out.println(request);
         String[] splitRequest = request.split(" ");
         this.method = splitRequest[0];
         this.url = splitRequest[1];
         this.httpVersion = splitRequest[2];
-    }
-
-    public String extractStartLine(String request) {
-        String[] splitRequest = request.split("\n");
-        return splitRequest[0];
     }
 
     public String getMethod() {
