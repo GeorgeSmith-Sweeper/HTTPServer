@@ -28,17 +28,6 @@ class RequestReaderTest {
 
         String result = subject.read(mockedBufferedReader);
 
-        assertEquals("GET / HTTP/1.1\n", result);
-    }
-
-    @Test
-    void requestReaderReturnsMultipleLinesFromABufferedReader() throws IOException {
-        String request = "GET / HTTP/1.1\nAnother: Thing";
-        when(mockedBufferedReader.readLine()).thenReturn(request).thenReturn(null);
-        when(mockedBufferedReader.ready()).thenReturn(true);
-
-        String result = subject.read(mockedBufferedReader);
-
-        assertEquals("GET / HTTP/1.1\nAnother: Thing\n", result);
+        assertEquals("GET / HTTP/1.1", result);
     }
 }
