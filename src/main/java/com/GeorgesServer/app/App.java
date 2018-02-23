@@ -1,13 +1,11 @@
 package com.GeorgesServer.app;
 
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 public class App {
     public static void main(String args[]) {
-
-        if (args.length != 4) {
-            System.err.println("Usage: java -jar target/HttpServer-1.0-SNAPSHOT.jar -p <port number> -d <public folder>");
-            System.exit(1);
-        }
 
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
@@ -16,10 +14,22 @@ public class App {
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
-        SocketFactory socketFactory = new SocketFactory();
 
-        EstablishesConnection establishesConnection = new EstablishesConnection(socketFactory);
-        MyServer server = new MyServer(establishesConnection, requestParser, requestHandler, responseSender, publicFolderPath);
-        server.start(port);
+        EstablishesConnection establishesConnection;
+        MyServer server;
+
+        try {
+            ServerSocket serverSocket = new ServerSocket(port);
+            establishesConnection = new EstablishesConnection(serverSocket);
+            server = new MyServer(
+                    establishesConnection,
+                    requestParser,
+                    requestHandler,
+                    responseSender,
+                    publicFolderPath);
+            server.start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

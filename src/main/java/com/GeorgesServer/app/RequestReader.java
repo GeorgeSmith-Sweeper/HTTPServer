@@ -7,8 +7,9 @@ public class RequestReader {
 
     public String read(BufferedReader reader) {
         StringBuilder sb = new StringBuilder();
+        String line;
         try {
-            sb.append(reader.readLine());
+            if ((line = reader.readLine()) != null) { sb.append(line); }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
