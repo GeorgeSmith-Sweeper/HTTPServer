@@ -9,16 +9,11 @@ public class RequestReader {
         StringBuilder sb = new StringBuilder();
         String line;
         try {
-            while (true) {
-                if (reader.ready() && (line = reader.readLine()) != null) {
-                    sb.append(line).append("\n");
-                } else {
-                    return sb.toString();
-                }
-            }
+            if ((line = reader.readLine()) != null) { sb.append(line); }
         } catch (IOException e) {
             e.printStackTrace();
             return null;
         }
+        return sb.toString();
     }
 }
