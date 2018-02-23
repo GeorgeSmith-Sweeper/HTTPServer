@@ -21,11 +21,11 @@ public class MyServer {
     }
 
     public void start() {
-        Connections connections = establishesConnection.connect();
-        while (true) {
+        String serverResponse = "";
+        while (!serverResponse.equals("Bye")) {
+            Connections connections = establishesConnection.connect();
             HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
-            String serverResponse = requestHandler.handle(clientRequest);
-            if (serverResponse.isEmpty()) {break;}
+            serverResponse = requestHandler.handle(clientRequest);
             responseSender.send(serverResponse, connections.getOut());
         }
     }
