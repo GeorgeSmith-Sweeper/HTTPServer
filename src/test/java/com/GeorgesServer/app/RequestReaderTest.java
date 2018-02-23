@@ -22,21 +22,12 @@ class RequestReaderTest {
 
     @Test
     void requestReaderReturnsAStringFromABufferedReader() throws IOException {
-        String request = "GET / HTTP/1.1\n";
-        when(mockedBufferedReader.readLine()).thenReturn(request);
+        String request = "GET / HTTP/1.1";
+        when(mockedBufferedReader.readLine()).thenReturn(request).thenReturn(null);
+        when(mockedBufferedReader.ready()).thenReturn(true);
 
         String result = subject.read(mockedBufferedReader);
 
-        assertEquals("GET / HTTP/1.1\n", result);
-    }
-
-    @Test
-    void requestReaderReturnsMultipleLinesFromABufferedReader() throws IOException {
-        String request = "GET / HTTP/1.1\nAnother: Thing";
-        when(mockedBufferedReader.readLine()).thenReturn(request);
-
-        String result = subject.read(mockedBufferedReader);
-
-        assertEquals("GET / HTTP/1.1\nAnother: Thing", result);
+        assertEquals("GET / HTTP/1.1", result);
     }
 }

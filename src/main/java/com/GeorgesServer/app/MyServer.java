@@ -8,7 +8,11 @@ public class MyServer {
     private RequestHandler requestHandler;
     private ResponseSender responseSender;
 
-    public MyServer(EstablishesConnection establishesConnection, RequestParser requestParser, RequestHandler requestHandler, ResponseSender responseSender, String publicFolderPath) {
+    public MyServer(EstablishesConnection establishesConnection,
+                    RequestParser requestParser,
+                    RequestHandler requestHandler,
+                    ResponseSender responseSender,
+                    String publicFolderPath) {
 
         this.establishesConnection = establishesConnection;
         this.requestParser = requestParser;
@@ -16,10 +20,13 @@ public class MyServer {
         this.responseSender = responseSender;
     }
 
-    public void start(int port) {
-        Connections connections = establishesConnection.connect(port);
-        HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
-        String serverResponse = requestHandler.handle(clientRequest);
-        responseSender.send(serverResponse, connections.getOut());
+    public void start() {
+        String serverResponse = "";
+        while (!serverResponse.equals("Bye")) {
+            Connections connections = establishesConnection.connect();
+            HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
+            serverResponse = requestHandler.handle(clientRequest);
+            responseSender.send(serverResponse, connections.getOut());
+        }
     }
 }
