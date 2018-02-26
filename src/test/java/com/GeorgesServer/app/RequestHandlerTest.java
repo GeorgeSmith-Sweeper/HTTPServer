@@ -11,10 +11,12 @@ import static org.junit.jupiter.api.Assertions.*;
 class RequestHandlerTest {
     private RequestHandler subject;
     private HashMap<String, String> clientRequest = new HashMap<>();
+    private String OK_STATUS = "HTTP/1.1 " + StatusCodes.OK +  "\n";
 
     @BeforeEach
     public void setUp() {
         subject = new RequestHandler();
+        clientRequest.put("HttpVersion", "HTTP/1.1");
     }
 
     @AfterEach
@@ -26,35 +28,30 @@ class RequestHandlerTest {
     void handlerFormatsAResponseWithABasicGetRequest() {
         clientRequest.put("Method", "GET");
         clientRequest.put("Url", "/");
-        clientRequest.put("HttpVersion", "HTTP/1.1");
 
-        String expectedResponse = "HTTP/1.1 200 OK\n";
         String result = subject.handle(clientRequest);
 
-        assertEquals(expectedResponse, result);
+        assertEquals(OK_STATUS, result);
     }
 
     @Test
     void handlerFormatsAResponseWithAPostRequestWithNoBody() {
         clientRequest.put("Method", "POST");
         clientRequest.put("Url", "/form");
-        clientRequest.put("HttpVersion", "HTTP/1.1");
         clientRequest.put("Content-Type", "application/x-www-form-urlencoded");
         clientRequest.put("My", "Data");
 
-        String expectedResponse = "HTTP/1.1 200 OK\n";
         String result = subject.handle(clientRequest);
 
-        assertEquals(expectedResponse, result);
+        assertEquals(OK_STATUS, result);
     }
 
     @Test
     void handlerFormatsAResponseWithAHeadRequestWithNoBody() {
         clientRequest.put("Method", "HEAD");
         clientRequest.put("Url", "/foobar");
-        clientRequest.put("HttpVersion", "HTTP/1.1");
 
-        String expectedResponse = "HTTP/1.1 404 NOT FOUND\n";
+        String expectedResponse = "HTTP/1.1 " + StatusCodes.NOT_FOUND + "\n";
         String result = subject.handle(clientRequest);
 
         assertEquals(expectedResponse, result);
@@ -64,11 +61,9 @@ class RequestHandlerTest {
     void handlerFormatsAResponseWithPutRequestWithNoBody() {
         clientRequest.put("Method", "PUT");
         clientRequest.put("Url", "/form");
-        clientRequest.put("HttpVersion", "HTTP/1.1");
 
-        String expectedResponse = "HTTP/1.1 200 OK\n";
         String result = subject.handle(clientRequest);
 
-        assertEquals(expectedResponse, result);
+        assertEquals(OK_STATUS, result);
     }
 }
