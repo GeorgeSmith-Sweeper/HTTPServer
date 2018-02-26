@@ -47,4 +47,16 @@ class RequestHandlerTest {
 
         assertEquals(expectedResponse, result);
     }
+
+    @Test
+    void handlerFormatsAResponseWithAHeadRequestWithNoBody() {
+        clientRequest.put("Method", "HEAD");
+        clientRequest.put("Url", "/foobar");
+        clientRequest.put("HttpVersion", "HTTP/1.1");
+
+        String expectedResponse = "HTTP/1.1 404 NOT FOUND\n";
+        String result = subject.handle(clientRequest);
+
+        assertEquals(expectedResponse, result);
+    }
 }
