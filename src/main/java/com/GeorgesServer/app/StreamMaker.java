@@ -4,11 +4,11 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EstablishesConnection {
+public class StreamMaker {
 
     private ServerSocket serverSocket;
 
-    public EstablishesConnection (ServerSocket serverSocket) {
+    public StreamMaker(ServerSocket serverSocket) {
 
         this.serverSocket = serverSocket;
     }
