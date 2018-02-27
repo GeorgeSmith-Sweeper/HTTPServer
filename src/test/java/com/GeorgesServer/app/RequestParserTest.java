@@ -12,19 +12,19 @@ import static org.mockito.Mockito.when;
 public class RequestParserTest {
     private RequestParser subject;
     private RequestReader mockedRequestReader;
-    private Connections mockedConnections;
+    private Streams mockedStreams;
 
     @BeforeEach
     public void setUp() {
         mockedRequestReader = mock(RequestReader.class);
-        mockedConnections = mock(Connections.class);
+        mockedStreams = mock(Streams.class);
         subject = new RequestParser(mockedRequestReader);
     }
 
     @Test
     void requestParserCanParseTheRequestStartline() {
-        when(mockedRequestReader.read(mockedConnections.getIn())).thenReturn("GET / HTTP/1.1");
-        subject.parse(mockedConnections.getIn());
+        when(mockedRequestReader.read(mockedStreams.getIn())).thenReturn("GET / HTTP/1.1");
+        subject.parse(mockedStreams.getIn());
 
         assertEquals("GET", subject.getMethod());
         assertEquals("/", subject.getUrl());

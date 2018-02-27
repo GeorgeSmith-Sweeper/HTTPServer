@@ -33,7 +33,7 @@ public class StreamMakerTest {
         when(mockedClientSocket.getInputStream()).thenReturn(mockedInputStream);
         when(mockedClientSocket.getOutputStream()).thenReturn(mockedOutputStream);
 
-        Connections result = subject.connect();
+        Streams result = subject.connect();
 
         assertTrue(result.getIn() instanceof BufferedReader);
         assertTrue(result.getOut() instanceof OutputStreamWriter);
