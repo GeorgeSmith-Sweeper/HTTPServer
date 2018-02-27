@@ -23,10 +23,10 @@ public class MyServer {
     public void start() {
         String serverResponse = "";
         while (!serverResponse.equals("Bye")) {
-            Connections connections = streamMaker.connect();
-            HashMap<String, String> clientRequest = requestParser.parse(connections.getIn());
+            Streams streams = streamMaker.connect();
+            HashMap<String, String> clientRequest = requestParser.parse(streams.getIn());
             serverResponse = requestHandler.handle(clientRequest);
-            responseSender.send(serverResponse, connections.getOut());
+            responseSender.send(serverResponse, streams.getOut());
         }
     }
 }

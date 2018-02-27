@@ -10,7 +10,7 @@ import java.util.HashMap;
 public class ServerTest {
 
     private StreamMaker mockedStreamMaker;
-    private Connections mockedConnections;
+    private Streams mockedStreams;
     private RequestParser mockedRequestParser;
     private HashMap mockedClientRequest;
     private RequestHandler mockedRequestHandler;
@@ -24,7 +24,7 @@ public class ServerTest {
         mockedStreamMaker = mock(StreamMaker.class);
         mockedRequestHandler = mock(RequestHandler.class);
         mockedClientRequest = mock(HashMap.class);
-        mockedConnections = mock(Connections.class);
+        mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = "Response";
@@ -40,15 +40,15 @@ public class ServerTest {
                 mockedRequestHandler,
                 mockedResponseSender,
                 publicFolderPath);
-        when(mockedStreamMaker.connect()).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
+        when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
+        when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
         when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
 
         myServer.start();
 
         verify(mockedStreamMaker, atLeastOnce()).connect();
-        verify(mockedRequestParser, atLeastOnce()).parse(mockedConnections.getIn());
+        verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
         verify(mockedRequestHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedConnections.getOut());
+        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedStreams.getOut());
     }
 }
