@@ -15,21 +15,24 @@ public class App {
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
 
-        EstablishesConnection establishesConnection;
         MyServer server;
+        ServerSocket serverSocket;
 
         try {
-            ServerSocket serverSocket = new ServerSocket(port);
-            establishesConnection = new EstablishesConnection(serverSocket);
-            server = new MyServer(
-                    establishesConnection,
-                    requestParser,
-                    requestHandler,
-                    responseSender,
-                    publicFolderPath);
-            server.start();
+            serverSocket = new ServerSocket(port);
         } catch (IOException e) {
             e.printStackTrace();
+            return;
         }
+
+        StreamMaker streamMaker = new StreamMaker(serverSocket);
+        server = new MyServer(
+                streamMaker,
+                requestParser,
+                requestHandler,
+                responseSender,
+                publicFolderPath);
+
+        server.start();
     }
 }

@@ -8,13 +8,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assumptions.assumeTrue;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-public class EstablishesConnectionTest {
-    private EstablishesConnection subject;
+public class StreamMakerTest {
+    private StreamMaker subject;
     private ServerSocket mockedServerSocket;
     private InputStream mockedInputStream;
     private OutputStream mockedOutputStream;
@@ -26,7 +24,7 @@ public class EstablishesConnectionTest {
         mockedClientSocket = mock(Socket.class);
         mockedInputStream = mock(InputStream.class);
         mockedOutputStream = mock(OutputStream.class);
-        subject = new EstablishesConnection(mockedServerSocket);
+        subject = new StreamMaker(mockedServerSocket);
     }
 
     @Test

@@ -24,7 +24,7 @@ public class RequestParser {
         parsedRequest.put("HttpVersion", getHttpVersion());
         return parsedRequest;
     }
-
+    
     private void parseRequestStartLine(String request) {
         String[] splitRequest = request.split(" ");
         this.method = splitRequest[0];
