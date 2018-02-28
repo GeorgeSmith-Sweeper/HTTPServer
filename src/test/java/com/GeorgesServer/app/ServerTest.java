@@ -2,10 +2,9 @@ package com.GeorgesServer.app;
 
 import static org.mockito.Mockito.*;
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.HashMap;
 
 public class ServerTest {
 

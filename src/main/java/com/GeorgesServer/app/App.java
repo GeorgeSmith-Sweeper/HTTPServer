@@ -1,6 +1,8 @@
 package com.GeorgesServer.app;
 
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.RequestHandler;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -10,7 +12,8 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
-        RequestHandler requestHandler = new RequestHandler();
+        HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
+        RequestHandler requestHandler = new RequestHandler(responseBuilder);
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
