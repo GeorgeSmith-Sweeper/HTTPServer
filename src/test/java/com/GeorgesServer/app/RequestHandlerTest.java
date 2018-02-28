@@ -7,62 +7,61 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class RequestHandlerTest {
     private RequestHandler subject;
-    private HashMap<String, String> clientRequest = new HashMap<>();
+    private ClientRequest mockClientRequest;
     private String OK_STATUS = "HTTP/1.1 " + StatusCodes.OK +  "\n";
 
     @BeforeEach
     public void setUp() {
         subject = new RequestHandler();
-        clientRequest.put("HttpVersion", "HTTP/1.1");
-    }
-
-    @AfterEach
-    public void clearClientRequest() {
-        clientRequest.clear();
+        mockClientRequest = mock(ClientRequest.class);
     }
 
     @Test
     void handlerFormatsAResponseWithABasicGetRequest() {
-        clientRequest.put("Method", "GET");
-        clientRequest.put("Url", "/");
+        when(mockClientRequest.getUrl()).thenReturn("/");
+        when(mockClientRequest.getHttpVersion()).thenReturn("HTTP/1.1");
 
-        String result = subject.handle(clientRequest);
+        String result = subject.handle(mockClientRequest);
 
         assertEquals(OK_STATUS, result);
     }
 
     @Test
     void handlerFormatsAResponseWithAPostRequestWithNoBody() {
-        clientRequest.put("Method", "POST");
-        clientRequest.put("Url", "/form");
-        clientRequest.put("Content-Type", "application/x-www-form-urlencoded");
-        clientRequest.put("My", "Data");
+        when(mockClientRequest.getUrl()).thenReturn("/form");
+        when(mockClientRequest.getHttpVersion()).thenReturn("HTTP/1.1");
+        when(mockClientRequest.getMethod()).thenReturn("POST");
 
-        String result = subject.handle(clientRequest);
+        String result = subject.handle(mockClientRequest);
 
         assertEquals(OK_STATUS, result);
     }
 
     @Test
     void handlerFormatsAResponseWithAHeadRequestWithNoBody() {
-        clientRequest.put("Method", "HEAD");
-        clientRequest.put("Url", "/foobar");
+        when(mockClientRequest.getMethod()).thenReturn("HEAD");
+        when(mockClientRequest.getUrl()).thenReturn("/foobar");
+        when(mockClientRequest.getHttpVersion()).thenReturn("HTTP/1.1");
 
         String expectedResponse = "HTTP/1.1 " + StatusCodes.NOT_FOUND + "\n";
-        String result = subject.handle(clientRequest);
+        String result = subject.handle(mockClientRequest);
 
         assertEquals(expectedResponse, result);
     }
 
     @Test
     void handlerFormatsAResponseWithPutRequestWithNoBody() {
-        clientRequest.put("Method", "PUT");
-        clientRequest.put("Url", "/form");
+        when(mockClientRequest.getMethod()).thenReturn("PUT");
+        when(mockClientRequest.getUrl()).thenReturn("/form");
+        when(mockClientRequest.getHttpVersion()).thenReturn("HTTP/1.1");
 
-        String result = subject.handle(clientRequest);
+
+        String result = subject.handle(mockClientRequest);
 
         assertEquals(OK_STATUS, result);
     }
