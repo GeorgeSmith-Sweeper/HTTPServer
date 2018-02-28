@@ -1,16 +1,14 @@
 package com.GeorgesServer.app;
 
-import java.util.HashMap;
-
 public class MyServer {
     private StreamMaker streamMaker;
     private RequestParser requestParser;
-    private RequestHandler requestHandler;
+    private IHandler requestHandler;
     private ResponseSender responseSender;
 
     public MyServer(StreamMaker streamMaker,
                     RequestParser requestParser,
-                    RequestHandler requestHandler,
+                    IHandler requestHandler,
                     ResponseSender responseSender,
                     String publicFolderPath) {
 
