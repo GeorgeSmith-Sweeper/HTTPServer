@@ -13,7 +13,7 @@ public class ServerTest {
     private Streams mockedStreams;
     private RequestParser mockedRequestParser;
     private ClientRequest mockedClientRequest;
-    private RequestHandler mockedRequestHandler;
+    private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
     private String mockedServerResponse;
     private String publicFolderPath;
@@ -21,7 +21,7 @@ public class ServerTest {
     @BeforeEach
     public void setUp() {
         mockedStreamMaker = mock(StreamMaker.class);
-        mockedRequestHandler = mock(RequestHandler.class);
+        mockedHandler = mock(IHandler.class);
         mockedClientRequest = mock(ClientRequest.class);
         mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
@@ -35,18 +35,18 @@ public class ServerTest {
         MyServer myServer = new MyServer(
                 mockedStreamMaker,
                 mockedRequestParser,
-                mockedRequestHandler,
+                mockedHandler,
                 mockedResponseSender,
                 publicFolderPath);
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
-        when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
+        when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
 
         myServer.start();
 
         verify(mockedStreamMaker, atLeastOnce()).connect();
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
-        verify(mockedRequestHandler, atLeastOnce()).handle(mockedClientRequest);
+        verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
         verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedStreams.getOut());
     }
 }
