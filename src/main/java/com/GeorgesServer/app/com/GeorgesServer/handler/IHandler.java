@@ -1,7 +1,8 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 import com.GeorgesServer.app.ClientRequest;
+import com.GeorgesServer.app.ServerResponse;
 
 public interface IHandler {
-    String handle(ClientRequest clientRequest);
+    ServerResponse handle(ClientRequest clientRequest);
 }

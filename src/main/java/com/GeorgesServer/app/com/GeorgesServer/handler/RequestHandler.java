@@ -3,7 +3,7 @@ package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 import com.GeorgesServer.app.ClientRequest;
 import com.GeorgesServer.app.HttpResponseBuilder;
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.ServerResponse;
 
 public class RequestHandler implements IHandler {
 
@@ -13,11 +13,10 @@ public class RequestHandler implements IHandler {
         this.responseBuilder = responseBuilder;
     }
 
-    public String handle(ClientRequest clientRequest) {
+    public ServerResponse handle(ClientRequest clientRequest) {
 
         responseBuilder.buildOkStatus();
-        String serverResponse = responseBuilder.getResponse();
-        return serverResponse;
+        return responseBuilder.getResponse();
 
 //        if (clientRequest.getUrl().equals("/") || clientRequest.getUrl().equals("/form")) {
 //            return clientRequest.getHttpVersion() + " " + StatusCodes.OK + "\n";
