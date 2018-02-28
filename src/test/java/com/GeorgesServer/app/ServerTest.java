@@ -9,10 +9,10 @@ import java.util.HashMap;
 
 public class ServerTest {
 
-    private EstablishesConnection mockedEstablishesConnection;
-    private Connections mockedConnections;
+    private StreamMaker mockedStreamMaker;
+    private Streams mockedStreams;
     private RequestParser mockedRequestParser;
-    private HashMap mockedClientRequest;
+    private ClientRequest mockedClientRequest;
     private RequestHandler mockedRequestHandler;
     private ResponseSender mockedResponseSender;
     private String mockedServerResponse;
@@ -21,10 +21,10 @@ public class ServerTest {
 
     @BeforeEach
     public void setUp() {
-        mockedEstablishesConnection = mock(EstablishesConnection.class);
+        mockedStreamMaker = mock(StreamMaker.class);
         mockedRequestHandler = mock(RequestHandler.class);
-        mockedClientRequest = mock(HashMap.class);
-        mockedConnections = mock(Connections.class);
+        mockedClientRequest = mock(ClientRequest.class);
+        mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = "Response";
@@ -35,20 +35,20 @@ public class ServerTest {
     @Test
     public void startServerCallsTheCorrectMethods() {
         MyServer myServer = new MyServer(
-                mockedEstablishesConnection,
+                mockedStreamMaker,
                 mockedRequestParser,
                 mockedRequestHandler,
                 mockedResponseSender,
                 publicFolderPath);
-        when(mockedEstablishesConnection.connect()).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
+        when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
+        when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
         when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
 
         myServer.start();
 
-        verify(mockedEstablishesConnection, atLeastOnce()).connect();
-        verify(mockedRequestParser, atLeastOnce()).parse(mockedConnections.getIn());
+        verify(mockedStreamMaker, atLeastOnce()).connect();
+        verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
         verify(mockedRequestHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedConnections.getOut());
+        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedStreams.getOut());
     }
 }
