@@ -17,7 +17,6 @@ public class ServerTest {
     private ResponseSender mockedResponseSender;
     private String mockedServerResponse;
     private String publicFolderPath;
-    private int port;
 
     @BeforeEach
     public void setUp() {
@@ -29,7 +28,6 @@ public class ServerTest {
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = "Response";
         publicFolderPath = "";
-        port = 6001;
     }
     
     @Test
