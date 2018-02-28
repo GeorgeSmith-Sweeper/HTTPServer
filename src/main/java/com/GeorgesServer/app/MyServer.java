@@ -21,12 +21,13 @@ public class MyServer {
     }
 
     public void start() {
-        String serverResponse = "";
-        while (!serverResponse.equals("Bye")) {
+        String formattedResponse = "";
+        while (!formattedResponse.equals("Bye")) {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
-            serverResponse = requestHandler.handle(clientRequest);
-            responseSender.send(serverResponse, streams.getOut());
+            ServerResponse serverResponse = requestHandler.handle(clientRequest);
+            formattedResponse = serverResponse.format();
+            responseSender.send(formattedResponse, streams.getOut());
         }
     }
 }

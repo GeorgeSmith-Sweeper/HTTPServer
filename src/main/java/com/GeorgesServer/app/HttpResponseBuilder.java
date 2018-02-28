@@ -1,9 +1,9 @@
 package com.GeorgesServer.app;
 
 public class HttpResponseBuilder {
-    private String response;
+    private ServerResponse response;
 
-    public String getResponse() {
+    public ServerResponse getResponse() {
         return this.response;
     }
 

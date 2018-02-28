@@ -14,8 +14,9 @@ public class ServerTest {
     private ClientRequest mockedClientRequest;
     private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
-    private String mockedServerResponse;
+    private ServerResponse mockedServerResponse;
     private String publicFolderPath;
+    private String mockedFormattedResponse;
 
     @BeforeEach
     public void setUp() {
@@ -25,7 +26,8 @@ public class ServerTest {
         mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
-        mockedServerResponse = "Response";
+        mockedServerResponse = mock(ServerResponse.class);
+        mockedFormattedResponse = "";
         publicFolderPath = "";
     }
     
@@ -39,13 +41,15 @@ public class ServerTest {
                 publicFolderPath);
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
-        when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
+        when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
+        when(mockedServerResponse.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
         myServer.start();
 
         verify(mockedStreamMaker, atLeastOnce()).connect();
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
         verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedStreams.getOut());
+        verify(mockedServerResponse, atLeastOnce()).format();
+        verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
     }
 }
