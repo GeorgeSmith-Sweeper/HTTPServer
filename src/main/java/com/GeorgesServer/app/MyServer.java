@@ -24,7 +24,7 @@ public class MyServer {
         String serverResponse = "";
         while (!serverResponse.equals("Bye")) {
             Streams streams = streamMaker.connect();
-            HashMap<String, String> clientRequest = requestParser.parse(streams.getIn());
+            ClientRequest clientRequest = requestParser.parse(streams.getIn());
             serverResponse = requestHandler.handle(clientRequest);
             responseSender.send(serverResponse, streams.getOut());
         }
