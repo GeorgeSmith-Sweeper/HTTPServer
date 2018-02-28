@@ -12,7 +12,7 @@ public class ServerTest {
     private StreamMaker mockedStreamMaker;
     private Streams mockedStreams;
     private RequestParser mockedRequestParser;
-    private HashMap mockedClientRequest;
+    private ClientRequest mockedClientRequest;
     private RequestHandler mockedRequestHandler;
     private ResponseSender mockedResponseSender;
     private String mockedServerResponse;
@@ -23,7 +23,7 @@ public class ServerTest {
     public void setUp() {
         mockedStreamMaker = mock(StreamMaker.class);
         mockedRequestHandler = mock(RequestHandler.class);
-        mockedClientRequest = mock(HashMap.class);
+        mockedClientRequest = mock(ClientRequest.class);
         mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);

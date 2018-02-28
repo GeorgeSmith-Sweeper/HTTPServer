@@ -1,18 +1,16 @@
 package com.GeorgesServer.app;
 
-import java.util.HashMap;
-
 
 public class RequestHandler {
 
-    public String handle(HashMap<String, String> clientRequest) {
+    public String handle(ClientRequest clientRequest) {
 
-        if (clientRequest.get("Url").equals("/") || clientRequest.get("Url").equals("/form")) {
-            return clientRequest.get("HttpVersion") + " " + StatusCodes.OK + "\n";
+        if (clientRequest.getUrl().equals("/") || clientRequest.getUrl().equals("/form")) {
+            return clientRequest.getHttpVersion() + " " + StatusCodes.OK + "\n";
         }
 
-        if (clientRequest.get("Method").equals("HEAD") && clientRequest.get("Url").equals("/foobar")) {
-            return clientRequest.get("HttpVersion") + " " + StatusCodes.NOT_FOUND + "\n";
+        if (clientRequest.getMethod().equals("HEAD") && clientRequest.getUrl().equals("/foobar")) {
+            return clientRequest.getHttpVersion() + " " + StatusCodes.NOT_FOUND + "\n";
         }
 
         return "";
