@@ -12,6 +12,6 @@ public class HttpResponseBuilder {
     }
 
     public void buildOkStatus() {
-        this.response.setStatus("200 OK");
+        this.response.setStatus("200", "OK");
     }
 }
