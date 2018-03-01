@@ -26,6 +26,7 @@ class RequestHandlerTest {
 
         subject.handle(mockClientRequest);
 
+        verify(mockResponseBuilder).buildHttpVersion();
         verify(mockResponseBuilder).buildOkStatus();
         verify(mockResponseBuilder).getResponse();
     }

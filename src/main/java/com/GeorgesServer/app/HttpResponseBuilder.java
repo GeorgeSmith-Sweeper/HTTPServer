@@ -14,4 +14,8 @@ public class HttpResponseBuilder {
     public void buildOkStatus() {
         this.response.setStatus("200", "OK");
     }
+
+    public void buildHttpVersion() {
+        this.response.setHttpVersion("HTTP/1.1");
+    }
 }
