@@ -17,7 +17,6 @@ class RouterTest {
         responseBuilder = new HttpResponseBuilder();
         defaultHandler = new DefaultHandler(responseBuilder);
         formHandler = new FormHandler(responseBuilder);
-
         subject = new Router(defaultHandler, formHandler);
     }
 
@@ -30,7 +29,7 @@ class RouterTest {
 
     @Test
     void routeChoosesAFormHandlerWhenTheUrlIsForm() {
-        IHandler result = subject.route("", "/form");
+        IHandler result = subject.route("GET", "/form");
 
         assertTrue(result instanceof FormHandler);
     }

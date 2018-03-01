@@ -1,16 +1,14 @@
 package com.GeorgesServer.app;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-class RequestHandlerTest {
-    private DefaultHandler defaultHandler;
+class FormHandlerTest {
+    private FormHandler formHandler;
     private ClientRequest mockClientRequest;
     private HttpResponseBuilder mockResponseBuilder;
 
@@ -18,13 +16,15 @@ class RequestHandlerTest {
     public void setUp() {
         mockClientRequest = mock(ClientRequest.class);
         mockResponseBuilder = mock(HttpResponseBuilder.class);
-        defaultHandler = new DefaultHandler(mockResponseBuilder);
+        formHandler = new FormHandler(mockResponseBuilder);
     }
 
     @Test
-    void handlerCallsTheCorrectMethodsWhenBuildingARootResponse() {
+    void formHandlerCallsTheCorrectMethodsWhenGivenAGETRequest() {
 
-        defaultHandler.handle(mockClientRequest);
+        when(mockClientRequest.getMethod()).thenReturn("GET");
+
+        formHandler.handle(mockClientRequest);
 
         verify(mockResponseBuilder).buildHttpVersion();
         verify(mockResponseBuilder).buildOkStatus();
