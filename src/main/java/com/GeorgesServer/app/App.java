@@ -17,7 +17,7 @@ public class App {
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
-        Router router = new Router();
+        Router router = new Router(defaultHandler);
 
         MyServer server;
         ServerSocket serverSocket;
@@ -33,7 +33,6 @@ public class App {
         server = new MyServer(
                 streamMaker,
                 requestParser,
-                defaultHandler,
                 responseSender,
                 router,
                 publicFolderPath);
