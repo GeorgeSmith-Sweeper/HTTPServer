@@ -38,7 +38,6 @@ public class ServerTest {
         MyServer myServer = new MyServer(
                 mockedStreamMaker,
                 mockedRequestParser,
-                mockedHandler,
                 mockedResponseSender,
                 mockedRouter,
                 publicFolderPath);

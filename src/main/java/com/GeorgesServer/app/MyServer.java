@@ -11,7 +11,6 @@ public class MyServer {
 
     public MyServer(StreamMaker streamMaker,
                     RequestParser requestParser,
-                    IHandler handler,
                     ResponseSender responseSender,
                     Router router,
                     String publicFolderPath) {
@@ -29,7 +28,6 @@ public class MyServer {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             IHandler handler = router.route(clientRequest.getMethod(), clientRequest.getUrl());
-
             ServerResponse serverResponse = handler.handle(clientRequest);
             formattedResponse = serverResponse.format();
             responseSender.send(formattedResponse, streams.getOut());
