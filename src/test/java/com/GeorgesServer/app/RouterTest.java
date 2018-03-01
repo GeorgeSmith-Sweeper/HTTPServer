@@ -9,14 +9,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RouterTest {
     private Router subject;
-    private IHandler defaultHandler;
+    private IHandler defaultHandler, formHandler;
     private HttpResponseBuilder responseBuilder;
 
     @BeforeEach
     private void setUp() {
         responseBuilder = new HttpResponseBuilder();
         defaultHandler = new DefaultHandler(responseBuilder);
-        subject = new Router(defaultHandler);
+        formHandler = new FormHandler(responseBuilder);
+
+        subject = new Router(defaultHandler, formHandler);
     }
 
     @Test
@@ -24,5 +26,12 @@ class RouterTest {
         IHandler result = subject.route("GET", "/");
 
         assertTrue(result instanceof DefaultHandler);
+    }
+
+    @Test
+    void routeChoosesAFormHandlerWhenTheUrlIsForm() {
+        IHandler result = subject.route("", "/form");
+
+        assertTrue(result instanceof FormHandler);
     }
 }
