@@ -27,7 +27,6 @@ public class MyServer {
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             ServerResponse serverResponse = requestHandler.handle(clientRequest);
             formattedResponse = serverResponse.format();
-            System.out.println("formattedResponse: " + formattedResponse);
             responseSender.send(formattedResponse, streams.getOut());
         }
     }
