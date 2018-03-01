@@ -1,6 +1,6 @@
 package com.GeorgesServer.app;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.RequestHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class RequestHandlerTest {
-    private RequestHandler subject;
+    private DefaultHandler subject;
     private ClientRequest mockClientRequest;
     private HttpResponseBuilder mockResponseBuilder;
     private String OK_STATUS = "HTTP/1.1 " + StatusCodes.OK +  "\n";
@@ -18,7 +18,7 @@ class RequestHandlerTest {
     public void setUp() {
         mockClientRequest = mock(ClientRequest.class);
         mockResponseBuilder = mock(HttpResponseBuilder.class);
-        subject = new RequestHandler(mockResponseBuilder);
+        subject = new DefaultHandler(mockResponseBuilder);
     }
 
     @Test

@@ -5,11 +5,11 @@ import com.GeorgesServer.app.ClientRequest;
 import com.GeorgesServer.app.HttpResponseBuilder;
 import com.GeorgesServer.app.ServerResponse;
 
-public class RequestHandler implements IHandler {
+public class DefaultHandler implements IHandler {
 
     private HttpResponseBuilder responseBuilder;
 
-    public RequestHandler(HttpResponseBuilder responseBuilder) {
+    public DefaultHandler(HttpResponseBuilder responseBuilder) {
         this.responseBuilder = responseBuilder;
     }
 

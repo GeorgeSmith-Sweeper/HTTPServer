@@ -1,7 +1,7 @@
 package com.GeorgesServer.app;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.RequestHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -13,10 +13,11 @@ public class App {
         int port = Integer.parseInt(args[1]);
 
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-        RequestHandler requestHandler = new RequestHandler(responseBuilder);
+        DefaultHandler defaultHandler = new DefaultHandler(responseBuilder);
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
+        Router router = new Router();
 
         MyServer server;
         ServerSocket serverSocket;
@@ -32,8 +33,9 @@ public class App {
         server = new MyServer(
                 streamMaker,
                 requestParser,
-                requestHandler,
+                defaultHandler,
                 responseSender,
+                router,
                 publicFolderPath);
 
         server.start();
