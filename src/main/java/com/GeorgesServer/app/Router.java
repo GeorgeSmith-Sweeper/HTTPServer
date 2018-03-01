@@ -5,15 +5,24 @@ import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 public class Router {
 
     private IHandler defaultHandler;
+    private IHandler formHandler;
     private IHandler handler;
 
-    public Router(IHandler defaultHandler) {
+    public Router(IHandler defaultHandler, IHandler formHandler) {
         this.defaultHandler = defaultHandler;
+        this.formHandler = formHandler;
     }
 
     public IHandler route(String method, String url) {
 
-        handler = (method.equals("GET") && url.equals("/")) ? defaultHandler : null;
+        if (method.equals("GET") && url.equals("/")) {
+            return defaultHandler;
+        }
+
+        if (url.equals("/form")) {
+            return formHandler;
+        }
+
         return handler;
     }
 }

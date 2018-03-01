@@ -14,10 +14,13 @@ public class App {
 
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
         DefaultHandler defaultHandler = new DefaultHandler(responseBuilder);
+        FormHandler formHandler = new FormHandler(responseBuilder);
+        Router router = new Router(defaultHandler, formHandler);
+
+
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
-        Router router = new Router(defaultHandler);
 
         MyServer server;
         ServerSocket serverSocket;
