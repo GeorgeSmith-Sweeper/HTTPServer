@@ -5,7 +5,6 @@ import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 public class MyServer {
     private StreamMaker streamMaker;
     private RequestParser requestParser;
-    private IHandler handler;
     private ResponseSender responseSender;
     private Router router;
 
@@ -17,7 +16,6 @@ public class MyServer {
 
         this.streamMaker = streamMaker;
         this.requestParser = requestParser;
-        this.handler = handler;
         this.responseSender = responseSender;
         this.router = router;
     }

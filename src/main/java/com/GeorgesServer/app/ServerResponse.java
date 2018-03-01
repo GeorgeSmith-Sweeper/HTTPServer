@@ -3,7 +3,7 @@ package com.GeorgesServer.app;
 public class ServerResponse {
     private String status;
     private String httpVersion;
-    
+
     public String format() {
         return getHttpVersion() +  " " + getStatus() + "\n";
     }
