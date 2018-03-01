@@ -5,12 +5,12 @@ import java.io.OutputStreamWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Connections {
+public class Streams {
 
     private BufferedReader bufferedReader;
     private OutputStreamWriter outputStreamWriter;
 
-    public Connections (BufferedReader bufferedReader, OutputStreamWriter outputStreamWriter) {
+    public Streams(BufferedReader bufferedReader, OutputStreamWriter outputStreamWriter) {
         this.bufferedReader = bufferedReader;
         this.outputStreamWriter = outputStreamWriter;
     }

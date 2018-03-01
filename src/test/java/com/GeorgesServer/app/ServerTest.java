@@ -2,53 +2,54 @@ package com.GeorgesServer.app;
 
 import static org.mockito.Mockito.*;
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-
 public class ServerTest {
 
-    private EstablishesConnection mockedEstablishesConnection;
-    private Connections mockedConnections;
+    private StreamMaker mockedStreamMaker;
+    private Streams mockedStreams;
     private RequestParser mockedRequestParser;
-    private HashMap mockedClientRequest;
-    private RequestHandler mockedRequestHandler;
+    private ClientRequest mockedClientRequest;
+    private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
-    private String mockedServerResponse;
+    private ServerResponse mockedServerResponse;
     private String publicFolderPath;
-    private int port;
+    private String mockedFormattedResponse;
 
     @BeforeEach
     public void setUp() {
-        mockedEstablishesConnection = mock(EstablishesConnection.class);
-        mockedRequestHandler = mock(RequestHandler.class);
-        mockedClientRequest = mock(HashMap.class);
-        mockedConnections = mock(Connections.class);
+        mockedStreamMaker = mock(StreamMaker.class);
+        mockedHandler = mock(IHandler.class);
+        mockedClientRequest = mock(ClientRequest.class);
+        mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
-        mockedServerResponse = "Response";
+        mockedServerResponse = mock(ServerResponse.class);
+        mockedFormattedResponse = "";
         publicFolderPath = "";
-        port = 6001;
     }
     
     @Test
     public void startServerCallsTheCorrectMethods() {
         MyServer myServer = new MyServer(
-                mockedEstablishesConnection,
+                mockedStreamMaker,
                 mockedRequestParser,
-                mockedRequestHandler,
+                mockedHandler,
                 mockedResponseSender,
                 publicFolderPath);
-        when(mockedEstablishesConnection.connect()).thenReturn(mockedConnections);
-        when(mockedRequestParser.parse(mockedConnections.getIn())).thenReturn(mockedClientRequest);
-        when(mockedRequestHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse).thenReturn("Bye");
+        when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
+        when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
+        when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
+        when(mockedServerResponse.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
         myServer.start();
 
-        verify(mockedEstablishesConnection, atLeastOnce()).connect();
-        verify(mockedRequestParser, atLeastOnce()).parse(mockedConnections.getIn());
-        verify(mockedRequestHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedResponseSender, atLeastOnce()).send(mockedServerResponse, mockedConnections.getOut());
+        verify(mockedStreamMaker, atLeastOnce()).connect();
+        verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
+        verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
+        verify(mockedServerResponse, atLeastOnce()).format();
+        verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
     }
 }
