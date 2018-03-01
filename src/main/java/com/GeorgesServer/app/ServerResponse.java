@@ -7,11 +7,12 @@ public class ServerResponse {
         return null;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus(String statusCode, String statusMessage) {
+        this.status = statusCode + " " + statusMessage;
     }
 
     public String getStatus() {
         return status;
     }
+
 }
