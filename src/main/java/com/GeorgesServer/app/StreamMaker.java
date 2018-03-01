@@ -4,16 +4,16 @@ import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class EstablishesConnection {
+public class StreamMaker {
 
     private ServerSocket serverSocket;
 
-    public EstablishesConnection (ServerSocket serverSocket) {
+    public StreamMaker(ServerSocket serverSocket) {
 
         this.serverSocket = serverSocket;
     }
 
-    public Connections connect() {
+    public Streams connect() {
 
         try {
             Socket clientSocket = this.serverSocket.accept();
@@ -22,7 +22,7 @@ public class EstablishesConnection {
             InputStreamReader inReader = new InputStreamReader(inputStream);
             OutputStreamWriter outWriter = new OutputStreamWriter(outputStream);
             BufferedReader buffReader = new BufferedReader(inReader);
-            return new Connections(buffReader, outWriter);
+            return new Streams(buffReader, outWriter);
         } catch (IOException e) {
             e.printStackTrace();
             return null;
