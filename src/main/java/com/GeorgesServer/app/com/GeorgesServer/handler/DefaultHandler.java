@@ -14,8 +14,6 @@ public class DefaultHandler implements IHandler {
     }
 
     public ServerResponse handle(ClientRequest clientRequest) {
-
-
         responseBuilder.buildHttpVersion();
         responseBuilder.buildOkStatus();
         return responseBuilder.getResponse();

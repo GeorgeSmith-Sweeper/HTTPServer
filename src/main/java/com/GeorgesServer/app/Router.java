@@ -1,6 +1,7 @@
 package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 public class Router {
 
@@ -13,13 +14,13 @@ public class Router {
         this.formHandler = formHandler;
     }
 
-    public IHandler route(String method, String url) {
+    public IHandler route(ClientRequest request) {
 
-        if (method.equals("GET") && url.equals("/")) {
+        if (request.getMethod().equals("GET") && request.getUrl().equals("/")) {
             return defaultHandler;
         }
 
-        if (url.equals("/form")) {
+        if (request.getUrl().equals("/form")) {
             return formHandler;
         }
 
