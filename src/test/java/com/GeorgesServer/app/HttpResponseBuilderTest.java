@@ -1,5 +1,7 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
+import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,10 +16,11 @@ class HttpResponseBuilderTest {
     }
 
     @Test
-    void buildOkStatusBuildsAValid200Status() {
+    void buildOkStatusCorrectlyAssemblesTheCorrectCode() {
         HttpResponseBuilder subject = new HttpResponseBuilder();
         subject.buildOkStatus();
 
-        assertEquals(subject.getResponse().getStatus(), "200 OK");
+        assertEquals(subject.getResponse().getStatusCode(), "200");
+        assertEquals(subject.getResponse().getStatusMsg(), "OK");
     }
 }
