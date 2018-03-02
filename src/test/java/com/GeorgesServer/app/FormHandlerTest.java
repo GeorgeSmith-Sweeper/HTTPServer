@@ -30,4 +30,16 @@ class FormHandlerTest {
         verify(mockResponseBuilder).buildOkStatus();
         verify(mockResponseBuilder).getResponse();
     }
+
+//    @Test
+//    void formHandlerCallsTheCorrectMethodsWhenGivenAPOSTRequest() {
+//
+//        when(mockClientRequest.getMethod()).thenReturn("POST");
+//
+//        formHandler.handle(mockClientRequest);
+//
+//        verify(mockResponseBuilder).buildHttpVersion();
+//        verify(mockResponseBuilder).buildOkStatus();
+//        verify(mockResponseBuilder).getResponse();
+//    }
 }

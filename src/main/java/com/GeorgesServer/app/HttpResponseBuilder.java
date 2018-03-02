@@ -1,6 +1,6 @@
 package com.GeorgesServer.app;
 
-public class HttpResponseBuilder {
+public class HttpResponseBuilder implements IBuilder{
     private ServerResponse response;
 
     public HttpResponseBuilder() {
