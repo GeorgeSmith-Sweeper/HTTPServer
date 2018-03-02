@@ -1,19 +1,12 @@
 package com.GeorgesServer.app.com.GeorgesServer.response;
 
 public class ServerResponse {
-    private String status;
     private String httpVersion;
+    private String statusCode;
+    private String statusMsg;
 
     public String format() {
-        return getHttpVersion() +  " " + getStatus() + "\n";
-    }
-
-    public void setStatus(String statusCode, String statusMessage) {
-        this.status = statusCode + " " + statusMessage;
-    }
-
-    public String getStatus() {
-        return status;
+        return getHttpVersion() + " " + getStatusCode() + " " + getStatusMsg() + "\n";
     }
 
     public void setHttpVersion(String httpVersion) {
@@ -22,5 +15,21 @@ public class ServerResponse {
 
     public String getHttpVersion() {
         return httpVersion;
+    }
+
+    public void setStatusCode(String statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusMsg(String statusMsg) {
+        this.statusMsg = statusMsg;
+    }
+
+    public String getStatusMsg() {
+        return statusMsg;
     }
 }
