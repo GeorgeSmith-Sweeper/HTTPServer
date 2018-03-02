@@ -14,6 +14,7 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
+//        RouterConfig routerConfig = RouterConfig();
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
         DefaultHandler defaultHandler = new DefaultHandler(responseBuilder);
         FormHandler formHandler = new FormHandler(responseBuilder);

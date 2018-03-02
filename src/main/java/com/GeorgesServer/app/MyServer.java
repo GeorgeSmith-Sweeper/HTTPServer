@@ -27,7 +27,7 @@ public class MyServer {
         while (!formattedResponse.equals("Bye")) {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
-            IHandler handler = router.route(clientRequest.getMethod(), clientRequest.getUrl());
+            IHandler handler = router.route(clientRequest);
             ServerResponse serverResponse = handler.handle(clientRequest);
             formattedResponse = serverResponse.format();
             responseSender.send(formattedResponse, streams.getOut());
