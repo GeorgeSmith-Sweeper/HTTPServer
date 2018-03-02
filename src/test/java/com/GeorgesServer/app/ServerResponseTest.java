@@ -10,21 +10,30 @@ class ServerResponseTest {
     @Test
     void formatBuildsAResponseWithNoBody() {
         ServerResponse serverResponse = new ServerResponse();
-        serverResponse.setStatus("200", "OK");
+        serverResponse.setStatusCode("200");
+        serverResponse.setStatusMsg("OK");
         serverResponse.setHttpVersion("HTTP/1.1");
         String result = serverResponse.format();
 
         assertEquals("HTTP/1.1 200 OK\n", result);
-
     }
 
     @Test
-    void setStatusCorrectlyFormatsAStatusCode() {
+    void setStatusCodeCorrectlyStoresAStatusCode() {
         ServerResponse serverResponse = new ServerResponse();
 
-        serverResponse.setStatus("200", "OK");
+        serverResponse.setStatusCode("200");
 
-        assertEquals("200 OK", serverResponse.getStatus());
+        assertEquals("200", serverResponse.getStatusCode());
+    }
+
+    @Test
+    void setStatusMsgCorrectlyStoresAStatusMsg() {
+        ServerResponse serverResponse = new ServerResponse();
+
+        serverResponse.setStatusMsg("OK");
+
+        assertEquals("OK", serverResponse.getStatusMsg());
     }
 
     @Test
