@@ -34,15 +34,27 @@ class FormHandlerTest {
         verify(mockResponseBuilder).getResponse();
     }
 
-//    @Test
-//    void formHandlerCallsTheCorrectMethodsWhenGivenAPOSTRequest() {
-//
-//        when(mockClientRequest.getMethod()).thenReturn("POST");
-//
-//        formHandler.handle(mockClientRequest);
-//
-//        verify(mockResponseBuilder).buildHttpVersion();
-//        verify(mockResponseBuilder).buildOkStatus();
-//        verify(mockResponseBuilder).getResponse();
-//    }
+    @Test
+    void formHandlerCallsTheCorrectMethodsWhenGivenAPOSTRequest() {
+
+        when(mockClientRequest.getMethod()).thenReturn("POST");
+
+        formHandler.handle(mockClientRequest);
+
+        verify(mockResponseBuilder).buildHttpVersion();
+        verify(mockResponseBuilder).buildOkStatus();
+        verify(mockResponseBuilder).getResponse();
+    }
+
+    @Test
+    void formHandlerCallsTheCorrectMethodsWhenGivenAPUTRequest() {
+
+        when(mockClientRequest.getMethod()).thenReturn("PUT");
+
+        formHandler.handle(mockClientRequest);
+
+        verify(mockResponseBuilder).buildHttpVersion();
+        verify(mockResponseBuilder).buildOkStatus();
+        verify(mockResponseBuilder).getResponse();
+    }
 }

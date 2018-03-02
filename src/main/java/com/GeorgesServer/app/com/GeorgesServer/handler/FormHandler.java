@@ -21,6 +21,18 @@ public class FormHandler implements IHandler {
           serverResponse = responseBuilder.getResponse();
       }
 
+      if (clientRequest.getMethod().equals("POST")) {
+          responseBuilder.buildHttpVersion();
+          responseBuilder.buildOkStatus();
+          serverResponse = responseBuilder.getResponse();
+      }
+
+      if (clientRequest.getMethod().equals("PUT")) {
+          responseBuilder.buildHttpVersion();
+          responseBuilder.buildOkStatus();
+          serverResponse = responseBuilder.getResponse();
+      }
+
       return serverResponse;
     }
 }
