@@ -1,9 +1,9 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 
-import com.GeorgesServer.app.ClientRequest;
-import com.GeorgesServer.app.HttpResponseBuilder;
-import com.GeorgesServer.app.ServerResponse;
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
+import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
 public class DefaultHandler implements IHandler {
 

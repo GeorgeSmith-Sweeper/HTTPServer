@@ -1,5 +1,7 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+
 import java.io.BufferedReader;
 
 public class RequestParser {

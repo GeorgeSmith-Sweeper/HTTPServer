@@ -1,5 +1,6 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
