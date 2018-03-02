@@ -1,4 +1,4 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.response;
 
 public class ServerResponse {
     private String status;

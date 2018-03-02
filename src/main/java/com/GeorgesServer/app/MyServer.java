@@ -1,6 +1,8 @@
 package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
 public class MyServer {
     private StreamMaker streamMaker;
