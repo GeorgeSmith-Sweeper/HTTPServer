@@ -1,6 +1,6 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.request;
 
-public class ClientRequest {
+public class ClientRequest implements IRequestBuilder {
     private String httpVersion;
     private String method;
     private String url;

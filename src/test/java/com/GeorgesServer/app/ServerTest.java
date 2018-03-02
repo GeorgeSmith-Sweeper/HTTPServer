@@ -3,6 +3,8 @@ package com.GeorgesServer.app;
 import static org.mockito.Mockito.*;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +19,7 @@ public class ServerTest {
     private ServerResponse mockedServerResponse;
     private String publicFolderPath;
     private String mockedFormattedResponse;
+    private Router mockedRouter;
 
     @BeforeEach
     public void setUp() {
@@ -27,6 +30,7 @@ public class ServerTest {
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
         mockedServerResponse = mock(ServerResponse.class);
+        mockedRouter = mock(Router.class);
         mockedFormattedResponse = "";
         publicFolderPath = "";
     }
@@ -36,11 +40,13 @@ public class ServerTest {
         MyServer myServer = new MyServer(
                 mockedStreamMaker,
                 mockedRequestParser,
-                mockedHandler,
                 mockedResponseSender,
+                mockedRouter,
                 publicFolderPath);
+
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
+        when(mockedRouter.route(mockedClientRequest.getMethod(), mockedClientRequest.getUrl())).thenReturn(mockedHandler);
         when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
         when(mockedServerResponse.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
@@ -48,6 +54,7 @@ public class ServerTest {
 
         verify(mockedStreamMaker, atLeastOnce()).connect();
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
+        verify(mockedRouter, atLeastOnce()).route(mockedClientRequest.getMethod(), mockedClientRequest.getUrl());
         verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
         verify(mockedServerResponse, atLeastOnce()).format();
         verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
