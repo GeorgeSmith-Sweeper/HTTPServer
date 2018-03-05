@@ -5,7 +5,6 @@ import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
-import com.sun.xml.internal.ws.api.policy.PolicyResolver;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,24 +15,22 @@ import static org.mockito.Mockito.when;
 class RouterTest {
     private Router subject;
     private IHandler defaultHandler, formHandler;
-    private HttpResponseBuilder responseBuilder;
     private ClientRequest mockedClientRequest;
+    private HttpResponseBuilder responseBuilder;
 
     @BeforeEach
     private void setUp() {
+        mockedClientRequest = mock(ClientRequest.class);
         responseBuilder = new HttpResponseBuilder();
         defaultHandler = new DefaultHandler(responseBuilder);
         formHandler = new FormHandler(responseBuilder);
-        mockedClientRequest = mock(ClientRequest.class);
-        subject = new Router(defaultHandler, formHandler);
-
+        subject = new Router();
     }
 
     @Test
     void routeChoosesADefaultHandlerWhenTheUrlIsRoot() {
-        when(mockedClientRequest.getMethod()).thenReturn("GET");
         when(mockedClientRequest.getUrl()).thenReturn("/");
-
+        subject.addRoute("/", defaultHandler);
 
         IHandler result = subject.route(mockedClientRequest);
 
@@ -42,11 +39,12 @@ class RouterTest {
 
     @Test
     void routeChoosesAFormHandlerWhenTheUrlIsForm() {
-        when(mockedClientRequest.getMethod()).thenReturn("");
         when(mockedClientRequest.getUrl()).thenReturn("/form");
+        subject.addRoute("/form", formHandler);
 
         IHandler result = subject.route(mockedClientRequest);
 
         assertTrue(result instanceof FormHandler);
     }
+
 }

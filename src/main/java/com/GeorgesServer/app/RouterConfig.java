@@ -17,9 +17,9 @@ public class RouterConfig {
 
     public RouterConfig(HttpResponseBuilder responseBuilder) {
         this.responseBuilder = responseBuilder;
-        makeHandlers(responseBuilder);
         router = new Router();
-        make();
+        makeHandlers(responseBuilder);
+        makeRoutes();
     }
 
     public void makeHandlers(HttpResponseBuilder responseBuilder) {
@@ -27,7 +27,7 @@ public class RouterConfig {
         formHandler = new FormHandler(responseBuilder);
     }
 
-    public void make() {
+    public void makeRoutes() {
         router.addRoute("/", defaultHandler);
         router.addRoute("/form", formHandler);
     }
