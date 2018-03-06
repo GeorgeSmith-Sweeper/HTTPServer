@@ -14,6 +14,9 @@ public class Router {
     }
 
     public IHandler route(ClientRequest request) {
+        if (routes.get(request.getUrl()) == null) {
+           return routes.get("/");
+        }
         return routes.get(request.getUrl());
     }
 
