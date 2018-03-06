@@ -15,8 +15,7 @@ public class App {
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
         HandlerCreator handlerCreator = new HandlerCreator(responseBuilder);
 
-        RouterConfig config = new RouterConfig(handlerCreator.getHandlers());
-        Router router = config.getRouter();
+        RouterConfig routerConfig = new RouterConfig(handlerCreator.getHandlers());
 
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
@@ -37,7 +36,7 @@ public class App {
                 streamMaker,
                 requestParser,
                 responseSender,
-                router,
+                routerConfig,
                 publicFolderPath);
 
         server.start();
