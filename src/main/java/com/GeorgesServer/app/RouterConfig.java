@@ -10,26 +10,18 @@ import java.util.HashMap;
 
 public class RouterConfig {
 
-    private HttpResponseBuilder responseBuilder;
-    DefaultHandler defaultHandler;
-    FormHandler formHandler;
-    Router router;
+    private HashMap<String, IHandler> handlers;
+    private Router router;
 
-    public RouterConfig(HttpResponseBuilder responseBuilder) {
-        this.responseBuilder = responseBuilder;
+    public RouterConfig(HashMap<String, IHandler> handlers) {
+        this.handlers = handlers;
         router = new Router();
-        makeHandlers(responseBuilder);
-        makeRoutes();
+        makeRoutes(router);
     }
 
-    public void makeHandlers(HttpResponseBuilder responseBuilder) {
-        defaultHandler = new DefaultHandler(responseBuilder);
-        formHandler = new FormHandler(responseBuilder);
-    }
-
-    public void makeRoutes() {
-        router.addRoute("/", defaultHandler);
-        router.addRoute("/form", formHandler);
+    public void makeRoutes(Router router) {
+        router.addRoute("/", handlers.get("defaultHandler"));
+        router.addRoute("/form", handlers.get("formHandler"));
     }
 
     public Router getRouter() {

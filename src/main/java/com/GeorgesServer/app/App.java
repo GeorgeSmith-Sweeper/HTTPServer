@@ -13,7 +13,9 @@ public class App {
         int port = Integer.parseInt(args[1]);
 
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-        RouterConfig config = new RouterConfig(responseBuilder);
+        HandlerCreator handlerCreator = new HandlerCreator(responseBuilder);
+
+        RouterConfig config = new RouterConfig(handlerCreator.getHandlers());
         Router router = config.getRouter();
 
         ResponseSender responseSender = new ResponseSender();
