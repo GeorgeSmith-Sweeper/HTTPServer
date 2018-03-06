@@ -8,21 +8,22 @@ public class MyServer {
     private StreamMaker streamMaker;
     private RequestParser requestParser;
     private ResponseSender responseSender;
-    private Router router;
+    private RouterConfig routerConfig;
 
     public MyServer(StreamMaker streamMaker,
                     RequestParser requestParser,
                     ResponseSender responseSender,
-                    Router router,
+                    RouterConfig routerConfig,
                     String publicFolderPath) {
 
         this.streamMaker = streamMaker;
         this.requestParser = requestParser;
         this.responseSender = responseSender;
-        this.router = router;
+        this.routerConfig = routerConfig;
     }
 
     public void start() {
+        Router router = routerConfig.getRouter();
         String formattedResponse = "";
         while (!formattedResponse.equals("Bye")) {
             Streams streams = streamMaker.connect();
