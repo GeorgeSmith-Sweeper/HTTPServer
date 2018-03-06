@@ -1,8 +1,6 @@
 package com.GeorgesServer.app;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 
 import java.io.IOException;
@@ -14,12 +12,11 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
-//        RouterConfig routerConfig = RouterConfig();
         HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-        DefaultHandler defaultHandler = new DefaultHandler(responseBuilder);
-        FormHandler formHandler = new FormHandler(responseBuilder);
-        Router router = new Router(defaultHandler, formHandler);
+        HandlerCreator handlerCreator = new HandlerCreator(responseBuilder);
 
+        RouterConfig config = new RouterConfig(handlerCreator.getHandlers());
+        Router router = config.getRouter();
 
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();

@@ -3,27 +3,21 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
+import java.util.HashMap;
+
 public class Router {
 
-    private IHandler defaultHandler;
-    private IHandler formHandler;
-    private IHandler handler;
+    private HashMap<String, IHandler> routes;
 
-    public Router(IHandler defaultHandler, IHandler formHandler) {
-        this.defaultHandler = defaultHandler;
-        this.formHandler = formHandler;
+    public Router() {
+        routes = new HashMap<>();
     }
 
     public IHandler route(ClientRequest request) {
+        return routes.get(request.getUrl());
+    }
 
-        if (request.getMethod().equals("GET") && request.getUrl().equals("/")) {
-            return defaultHandler;
-        }
-
-        if (request.getUrl().equals("/form")) {
-            return formHandler;
-        }
-
-        return handler;
+    public void addRoute(String path, IHandler handler) {
+        routes.put(path, handler);
     }
 }
