@@ -12,6 +12,7 @@ public class HandlerCreator {
 
     public HandlerCreator(HttpResponseBuilder responsebuilder) {
         this.responsebuilder = responsebuilder;
+        makeHandlers(responsebuilder);
     }
 
     public void makeHandlers(HttpResponseBuilder responseBuilder) {
