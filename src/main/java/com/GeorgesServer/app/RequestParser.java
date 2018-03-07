@@ -21,7 +21,6 @@ public class RequestParser {
 
     public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
-        System.out.println(request);
         parseRequestStartLine(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
@@ -32,7 +31,6 @@ public class RequestParser {
     private void parseRequestStartLine(String request) {
         String[] splitRequest = request.split(" ");
         this.method = splitRequest[0];
-        System.out.println("Method: " + method);
         this.url = splitRequest[1];
         this.httpVersion = splitRequest[2];
     }

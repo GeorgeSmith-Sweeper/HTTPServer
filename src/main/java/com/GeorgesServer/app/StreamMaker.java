@@ -22,7 +22,6 @@ public class StreamMaker {
             InputStreamReader inReader = new InputStreamReader(inputStream);
             OutputStreamWriter outWriter = new OutputStreamWriter(outputStream);
             BufferedReader buffReader = new BufferedReader(inReader);
-            System.out.println("Socket Closed: " + clientSocket.isClosed());
             return new Streams(inReader, outWriter);
         } catch (IOException e) {
             e.printStackTrace();
