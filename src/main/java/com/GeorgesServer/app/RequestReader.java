@@ -8,12 +8,12 @@ public class RequestReader {
 
     public String read(InputStreamReader reader) {
         StringBuilder sb = new StringBuilder();
+        int aByte;
         try {
-            while (reader.ready()) {
-                char character = ((char) reader.read());
+            while (((aByte = reader.read()) != -1) && reader.ready()) {
+                char character = (char) aByte;
                 sb.append(character);
             }
-            System.out.print(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
