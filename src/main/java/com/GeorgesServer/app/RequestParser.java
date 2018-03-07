@@ -3,6 +3,8 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class RequestParser {
 
@@ -17,7 +19,7 @@ public class RequestParser {
         clientRequest = new ClientRequest();
     }
 
-    public ClientRequest parse(BufferedReader reader) {
+    public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
         parseRequestStartLine(request);
         clientRequest.setMethod(getMethod());

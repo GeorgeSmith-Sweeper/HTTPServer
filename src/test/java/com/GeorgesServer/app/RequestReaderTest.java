@@ -3,7 +3,7 @@ package com.GeorgesServer.app;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,23 +11,25 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class RequestReaderTest {
-    private BufferedReader mockedBufferedReader;
+    private InputStreamReader mockedInputStreamReader;
     private RequestReader subject;
 
     @BeforeEach
     public void setUp() {
-        mockedBufferedReader = mock(BufferedReader.class);
+        mockedInputStreamReader = mock(InputStreamReader.class);
         subject = new RequestReader();
     }
 
     @Test
-    void requestReaderReturnsAStringFromABufferedReader() throws IOException {
-        String request = "GET / HTTP/1.1";
-        when(mockedBufferedReader.readLine()).thenReturn(request).thenReturn(null);
-        when(mockedBufferedReader.ready()).thenReturn(true);
+    void requestReaderReturnsAStringFromAInputStreamReader() throws IOException {
+        int request = 71;
+        int streamHasNotEnded = -1;
 
-        String result = subject.read(mockedBufferedReader);
+        when(mockedInputStreamReader.read()).thenReturn(request).thenReturn(streamHasNotEnded);
+        when(mockedInputStreamReader.ready()).thenReturn(true);
 
-        assertEquals("GET / HTTP/1.1", result);
+        String result = subject.read(mockedInputStreamReader);
+
+        assertEquals("G", result);
     }
 }
