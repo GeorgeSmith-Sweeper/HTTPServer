@@ -22,7 +22,7 @@ public class StreamMaker {
             InputStreamReader inReader = new InputStreamReader(inputStream);
             OutputStreamWriter outWriter = new OutputStreamWriter(outputStream);
             BufferedReader buffReader = new BufferedReader(inReader);
-            return new Streams(buffReader, outWriter);
+            return new Streams(inReader, outWriter);
         } catch (IOException e) {
             e.printStackTrace();
             return null;

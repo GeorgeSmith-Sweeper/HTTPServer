@@ -3,6 +3,8 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class RequestParser {
 
@@ -17,8 +19,9 @@ public class RequestParser {
         clientRequest = new ClientRequest();
     }
 
-    public ClientRequest parse(BufferedReader reader) {
+    public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
+        System.out.println("The Returned request: " + request);
         parseRequestStartLine(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
@@ -27,6 +30,7 @@ public class RequestParser {
     }
     
     private void parseRequestStartLine(String request) {
+        System.out.println("HERERE" + request);
         String[] splitRequest = request.split(" ");
         this.method = splitRequest[0];
         this.url = splitRequest[1];

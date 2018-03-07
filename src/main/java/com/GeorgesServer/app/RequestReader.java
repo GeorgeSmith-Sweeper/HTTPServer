@@ -1,18 +1,19 @@
 package com.GeorgesServer.app;
 
-import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 public class RequestReader {
 
-    public String read(BufferedReader reader) {
+    public String read(InputStreamReader reader) {
         StringBuilder sb = new StringBuilder();
-        String line;
         try {
-            if ((line = reader.readLine()) != null) {
-                System.out.println(line);
-                sb.append(line);
+            while (reader.ready()) {
+                char character = ((char) reader.read());
+                sb.append(character);
             }
+            System.out.print(sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
             return null;
