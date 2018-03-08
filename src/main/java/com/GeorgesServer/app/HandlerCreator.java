@@ -7,15 +7,13 @@ import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import java.util.HashMap;
 
 public class HandlerCreator {
-    private HttpResponseBuilder responsebuilder;
     private HashMap<String, IHandler> handlers = new HashMap<>();
 
-    public HandlerCreator(HttpResponseBuilder responsebuilder) {
-        this.responsebuilder = responsebuilder;
-        makeHandlers(responsebuilder);
+    public HandlerCreator() {
+        makeHandlers();
     }
 
-    public void makeHandlers(HttpResponseBuilder responseBuilder) {
+    public void makeHandlers() {
         handlers.put("defaultHandler", new DefaultHandler());
         handlers.put("formHandler", new FormHandler());
     }

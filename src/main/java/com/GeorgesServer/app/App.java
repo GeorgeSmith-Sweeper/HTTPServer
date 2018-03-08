@@ -12,9 +12,7 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
-        HttpResponseBuilder responseBuilder = new HttpResponseBuilder();
-        HandlerCreator handlerCreator = new HandlerCreator(responseBuilder);
-
+        HandlerCreator handlerCreator = new HandlerCreator();
         RouterConfig routerConfig = new RouterConfig(handlerCreator.getHandlers());
 
         ResponseSender responseSender = new ResponseSender();

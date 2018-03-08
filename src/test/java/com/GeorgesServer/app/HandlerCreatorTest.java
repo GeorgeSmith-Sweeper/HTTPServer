@@ -10,18 +10,16 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
 class HandlerCreatorTest {
-    private HttpResponseBuilder mockedResponseBuilder;
     private HandlerCreator subject;
 
     @BeforeEach
     void setUp() {
-        mockedResponseBuilder = mock(HttpResponseBuilder.class);
-        subject = new HandlerCreator(mockedResponseBuilder);
+        subject = new HandlerCreator();
     }
 
     @Test
     void makeHandlersCreatesHandlersForASpecificKey() {
-        subject.makeHandlers(mockedResponseBuilder);
+        subject.makeHandlers();
 
         assertTrue(subject.getHandlers().get("defaultHandler") instanceof DefaultHandler);
         assertTrue(subject.getHandlers().get("formHandler") instanceof FormHandler);
