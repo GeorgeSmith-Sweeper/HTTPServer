@@ -23,7 +23,7 @@ class RouterTest {
         mockedClientRequest = mock(ClientRequest.class);
         responseBuilder = new HttpResponseBuilder();
         defaultHandler = new DefaultHandler();
-        formHandler = new FormHandler(responseBuilder);
+        formHandler = new FormHandler();
         subject = new Router();
     }
 

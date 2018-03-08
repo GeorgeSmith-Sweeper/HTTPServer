@@ -17,7 +17,7 @@ public class HandlerCreator {
 
     public void makeHandlers(HttpResponseBuilder responseBuilder) {
         handlers.put("defaultHandler", new DefaultHandler());
-        handlers.put("formHandler", new FormHandler(responseBuilder));
+        handlers.put("formHandler", new FormHandler());
     }
 
     public HashMap<String, IHandler>getHandlers() {
