@@ -26,9 +26,16 @@ public class HttpResponseBuilder implements IResponseBuilder {
         this.response.setHttpVersion(httpVersion);
     }
 
+    @Override
     public void buildOkStatus() {
         setStatusCode("200");
         setStatusMsg("OK");
+    }
+
+    @Override
+    public void build206Status() {
+        setStatusCode("206");
+        setStatusMsg("Partial Content");
     }
 
     public void buildHttpVersion() {

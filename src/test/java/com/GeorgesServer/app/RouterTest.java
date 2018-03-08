@@ -48,7 +48,7 @@ class RouterTest {
     }
 
     @Test
-    void routeChoosesAPartialContenthandlerWhenTheUrlIsPartialContent() {
+    void routeChoosesAPartialContentHandlerWhenTheUrlIsPartialContent() {
         when(mockedClientRequest.getUrl()).thenReturn("/partial_content.txt");
         subject.addRoute("/partial_content.txt", partialContentHandler);
 

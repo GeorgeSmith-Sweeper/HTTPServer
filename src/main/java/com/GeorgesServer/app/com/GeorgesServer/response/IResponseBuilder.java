@@ -5,6 +5,7 @@ public interface IResponseBuilder {
     void setStatusMsg(String statusMsg);
     void setHttpVersion(String httpVersion);
     void buildOkStatus();
+    void build206Status();
     void buildHttpVersion();
     ServerResponse getResponse();
 }

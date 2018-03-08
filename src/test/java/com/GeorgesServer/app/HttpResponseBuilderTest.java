@@ -16,11 +16,20 @@ class HttpResponseBuilderTest {
     }
 
     @Test
-    void buildOkStatusCorrectlyAssemblesTheCorrectCode() {
+    void buildOkStatusAssemblesTheCorrectCode() {
         HttpResponseBuilder subject = new HttpResponseBuilder();
         subject.buildOkStatus();
 
         assertEquals(subject.getResponse().getStatusCode(), "200");
         assertEquals(subject.getResponse().getStatusMsg(), "OK");
+    }
+
+    @Test
+    void build206StatusAssemblesTheCorrectCode() {
+        HttpResponseBuilder subject = new HttpResponseBuilder();
+        subject.build206Status();
+
+        assertEquals(subject.getResponse().getStatusCode(), "206");
+        assertEquals(subject.getResponse().getStatusMsg(), "Partial Content");
     }
 }
