@@ -16,19 +16,17 @@ import static org.mockito.Mockito.when;
 class RouterConfigTest {
     private HashMap mockedRouterHandlers;
     private Router mockedRouter;
-    private HttpResponseBuilder responseBuilder;
 
     @BeforeEach
     void setUp() {
-        responseBuilder = new HttpResponseBuilder();
         mockedRouterHandlers = mock(HashMap.class);
         mockedRouter = mock(Router.class);
     }
 
     @Test
     void makeRoutesAssignsAPathToASpecificHandler() {
-        IHandler defaultHandler = new DefaultHandler(responseBuilder);
-        IHandler formHandler = new FormHandler(responseBuilder);
+        IHandler defaultHandler = new DefaultHandler();
+        IHandler formHandler = new FormHandler();
 
         RouterConfig subject = new RouterConfig(mockedRouterHandlers);
 

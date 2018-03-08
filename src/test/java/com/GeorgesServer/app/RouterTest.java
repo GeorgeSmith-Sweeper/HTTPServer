@@ -22,8 +22,8 @@ class RouterTest {
     private void setUp() {
         mockedClientRequest = mock(ClientRequest.class);
         responseBuilder = new HttpResponseBuilder();
-        defaultHandler = new DefaultHandler(responseBuilder);
-        formHandler = new FormHandler(responseBuilder);
+        defaultHandler = new DefaultHandler();
+        formHandler = new FormHandler();
         subject = new Router();
     }
 

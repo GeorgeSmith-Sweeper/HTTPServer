@@ -9,8 +9,8 @@ public class FormHandler implements IHandler {
     private HttpResponseBuilder responseBuilder;
     private ServerResponse serverResponse;
 
-    public FormHandler(HttpResponseBuilder responseBuilder) {
-        this.responseBuilder = responseBuilder;
+    public FormHandler() {
+        responseBuilder = new HttpResponseBuilder();
     }
 
     @Override
