@@ -3,6 +3,7 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +15,7 @@ import static org.mockito.Mockito.when;
 
 class RouterTest {
     private Router subject;
-    private IHandler defaultHandler, formHandler;
+    private IHandler defaultHandler, formHandler, partialContentHandler;
     private ClientRequest mockedClientRequest;
 
     @BeforeEach
@@ -22,6 +23,7 @@ class RouterTest {
         mockedClientRequest = mock(ClientRequest.class);
         defaultHandler = new DefaultHandler();
         formHandler = new FormHandler();
+        partialContentHandler = new PartialContentHandler();
         subject = new Router();
     }
 
@@ -43,6 +45,16 @@ class RouterTest {
         IHandler result = subject.route(mockedClientRequest);
 
         assertTrue(result instanceof FormHandler);
+    }
+
+    @Test
+    void routeChoosesAPartialContenthandlerWhenTheUrlIsPartialContent() {
+        when(mockedClientRequest.getUrl()).thenReturn("/partial_content.txt");
+        subject.addRoute("/partial_content.txt", partialContentHandler);
+
+        IHandler result = subject.route(mockedClientRequest);
+
+        assertTrue(result instanceof PartialContentHandler);
     }
 
 }
