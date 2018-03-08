@@ -27,7 +27,7 @@ class RouterConfigTest {
 
     @Test
     void makeRoutesAssignsAPathToASpecificHandler() {
-        IHandler defaultHandler = new DefaultHandler(responseBuilder);
+        IHandler defaultHandler = new DefaultHandler();
         IHandler formHandler = new FormHandler(responseBuilder);
 
         RouterConfig subject = new RouterConfig(mockedRouterHandlers);

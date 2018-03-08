@@ -9,8 +9,8 @@ public class DefaultHandler implements IHandler {
 
     private HttpResponseBuilder responseBuilder;
 
-    public DefaultHandler(HttpResponseBuilder responseBuilder) {
-        this.responseBuilder = responseBuilder;
+    public DefaultHandler() {
+        responseBuilder = new HttpResponseBuilder();
     }
 
     public ServerResponse handle(ClientRequest clientRequest) {

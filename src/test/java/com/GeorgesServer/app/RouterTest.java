@@ -22,7 +22,7 @@ class RouterTest {
     private void setUp() {
         mockedClientRequest = mock(ClientRequest.class);
         responseBuilder = new HttpResponseBuilder();
-        defaultHandler = new DefaultHandler(responseBuilder);
+        defaultHandler = new DefaultHandler();
         formHandler = new FormHandler(responseBuilder);
         subject = new Router();
     }
