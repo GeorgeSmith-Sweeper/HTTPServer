@@ -16,12 +16,10 @@ class RouterTest {
     private Router subject;
     private IHandler defaultHandler, formHandler;
     private ClientRequest mockedClientRequest;
-    private HttpResponseBuilder responseBuilder;
 
     @BeforeEach
     private void setUp() {
         mockedClientRequest = mock(ClientRequest.class);
-        responseBuilder = new HttpResponseBuilder();
         defaultHandler = new DefaultHandler();
         formHandler = new FormHandler();
         subject = new Router();

@@ -15,7 +15,6 @@ import static org.mockito.Mockito.verify;
 class DefaultHandlerTest {
     private DefaultHandler subject;
     private ClientRequest mockClientRequest;
-    private HttpResponseBuilder mockResponseBuilder;
 
     @BeforeEach
     public void setUp() {
