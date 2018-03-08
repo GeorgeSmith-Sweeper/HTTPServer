@@ -2,22 +2,28 @@ package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class HttpResponseBuilderTest {
 
+    HttpResponseBuilder subject;
+
+    @BeforeEach
+    void setUp() {
+        subject = new HttpResponseBuilder();
+    }
+
     @Test
     void getResponseReturnsAServerResponseObject() {
-        HttpResponseBuilder subject = new HttpResponseBuilder();
 
         assertTrue(subject.getResponse() instanceof ServerResponse);
     }
 
     @Test
     void buildOkStatusAssemblesTheCorrectCode() {
-        HttpResponseBuilder subject = new HttpResponseBuilder();
         subject.buildOkStatus();
 
         assertEquals(subject.getResponse().getStatusCode(), "200");
@@ -26,7 +32,6 @@ class HttpResponseBuilderTest {
 
     @Test
     void build206StatusAssemblesTheCorrectCode() {
-        HttpResponseBuilder subject = new HttpResponseBuilder();
         subject.build206Status();
 
         assertEquals(subject.getResponse().getStatusCode(), "206");
