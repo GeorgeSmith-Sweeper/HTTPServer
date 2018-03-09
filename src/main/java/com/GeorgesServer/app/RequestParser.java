@@ -21,6 +21,7 @@ public class RequestParser {
 
     public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
+        System.out.println(request);
         parseRequestStartLine(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());

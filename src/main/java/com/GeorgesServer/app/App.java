@@ -26,23 +26,33 @@ public class App {
         MyServer server;
         ServerSocket serverSocket;
 
-        String path = publicFolderPath + "/partial_content.txt";
-        Path file = Paths.get(path);
+        String folder = publicFolderPath;
+        String fileWeWant = "/partial_content.txt";
+        Path file = Paths.get(folder + fileWeWant);
+
         StringBuilder sb = new StringBuilder();
+        String fileContents = "";
         byte[] fileArray;
+
         try {
             fileArray = Files.readAllBytes(file);
             for (byte letter : fileArray) {
-                System.out.println(letter);
-
                 char character = (char) letter;
                 sb.append(character);
             }
-            System.out.print(sb.toString());
+            fileContents = sb.toString();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        String rangeStartAndEnd = fileContents.substring(0, 4);
+        System.out.println("rangeStartAndEnd: " + rangeStartAndEnd);
+
+        String noRangeStart = fileContents.substring(fileContents.length()-6);
+        System.out.println("noRangeStart: " + noRangeStart);
+
+        String noRangeEnd = fileContents.substring(4);
+        System.out.println("noRangeEnd: " + noRangeEnd);
 
 
         try {
