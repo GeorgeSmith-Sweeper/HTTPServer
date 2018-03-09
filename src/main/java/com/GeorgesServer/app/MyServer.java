@@ -32,8 +32,8 @@ public class MyServer {
 
     public void start() {
         Router router = routerConfig.getRouter();
-        String formattedResponse = "";
-        while (!formattedResponse.equals("Bye")) {
+        byte[] formattedResponse;
+        while (true) {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             IHandler handler = router.route(clientRequest);

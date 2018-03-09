@@ -34,17 +34,15 @@ public class App {
         StringBuilder sb = new StringBuilder();
         String fileContents = "";
         byte[] fileArray;
-        byte[] byteArray = new byte[4];
+        byte[] byteArray = new byte[5];
         try {
             fileArray = Files.readAllBytes(file);
-            System.out.println("byteArrayLength: " + fileArray.length);
 
-            for (int start = 0; start < 4; start++) {
-                byteArray[start] = fileArray[start];
-                System.out.println(byteArray[start]);
+            for (int index = 0; index < 5; index++) {
+                byteArray[index] = fileArray[index];
+                System.out.println(byteArray[index]);
             }
 
-            System.out.println(byteArray.length);
             for (byte letter : fileArray) {
                 char character = (char) letter;
                 sb.append(character);
