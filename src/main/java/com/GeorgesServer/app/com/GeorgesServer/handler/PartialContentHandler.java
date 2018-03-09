@@ -17,6 +17,7 @@ public class PartialContentHandler implements IHandler{
     public ServerResponse handle(ClientRequest clientRequest) {
         responseBuilder.buildHttpVersion();
         responseBuilder.build206Status();
+        responseBuilder.setBody("");
         return responseBuilder.getResponse();
     }
 }

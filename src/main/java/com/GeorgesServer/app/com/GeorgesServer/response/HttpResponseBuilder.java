@@ -41,4 +41,8 @@ public class HttpResponseBuilder implements IResponseBuilder {
     public void buildHttpVersion() {
         setHttpVersion("HTTP/1.1");
     }
+
+    public void setBody(String body) {
+        this.response.body = body;
+    }
 }

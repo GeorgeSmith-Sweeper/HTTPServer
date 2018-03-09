@@ -8,6 +8,7 @@ import java.net.ServerSocket;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class App {
@@ -33,9 +34,17 @@ public class App {
         StringBuilder sb = new StringBuilder();
         String fileContents = "";
         byte[] fileArray;
-
+        byte[] byteArray = new byte[4];
         try {
             fileArray = Files.readAllBytes(file);
+            System.out.println("byteArrayLength: " + fileArray.length);
+
+            for (int start = 0; start < 4; start++) {
+                byteArray[start] = fileArray[start];
+                System.out.println(byteArray[start]);
+            }
+
+            System.out.println(byteArray.length);
             for (byte letter : fileArray) {
                 char character = (char) letter;
                 sb.append(character);
