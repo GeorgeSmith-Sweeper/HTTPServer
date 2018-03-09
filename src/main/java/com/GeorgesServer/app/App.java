@@ -29,10 +29,8 @@ public class App {
         String path = publicFolderPath + "/partial_content.txt";
         Path file = Paths.get(path);
         StringBuilder sb = new StringBuilder();
-        System.out.println(Files.isReadable(file));
         byte[] fileArray;
         try {
-
             fileArray = Files.readAllBytes(file);
             for (byte letter : fileArray) {
                 System.out.println(letter);
