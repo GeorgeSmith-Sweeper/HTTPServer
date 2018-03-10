@@ -4,6 +4,8 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class ClientRequestTest {
@@ -34,11 +36,19 @@ class ClientRequestTest {
 
     @Test
     void setUrlSetsTheFieldUrl() {
-        String Url = "/";
+        String url = "/";
 
-        subject.setUrl(Url);
+        subject.setUrl(url);
 
-        assertEquals(Url, subject.getUrl());
+        assertEquals(url, subject.getUrl());
     }
 
+    @Test
+    void setHeadersSetsTheFieldHeaders() {
+        ArrayList<String> headers = new ArrayList<>();
+
+        subject.setHeaders(headers);
+
+        assertEquals(headers, subject.getHeaders());
+    }
 }

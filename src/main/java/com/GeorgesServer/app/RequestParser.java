@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.time.temporal.TemporalAmount;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class RequestParser {
 
@@ -29,6 +30,7 @@ public class RequestParser {
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
+        clientRequest.setHeaders(getHeaders());
         return clientRequest;
     }
     
@@ -48,8 +50,6 @@ public class RequestParser {
             }
         }
     }
-
-
 
     public String getMethod() {
         return method;
