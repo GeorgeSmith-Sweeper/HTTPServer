@@ -24,17 +24,8 @@ public class RequestParser {
 
     public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
-
-        String[] lines = request.split("\n");
-        headers = new ArrayList<>();
-        for (String line : lines) {
-            if (line.contains(":")) {
-                headers.add(line);
-            }
-        }
-
         parseRequestStartLine(request);
-
+        parseHeaders(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
@@ -46,6 +37,16 @@ public class RequestParser {
         this.method = splitRequest[0];
         this.url = splitRequest[1];
         this.httpVersion = splitRequest[2];
+    }
+
+    private void parseHeaders(String request) {
+        String[] lines = request.split("\n");
+        headers = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains(":")) {
+                headers.add(line);
+            }
+        }
     }
 
 
