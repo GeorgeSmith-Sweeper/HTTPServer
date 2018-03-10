@@ -5,6 +5,8 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.time.temporal.TemporalAmount;
+import java.util.ArrayList;
 
 public class RequestParser {
 
@@ -13,6 +15,7 @@ public class RequestParser {
     private String url;
     private String httpVersion;
     private ClientRequest clientRequest;
+    private ArrayList<String> headers;
 
     public RequestParser(RequestReader requestReader) {
         this.requestReader = requestReader;
@@ -21,7 +24,17 @@ public class RequestParser {
 
     public ClientRequest parse(InputStreamReader reader) {
         String request = requestReader.read(reader);
+
+        String[] lines = request.split("\n");
+        headers = new ArrayList<>();
+        for (String line : lines) {
+            if (line.contains(":")) {
+                headers.add(line);
+            }
+        }
+
         parseRequestStartLine(request);
+
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
@@ -35,6 +48,8 @@ public class RequestParser {
         this.httpVersion = splitRequest[2];
     }
 
+
+
     public String getMethod() {
         return method;
     }
@@ -45,5 +60,9 @@ public class RequestParser {
 
     public String getHttpVersion() {
         return httpVersion;
+    }
+
+    public ArrayList<String> getHeaders() {
+        return headers;
     }
 }
