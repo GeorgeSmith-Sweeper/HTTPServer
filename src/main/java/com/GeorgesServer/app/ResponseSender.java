@@ -1,12 +1,12 @@
 package com.GeorgesServer.app;
 
 import java.io.IOException;
-import java.io.OutputStreamWriter;
+import java.io.OutputStream;
 
 public class ResponseSender {
-    public void send (String response, OutputStreamWriter out) {
+    public void send (String response, OutputStream out) {
         try {
-            out.write(response);
+            out.write(response.getBytes());
             out.close();
         } catch (IOException e) {
             e.printStackTrace();

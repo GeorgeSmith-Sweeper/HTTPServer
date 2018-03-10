@@ -14,21 +14,21 @@ import static org.mockito.Mockito.verify;
 class ResponseSenderTest {
 
     private ResponseSender subject;
-    private OutputStreamWriter mockedOutPutStreamWriter;
+    private OutputStream mockedOutPutStream;
 
     @BeforeEach
     void setUp () {
         subject = new ResponseSender();
-        mockedOutPutStreamWriter = mock(OutputStreamWriter.class);
+        mockedOutPutStream = mock(OutputStream.class);
     }
 
     @Test
     void requestIsSentWithStreamWriter() throws IOException {
         String response = "Nothing to see here";
 
-        subject.send(response, mockedOutPutStreamWriter);
+        subject.send(response, mockedOutPutStream);
 
-        verify(mockedOutPutStreamWriter).write(response);
-        verify(mockedOutPutStreamWriter).close();
+        verify(mockedOutPutStream).write(response.getBytes());
+        verify(mockedOutPutStream).close();
     }
 }
