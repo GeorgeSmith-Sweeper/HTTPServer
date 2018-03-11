@@ -4,7 +4,6 @@ import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
-import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -17,6 +16,7 @@ import static org.mockito.Mockito.when;
 class RouterConfigTest {
     private HashMap mockedRouterHandlers;
     private Router mockedRouter;
+    private String publicFolderPath;
 
     @BeforeEach
     void setUp() {
@@ -28,7 +28,7 @@ class RouterConfigTest {
     void makeRoutesAssignsAPathToASpecificHandler() {
         IHandler defaultHandler = new DefaultHandler();
         IHandler formHandler = new FormHandler();
-        IHandler partialContentHandler = new PartialContentHandler();
+        IHandler partialContentHandler = new PartialContentHandler(publicFolderPath);
 
         RouterConfig subject = new RouterConfig(mockedRouterHandlers);
 

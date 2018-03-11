@@ -34,8 +34,7 @@ public class App {
                 streamMaker,
                 requestParser,
                 responseSender,
-                routerConfig,
-                publicFolderPath);
+                routerConfig);
 
         server.start();
     }

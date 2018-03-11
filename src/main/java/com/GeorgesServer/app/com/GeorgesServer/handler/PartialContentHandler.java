@@ -4,14 +4,12 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
-import java.util.ArrayList;
-
 public class PartialContentHandler implements IHandler{
 
     private HttpResponseBuilder responseBuilder;
     private ServerResponse serverResponse;
 
-    public PartialContentHandler() {
+    public PartialContentHandler(String publicFolderPath) {
         responseBuilder = new HttpResponseBuilder();
     }
 

@@ -17,7 +17,6 @@ public class ServerTest {
     private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
     private ServerResponse mockedServerResponse;
-    private String publicFolderPath;
     private String mockedFormattedResponse;
     private Router mockedRouter;
     private RouterConfig mockedRouterConfig;
@@ -34,7 +33,6 @@ public class ServerTest {
         mockedRouter = mock(Router.class);
         mockedRouterConfig = mock(RouterConfig.class);
         mockedFormattedResponse = "";
-        publicFolderPath = "";
     }
     
     @Test
@@ -43,8 +41,7 @@ public class ServerTest {
                 mockedStreamMaker,
                 mockedRequestParser,
                 mockedResponseSender,
-                mockedRouterConfig,
-                publicFolderPath);
+                mockedRouterConfig);
 
         when(mockedRouterConfig.getRouter()).thenReturn(mockedRouter);
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);

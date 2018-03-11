@@ -19,7 +19,7 @@ public class HandlerCreator {
     public void makeHandlers() {
         handlers.put("defaultHandler", new DefaultHandler());
         handlers.put("formHandler", new FormHandler());
-        handlers.put("partialContentHandler", new PartialContentHandler());
+        handlers.put("partialContentHandler", new PartialContentHandler(publicFolderPath));
     }
 
     public HashMap<String, IHandler>getHandlers() {

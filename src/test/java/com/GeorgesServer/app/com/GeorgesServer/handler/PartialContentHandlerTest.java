@@ -5,20 +5,18 @@ import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class PartialContentHandlerTest {
     private PartialContentHandler subject;
     private ClientRequest mockClientRequest;
+    private String publicFolderPath;
 
     @BeforeEach
     public void setUp() {
         mockClientRequest = mock(ClientRequest.class);
-        subject = new PartialContentHandler();
+        subject = new PartialContentHandler(publicFolderPath);
     }
 
     @Test

@@ -13,8 +13,7 @@ public class MyServer {
     public MyServer(StreamMaker streamMaker,
                     RequestParser requestParser,
                     ResponseSender responseSender,
-                    RouterConfig routerConfig,
-                    String publicFolderPath) {
+                    RouterConfig routerConfig) {
 
         this.streamMaker = streamMaker;
         this.requestParser = requestParser;
