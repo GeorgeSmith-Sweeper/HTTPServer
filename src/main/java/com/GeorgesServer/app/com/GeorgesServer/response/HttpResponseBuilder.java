@@ -1,5 +1,7 @@
 package com.GeorgesServer.app.com.GeorgesServer.response;
 
+
+
 public class HttpResponseBuilder implements IResponseBuilder {
     private ServerResponse response;
 
@@ -40,5 +42,10 @@ public class HttpResponseBuilder implements IResponseBuilder {
 
     public void buildHttpVersion() {
         setHttpVersion("HTTP/1.1");
+    }
+
+    @Override
+    public void buildContentRangeHeader() {
+//        setContentRangeHeader();
     }
 }

@@ -1,5 +1,7 @@
 package com.GeorgesServer.app.com.GeorgesServer.response;
 
+import java.util.ArrayList;
+
 public interface IResponseBuilder {
     void setStatusCode(String statusCode);
     void setStatusMsg(String statusMsg);
@@ -7,5 +9,8 @@ public interface IResponseBuilder {
     void buildOkStatus();
     void build206Status();
     void buildHttpVersion();
+    void buildContentRangeHeader();
+
     ServerResponse getResponse();
+
 }

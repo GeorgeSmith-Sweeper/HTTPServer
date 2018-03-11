@@ -4,6 +4,7 @@ public class ServerResponse {
     private String httpVersion;
     private String statusCode;
     private String statusMsg;
+    private String contentRangeHeader;
 
     public String format() {
         return getHttpVersion() + " " + getStatusCode() + " " + getStatusMsg() + "\n";
@@ -31,5 +32,10 @@ public class ServerResponse {
 
     public String getStatusMsg() {
         return statusMsg;
+    }
+
+    
+    public String getContentRangeHeader() {
+        return contentRangeHeader;
     }
 }

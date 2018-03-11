@@ -5,8 +5,11 @@ import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class PartialContentHandlerTest {
     private PartialContentHandler subject;
@@ -30,4 +33,16 @@ class PartialContentHandlerTest {
         assertEquals(expectedMsg, result.getStatusMsg());
         assertEquals(expectedVersion, result.getHttpVersion());
     }
+
+//    @Test
+//    void handlerBuildsAContentRangeHeader() {
+//        ArrayList<String> headers = new ArrayList<>();
+//        headers.add("Range: bytes=0-4");
+//        when(mockClientRequest.getHeaders()).thenReturn(headers);
+//        String expectedContentRange = "Content-Range: bytes 0-4";
+//
+//        ServerResponse result = subject.handle(mockClientRequest);
+//
+//        assertEquals(expectedContentRange, result.getContentRangeHeader());
+//    }
 }
