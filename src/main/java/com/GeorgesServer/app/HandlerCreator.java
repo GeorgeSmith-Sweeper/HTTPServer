@@ -4,13 +4,15 @@ import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
-import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
+
 import java.util.HashMap;
 
 public class HandlerCreator {
     private HashMap<String, IHandler> handlers = new HashMap<>();
+    private String publicFolderPath;
 
-    public HandlerCreator() {
+    public HandlerCreator(String publicFolderPath) {
+        this.publicFolderPath = publicFolderPath;
         makeHandlers();
     }
 
