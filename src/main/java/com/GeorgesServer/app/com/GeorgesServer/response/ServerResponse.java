@@ -5,6 +5,7 @@ public class ServerResponse {
     private String statusCode;
     private String statusMsg;
     private String contentRangeHeader;
+    private String body;
 
     public String format() {
         return getHttpVersion() + " " + getStatusCode() + " " + getStatusMsg() + "\n";
@@ -37,5 +38,13 @@ public class ServerResponse {
     
     public String getContentRangeHeader() {
         return contentRangeHeader;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

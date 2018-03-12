@@ -45,6 +45,11 @@ public class HttpResponseBuilder implements IResponseBuilder {
     }
 
     @Override
+    public void buildBody(String body) {
+        this.response.setBody(body);
+    }
+
+    @Override
     public void buildContentRangeHeader() {
 //        setContentRangeHeader();
     }

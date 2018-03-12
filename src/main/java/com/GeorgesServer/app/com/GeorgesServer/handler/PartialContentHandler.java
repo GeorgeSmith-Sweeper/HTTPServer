@@ -4,12 +4,22 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
 import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.StreamSupport;
+
 public class PartialContentHandler implements IHandler{
 
     private HttpResponseBuilder responseBuilder;
     private ServerResponse serverResponse;
+    private String publicFolderPath;
 
     public PartialContentHandler(String publicFolderPath) {
+        this.publicFolderPath = publicFolderPath;
         responseBuilder = new HttpResponseBuilder();
     }
 
@@ -18,24 +28,53 @@ public class PartialContentHandler implements IHandler{
         responseBuilder.buildHttpVersion();
         responseBuilder.build206Status();
 
-//        ArrayList<String> headers = clientRequest.getHeaders();
-//        String rangeHeader = "";
-//        for (String header : headers) {
-//            if (header.contains("Range")) {
-//                rangeHeader = header;
-//            }
-//        }
+        // get range values from range header
+        ArrayList<String> headers = clientRequest.getHeaders();
+        String rangeHeader = "";
+        for (String header : headers) {
+            if (header.contains("Range")) {
+                rangeHeader = header;
+            }
+        }
+        int equalsLocation = rangeHeader.indexOf("=");
+        String range = rangeHeader.substring(equalsLocation+1, rangeHeader.length());
+        String[] contentRange = range.split("-");
+        String start = contentRange[0].trim();
+        String end = contentRange[1].trim();
 
-        // try splitting the range by "=" and then by "-"
-        // alternatively try to find the "-" and the get char on either side
-        // the range values will be fed into the file reader as the substring search points
-        // the reading of the file must happen in the handler for the correct values to be built by the response builder.
+        // read the file and store contents
+        String fileWeWant = "/partial_content.txt";
+        StringBuilder sb = new StringBuilder();
+        String fileContents = "";
+        List<String> fileArray;
+        try {
+            Path file = Paths.get(publicFolderPath + fileWeWant);
+            fileArray = Files.readAllLines(file);
+            for(String line: fileArray) {
+                sb.append(line);
+            }
+            fileContents = sb.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-
-//        String[] range = rangeHeader.split("");
-//        System.out.println(range[0]);
-//        System.out.println(range[1]);
+        // get the content with ranges
+        if (start.isEmpty()) {
+            int convertedEnd = Integer.parseInt(end.trim());
+            String noRangeStart = fileContents.substring(fileContents.length()-convertedEnd);
+            responseBuilder.buildBody(noRangeStart);
+        } else if (end.isEmpty()) {
+            int convertedStart = Integer.parseInt(start.trim());
+            String noRangeEnd = fileContents.substring(convertedStart);
+            responseBuilder.buildBody(noRangeEnd);
+        } else {
+            int convertedEnd = Integer.parseInt(end.trim());
+            int convertedStart = Integer.parseInt(start.trim());
+            String rangeStartAndEnd = fileContents.substring(convertedStart, convertedEnd+1);
+            responseBuilder.buildBody(rangeStartAndEnd);
+        }
         responseBuilder.buildContentRangeHeader();
+
         return responseBuilder.getResponse();
     }
 }
