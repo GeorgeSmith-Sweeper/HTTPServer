@@ -40,4 +40,64 @@ class PartialContentHandlerTest {
         assertEquals(expectedVersion, result.getHttpVersion());
         assertEquals(expectedBody, result.getBody());
     }
+
+    @Test
+    void handlerBuildsAContentRangeHeaderWithNoEndRange() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes=4- ");
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        String expectedContentRange = "Content-Range: bytes 4-76";
+
+        ServerResponse result = subject.handle(mockClientRequest);
+
+        assertEquals(expectedContentRange, result.getContentRangeHeader());
+    }
+
+    @Test
+    void handlerBuildsAContentRangeHeaderWithNoStartRange() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes= -6");
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        String expectedContentRange = "Content-Range: bytes 71-76";
+
+        ServerResponse result = subject.handle(mockClientRequest);
+
+        assertEquals(expectedContentRange, result.getContentRangeHeader());
+    }
+
+    @Test
+    void handlerBuildsAContentLengthHeader() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes=0-4");
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        String expectedContentRange = "Content-Length: 5";
+
+        ServerResponse result = subject.handle(mockClientRequest);
+
+        assertEquals(expectedContentRange, result.getContentLengthHeader());
+    }
+
+    @Test
+    void handlerBuildsAContentLengthHeaderWithNoEndRange() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes=4- ");
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        String expectedContentRange = "Content-Length: 72";
+
+        ServerResponse result = subject.handle(mockClientRequest);
+
+        assertEquals(expectedContentRange, result.getContentLengthHeader());
+    }
+
+    @Test
+    void handlerBuildsAContentLengthHeaderWithNoStartRange() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes= -6 ");
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        String expectedContentRange = "Content-Length: 6";
+
+        ServerResponse result = subject.handle(mockClientRequest);
+
+        assertEquals(expectedContentRange, result.getContentLengthHeader());
+    }
 }

@@ -9,8 +9,9 @@ public interface IResponseBuilder {
     void build206Status();
     void buildHttpVersion();
     void buildBody(String body);
-    void buildContentRangeHeader();
+    void buildContentRangeHeader(String start, String end);
 
     ServerResponse getResponse();
 
+    void buildContentLengthHeader(int length);
 }

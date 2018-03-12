@@ -5,14 +5,11 @@ public class ServerResponse {
     private String statusCode;
     private String statusMsg;
     private String contentRangeHeader;
+    private String contentLengthHeader;
     private String body;
 
     public String format() {
         return getHttpVersion() + " " + getStatusCode() + " " + getStatusMsg() + "\n";
-    }
-
-    public void setHttpVersion(String httpVersion) {
-        this.httpVersion = httpVersion;
     }
 
     public String getHttpVersion() {
@@ -46,5 +43,21 @@ public class ServerResponse {
 
     public String getBody() {
         return body;
+    }
+
+    public void setContentRangeHeader(String contentRangeHeader) {
+        this.contentRangeHeader = contentRangeHeader;
+    }
+
+    public void setContentLengthHeader(String contentLengthHeader) {
+        this.contentLengthHeader = contentLengthHeader;
+    }
+
+    public String getContentLengthHeader() {
+        return contentLengthHeader;
+    }
+
+    public void setHttpVersion(String httpVersion) {
+        this.httpVersion = httpVersion;
     }
 }

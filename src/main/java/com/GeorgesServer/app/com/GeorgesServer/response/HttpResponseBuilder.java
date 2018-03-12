@@ -14,6 +14,12 @@ public class HttpResponseBuilder implements IResponseBuilder {
     }
 
     @Override
+    public void buildContentLengthHeader(int length) {
+        String fullHeader = String.format("Content-Length: %s", length);
+        this.response.setContentLengthHeader(fullHeader);
+    }
+
+    @Override
     public void setStatusCode(String statusCode) {
         this.response.setStatusCode(statusCode);
     }
@@ -50,7 +56,9 @@ public class HttpResponseBuilder implements IResponseBuilder {
     }
 
     @Override
-    public void buildContentRangeHeader() {
-//        setContentRangeHeader();
+    public void buildContentRangeHeader(String start, String end) {
+        String fullHeader = String.format("Content-Range: bytes %s-%s", start, end);
+        this.response.setContentRangeHeader(fullHeader);
     }
+
 }

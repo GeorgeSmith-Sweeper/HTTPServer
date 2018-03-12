@@ -62,18 +62,23 @@ public class PartialContentHandler implements IHandler{
         if (start.isEmpty()) {
             int convertedEnd = Integer.parseInt(end.trim());
             String noRangeStart = fileContents.substring(fileContents.length()-convertedEnd);
+            responseBuilder.buildContentLengthHeader(noRangeStart.length());
+            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedEnd+1), Integer.toString(fileContents.length()));
             responseBuilder.buildBody(noRangeStart);
         } else if (end.isEmpty()) {
             int convertedStart = Integer.parseInt(start.trim());
             String noRangeEnd = fileContents.substring(convertedStart);
+            responseBuilder.buildContentLengthHeader(noRangeEnd.length());
+            responseBuilder.buildContentRangeHeader(start, Integer.toString(fileContents.length()));
             responseBuilder.buildBody(noRangeEnd);
         } else {
             int convertedEnd = Integer.parseInt(end.trim());
             int convertedStart = Integer.parseInt(start.trim());
             String rangeStartAndEnd = fileContents.substring(convertedStart, convertedEnd+1);
+            responseBuilder.buildContentLengthHeader(rangeStartAndEnd.length());
+            responseBuilder.buildContentRangeHeader(start, end);
             responseBuilder.buildBody(rangeStartAndEnd);
         }
-        responseBuilder.buildContentRangeHeader();
 
         return responseBuilder.getResponse();
     }
