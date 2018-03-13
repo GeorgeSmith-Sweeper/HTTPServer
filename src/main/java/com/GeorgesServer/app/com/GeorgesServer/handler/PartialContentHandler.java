@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -27,20 +28,9 @@ public class PartialContentHandler implements IHandler{
     public ServerResponse handle(ClientRequest clientRequest) {
         responseBuilder.buildHttpVersion();
         responseBuilder.build206Status();
+        String first = getBytePositions(clientRequest).get("first");
+        String last = getBytePositions(clientRequest).get("last");
 
-        // get range values from range header
-        ArrayList<String> headers = clientRequest.getHeaders();
-        String rangeHeader = "";
-        for (String header : headers) {
-            if (header.contains("Range")) {
-                rangeHeader = header;
-            }
-        }
-        int equalsLocation = rangeHeader.indexOf("=");
-        String range = rangeHeader.substring(equalsLocation+1, rangeHeader.length());
-        String[] contentRange = range.split("-");
-        String start = contentRange[0].trim();
-        String end = contentRange[1].trim();
 
         // read the file and store contents
         String fileWeWant = "/partial_content.txt";
@@ -53,29 +43,45 @@ public class PartialContentHandler implements IHandler{
         }
 
         // build responses
-        if (start.isEmpty()) {
-            int convertedEnd = Integer.parseInt(end.trim());
-            String noRangeStart = fileContents.substring(fileContents.length()-convertedEnd);
-            System.out.println("noRangeStart: " + noRangeStart);
-            responseBuilder.buildContentLengthHeader(noRangeStart.length());
-            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedEnd), Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(noRangeStart);
-        } else if (end.isEmpty()) {
-            int convertedStart = Integer.parseInt(start.trim());
-            String noRangeEnd = fileContents.substring(convertedStart);
-            System.out.println("noRangeEnd: " + noRangeEnd);
-            responseBuilder.buildContentLengthHeader(noRangeEnd.length());
-            responseBuilder.buildContentRangeHeader(start, Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(noRangeEnd);
+        if (first.isEmpty()) {
+            int convertedlast = Integer.parseInt(last.trim());
+            String noRangefirst = fileContents.substring(fileContents.length()-convertedlast);
+            responseBuilder.buildContentLengthHeader(noRangefirst.length());
+            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedlast), Integer.toString(fileContents.length()-1));
+            responseBuilder.buildBody(noRangefirst);
+        } else if (last.isEmpty()) {
+            int convertedfirst = Integer.parseInt(first.trim());
+            String noRangelast = fileContents.substring(convertedfirst);
+            responseBuilder.buildContentLengthHeader(noRangelast.length());
+            responseBuilder.buildContentRangeHeader(first, Integer.toString(fileContents.length()-1));
+            responseBuilder.buildBody(noRangelast);
         } else {
-            int convertedEnd = Integer.parseInt(end.trim());
-            int convertedStart = Integer.parseInt(start.trim());
-            String rangeStartAndEnd = fileContents.substring(convertedStart, convertedEnd+1);
-            System.out.println("rangeStartAndEnd: " + rangeStartAndEnd);
-            responseBuilder.buildContentLengthHeader(rangeStartAndEnd.length());
-            responseBuilder.buildContentRangeHeader(start, end);
-            responseBuilder.buildBody(rangeStartAndEnd);
+            int convertedlast = Integer.parseInt(last.trim());
+            int convertedfirst = Integer.parseInt(first.trim());
+            String rangefirstAndlast = fileContents.substring(convertedfirst, convertedlast+1);
+            responseBuilder.buildContentLengthHeader(rangefirstAndlast.length());
+            responseBuilder.buildContentRangeHeader(first, last);
+            responseBuilder.buildBody(rangefirstAndlast);
         }
         return responseBuilder.getResponse();
+    }
+
+    public HashMap<String,String> getBytePositions(ClientRequest clientRequest) {
+        HashMap<String, String> positions = new HashMap<>();
+        ArrayList<String> headers = clientRequest.getHeaders();
+        String rangeHeader = "";
+        for (String header : headers) {
+            if (header.contains("Range")) {
+                rangeHeader = header;
+            }
+        }
+        int equalsLocation = rangeHeader.indexOf("=");
+        String range = rangeHeader.substring(equalsLocation+1, rangeHeader.length());
+        String[] contentRange = range.split("-");
+        String first = contentRange[0].trim();
+        String last = contentRange[1].trim();
+        positions.put("first", first);
+        positions.put("last", last);
+        return positions;
     }
 }

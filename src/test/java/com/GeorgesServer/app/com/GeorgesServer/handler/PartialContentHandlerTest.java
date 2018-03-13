@@ -6,6 +6,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
@@ -20,6 +21,19 @@ class PartialContentHandlerTest {
         String publicFolderPath = "../cob_spec/public/";
         mockClientRequest = mock(ClientRequest.class);
         subject = new PartialContentHandler(publicFolderPath);
+    }
+
+    @Test
+    void getBytePositionsReturnsAFirstAndLastBytePosition() {
+        ArrayList<String> headers = new ArrayList<>();
+        headers.add("Range: bytes=0-4");
+        String expectedFirstBytePosition = "0";
+        String expectedLastBytePosition = "4";
+        when(mockClientRequest.getHeaders()).thenReturn(headers);
+        HashMap<String, String> result = subject.getBytePositions(mockClientRequest);
+
+        assertEquals(expectedFirstBytePosition, result.get("first"));
+        assertEquals(expectedLastBytePosition, result.get("last"));
     }
 
     @Test
