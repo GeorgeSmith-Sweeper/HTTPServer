@@ -44,42 +44,38 @@ public class PartialContentHandler implements IHandler{
 
         // read the file and store contents
         String fileWeWant = "/partial_content.txt";
-        StringBuilder sb = new StringBuilder();
+        Path file = Paths.get(publicFolderPath + fileWeWant);
         String fileContents = "";
-        List<String> fileArray;
         try {
-            Path file = Paths.get(publicFolderPath + fileWeWant);
-            fileArray = Files.readAllLines(file);
-            for(String line: fileArray) {
-                sb.append(line);
-            }
-            fileContents = sb.toString();
+            fileContents = new String(Files.readAllBytes(file));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        // get the content with ranges
+        // build responses
         if (start.isEmpty()) {
             int convertedEnd = Integer.parseInt(end.trim());
             String noRangeStart = fileContents.substring(fileContents.length()-convertedEnd);
+            System.out.println("noRangeStart: " + noRangeStart);
             responseBuilder.buildContentLengthHeader(noRangeStart.length());
-            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedEnd+1), Integer.toString(fileContents.length()));
+            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedEnd), Integer.toString(fileContents.length()-1));
             responseBuilder.buildBody(noRangeStart);
         } else if (end.isEmpty()) {
             int convertedStart = Integer.parseInt(start.trim());
             String noRangeEnd = fileContents.substring(convertedStart);
+            System.out.println("noRangeEnd: " + noRangeEnd);
             responseBuilder.buildContentLengthHeader(noRangeEnd.length());
-            responseBuilder.buildContentRangeHeader(start, Integer.toString(fileContents.length()));
+            responseBuilder.buildContentRangeHeader(start, Integer.toString(fileContents.length()-1));
             responseBuilder.buildBody(noRangeEnd);
         } else {
             int convertedEnd = Integer.parseInt(end.trim());
             int convertedStart = Integer.parseInt(start.trim());
             String rangeStartAndEnd = fileContents.substring(convertedStart, convertedEnd+1);
+            System.out.println("rangeStartAndEnd: " + rangeStartAndEnd);
             responseBuilder.buildContentLengthHeader(rangeStartAndEnd.length());
             responseBuilder.buildContentRangeHeader(start, end);
             responseBuilder.buildBody(rangeStartAndEnd);
         }
-
         return responseBuilder.getResponse();
     }
 }
