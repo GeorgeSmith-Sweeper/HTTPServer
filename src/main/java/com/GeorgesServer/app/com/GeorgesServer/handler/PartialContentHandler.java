@@ -30,17 +30,7 @@ public class PartialContentHandler implements IHandler{
         responseBuilder.build206Status();
         String first = getBytePositions(clientRequest).get("first");
         String last = getBytePositions(clientRequest).get("last");
-
-
-        // read the file and store contents
-        String fileWeWant = "/partial_content.txt";
-        Path file = Paths.get(publicFolderPath + fileWeWant);
-        String fileContents = "";
-        try {
-            fileContents = new String(Files.readAllBytes(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String fileContents = getFileContents();
 
         // build responses
         if (first.isEmpty()) {
@@ -83,5 +73,17 @@ public class PartialContentHandler implements IHandler{
         positions.put("first", first);
         positions.put("last", last);
         return positions;
+    }
+
+    public String getFileContents() {
+        String fileWeWant = "/partial_content.txt";
+        Path file = Paths.get(publicFolderPath + fileWeWant);
+        String fileContents = "";
+        try {
+            fileContents = new String(Files.readAllBytes(file));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fileContents;
     }
 }

@@ -37,6 +37,14 @@ class PartialContentHandlerTest {
     }
 
     @Test
+    void getFileContentsCanReadTheEntireContentsOfATextFile() {
+        String expectedContent = "This is a file that contains text to read part of in order to fulfill a 206.\n";
+        String result = subject.getFileContents();
+
+        assertEquals(expectedContent, result);
+    }
+
+    @Test
     void handlerBuildsA206Status() {
         String expectedCode = "206";
         String expectedMsg = "Partial Content";
