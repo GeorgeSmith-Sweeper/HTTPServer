@@ -22,6 +22,7 @@ public class RouterConfig {
     public void makeRoutes(Router router) {
         router.addRoute("/", handlers.get("defaultHandler"));
         router.addRoute("/form", handlers.get("formHandler"));
+        router.addRoute("/partial_content.txt", handlers.get("partialContentHandler"));
     }
 
     public Router getRouter() {

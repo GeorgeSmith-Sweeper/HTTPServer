@@ -1,24 +1,23 @@
 package com.GeorgesServer.app;
 
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.io.OutputStream;
 
 public class Streams {
 
-    private OutputStreamWriter outputStreamWriter;
+    private OutputStream outputStream;
     private InputStreamReader inputStreamReader;
 
-    public Streams(InputStreamReader inputStreamReader, OutputStreamWriter outputStreamWriter) {
+    public Streams(InputStreamReader inputStreamReader, OutputStream outputStream) {
         this.inputStreamReader = inputStreamReader;
-        this.outputStreamWriter = outputStreamWriter;
+        this.outputStream = outputStream;
     }
 
     public InputStreamReader getIn() {
         return this.inputStreamReader;
     }
 
-    public OutputStreamWriter getOut() {
-        return this.outputStreamWriter;
+    public OutputStream getOut() {
+        return this.outputStream;
     }
 }

@@ -1,47 +1,53 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class ServerResponseTest {
+    private ClientRequest mockedClientRequest;
+    private ServerResponse subject;
+
+    @BeforeEach
+    void setUp() {
+        mockedClientRequest = mock(ClientRequest.class);
+        subject = new ServerResponse();
+    }
 
     @Test
     void formatBuildsAResponseWithNoBody() {
-        ServerResponse serverResponse = new ServerResponse();
-        serverResponse.setStatusCode("200");
-        serverResponse.setStatusMsg("OK");
-        serverResponse.setHttpVersion("HTTP/1.1");
-        String result = serverResponse.format();
+        subject.setStatusCode("200");
+        subject.setStatusMsg("OK");
+        subject.setHttpVersion("HTTP/1.1");
+        when(mockedClientRequest.getUrl()).thenReturn("/");
+        String result = subject.format(mockedClientRequest);
 
         assertEquals("HTTP/1.1 200 OK\n", result);
     }
 
     @Test
     void setStatusCodeCorrectlyStoresAStatusCode() {
-        ServerResponse serverResponse = new ServerResponse();
+        subject.setStatusCode("200");
 
-        serverResponse.setStatusCode("200");
-
-        assertEquals("200", serverResponse.getStatusCode());
+        assertEquals("200", subject.getStatusCode());
     }
 
     @Test
     void setStatusMsgCorrectlyStoresAStatusMsg() {
-        ServerResponse serverResponse = new ServerResponse();
+        subject.setStatusMsg("OK");
 
-        serverResponse.setStatusMsg("OK");
-
-        assertEquals("OK", serverResponse.getStatusMsg());
+        assertEquals("OK", subject.getStatusMsg());
     }
 
     @Test
     void setHttpVersionAddsTheHttpVersion() {
-        ServerResponse serverResponse = new ServerResponse();
+        subject.setHttpVersion("HTTP/1.1");
 
-        serverResponse.setHttpVersion("HTTP/1.1");
-
-        assertEquals("HTTP/1.1", serverResponse.getHttpVersion());
+        assertEquals("HTTP/1.1", subject.getHttpVersion());
     }
 }

@@ -17,7 +17,6 @@ public class ServerTest {
     private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
     private ServerResponse mockedServerResponse;
-    private String publicFolderPath;
     private String mockedFormattedResponse;
     private Router mockedRouter;
     private RouterConfig mockedRouterConfig;
@@ -34,7 +33,6 @@ public class ServerTest {
         mockedRouter = mock(Router.class);
         mockedRouterConfig = mock(RouterConfig.class);
         mockedFormattedResponse = "";
-        publicFolderPath = "";
     }
     
     @Test
@@ -43,15 +41,14 @@ public class ServerTest {
                 mockedStreamMaker,
                 mockedRequestParser,
                 mockedResponseSender,
-                mockedRouterConfig,
-                publicFolderPath);
+                mockedRouterConfig);
 
         when(mockedRouterConfig.getRouter()).thenReturn(mockedRouter);
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
         when(mockedRouter.route(mockedClientRequest)).thenReturn(mockedHandler);
         when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
-        when(mockedServerResponse.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
+        when(mockedServerResponse.format(mockedClientRequest)).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
         myServer.start();
 
@@ -60,7 +57,7 @@ public class ServerTest {
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
         verify(mockedRouter, atLeastOnce()).route(mockedClientRequest);
         verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedServerResponse, atLeastOnce()).format();
+        verify(mockedServerResponse, atLeastOnce()).format(mockedClientRequest);
         verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
     }
 }

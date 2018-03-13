@@ -12,7 +12,7 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
-        HandlerCreator handlerCreator = new HandlerCreator();
+        HandlerCreator handlerCreator = new HandlerCreator(publicFolderPath);
         RouterConfig routerConfig = new RouterConfig(handlerCreator.getHandlers());
 
         ResponseSender responseSender = new ResponseSender();
@@ -34,8 +34,7 @@ public class App {
                 streamMaker,
                 requestParser,
                 responseSender,
-                routerConfig,
-                publicFolderPath);
+                routerConfig);
 
         server.start();
     }

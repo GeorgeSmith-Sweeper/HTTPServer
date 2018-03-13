@@ -13,8 +13,7 @@ public class MyServer {
     public MyServer(StreamMaker streamMaker,
                     RequestParser requestParser,
                     ResponseSender responseSender,
-                    RouterConfig routerConfig,
-                    String publicFolderPath) {
+                    RouterConfig routerConfig) {
 
         this.streamMaker = streamMaker;
         this.requestParser = requestParser;
@@ -30,7 +29,7 @@ public class MyServer {
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             IHandler handler = router.route(clientRequest);
             ServerResponse serverResponse = handler.handle(clientRequest);
-            formattedResponse = serverResponse.format();
+            formattedResponse = serverResponse.format(clientRequest);
             responseSender.send(formattedResponse, streams.getOut());
         }
     }
