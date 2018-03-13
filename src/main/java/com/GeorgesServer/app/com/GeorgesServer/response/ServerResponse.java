@@ -1,5 +1,7 @@
 package com.GeorgesServer.app.com.GeorgesServer.response;
 
+import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+
 public class ServerResponse {
     private String httpVersion;
     private String statusCode;
@@ -8,7 +10,15 @@ public class ServerResponse {
     private String contentLengthHeader;
     private String body;
 
-    public String format() {
+    public String format(ClientRequest clientRequest) {
+        if (clientRequest.getUrl().equals("/partial_content.txt")) {
+            return getHttpVersion() + " " +
+                    getStatusCode() + " " +
+                    getStatusMsg() + "\n" +
+                    getContentRangeHeader() + "\n" +
+                    getContentLengthHeader() + "\n\n" +
+                    getBody();
+        }
         return getHttpVersion() + " " + getStatusCode() + " " + getStatusMsg() + "\n";
     }
 

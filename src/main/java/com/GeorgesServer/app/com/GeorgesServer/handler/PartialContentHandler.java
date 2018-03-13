@@ -16,7 +16,6 @@ import java.util.stream.StreamSupport;
 public class PartialContentHandler implements IHandler{
 
     private HttpResponseBuilder responseBuilder;
-    private ServerResponse serverResponse;
     private String publicFolderPath;
 
     public PartialContentHandler(String publicFolderPath) {
@@ -31,28 +30,7 @@ public class PartialContentHandler implements IHandler{
         String first = getBytePositions(clientRequest).get("first");
         String last = getBytePositions(clientRequest).get("last");
         String fileContents = getFileContents();
-
-        // build responses
-        if (first.isEmpty()) {
-            int convertedlast = Integer.parseInt(last.trim());
-            String noRangefirst = fileContents.substring(fileContents.length()-convertedlast);
-            responseBuilder.buildContentLengthHeader(noRangefirst.length());
-            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedlast), Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(noRangefirst);
-        } else if (last.isEmpty()) {
-            int convertedfirst = Integer.parseInt(first.trim());
-            String noRangelast = fileContents.substring(convertedfirst);
-            responseBuilder.buildContentLengthHeader(noRangelast.length());
-            responseBuilder.buildContentRangeHeader(first, Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(noRangelast);
-        } else {
-            int convertedlast = Integer.parseInt(last.trim());
-            int convertedfirst = Integer.parseInt(first.trim());
-            String rangefirstAndlast = fileContents.substring(convertedfirst, convertedlast+1);
-            responseBuilder.buildContentLengthHeader(rangefirstAndlast.length());
-            responseBuilder.buildContentRangeHeader(first, last);
-            responseBuilder.buildBody(rangefirstAndlast);
-        }
+        buildHeaders(first, last, fileContents);
         return responseBuilder.getResponse();
     }
 
@@ -85,5 +63,30 @@ public class PartialContentHandler implements IHandler{
             e.printStackTrace();
         }
         return fileContents;
+    }
+
+    private void buildHeaders(String first, String last, String fileContents) {
+        String partialContent;
+        
+        if (first.isEmpty()) {
+            int convertedLast = Integer.parseInt(last);
+            partialContent = fileContents.substring(fileContents.length()-convertedLast);
+            responseBuilder.buildContentLengthHeader(partialContent.length());
+            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedLast), Integer.toString(fileContents.length()-1));
+            responseBuilder.buildBody(partialContent);
+        } else if (last.isEmpty()) {
+            int convertedFirst = Integer.parseInt(first);
+            partialContent = fileContents.substring(convertedFirst);
+            responseBuilder.buildContentLengthHeader(partialContent.length());
+            responseBuilder.buildContentRangeHeader(first, Integer.toString(fileContents.length()-1));
+            responseBuilder.buildBody(partialContent);
+        } else {
+            int convertedFirst = Integer.parseInt(first);
+            int convertedLast = Integer.parseInt(last);
+            partialContent = fileContents.substring(convertedFirst, convertedLast+1);
+            responseBuilder.buildContentLengthHeader(partialContent.length());
+            responseBuilder.buildContentRangeHeader(first, last);
+            responseBuilder.buildBody(partialContent);
+        }
     }
 }
