@@ -4,7 +4,6 @@ import static org.mockito.Mockito.*;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
