@@ -24,14 +24,12 @@ class DefaultHandlerTest {
 
     @Test
     void handlerCallsTheCorrectMethodsWhenBuildingARootResponse() {
-        String expectedCode = "200";
-        String expectedMsg = "OK";
-        String expectedVersion = "HTTP/1.1";
+        String expectedResponse = "HTTP/1.1 200 OK\n";
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedCode, result.getStatusCode());
-        assertEquals(expectedMsg, result.getStatusMsg());
-        assertEquals(expectedVersion, result.getHttpVersion());
+        assertEquals(expectedResponse, result);
     }
 }
+
