@@ -16,7 +16,6 @@ public class ServerTest {
     private ClientRequest mockedClientRequest;
     private IHandler mockedHandler;
     private ResponseSender mockedResponseSender;
-    private ServerResponse mockedServerResponse;
     private String mockedFormattedResponse;
     private Router mockedRouter;
     private RouterConfig mockedRouterConfig;
@@ -29,7 +28,6 @@ public class ServerTest {
         mockedStreams = mock(Streams.class);
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
-        mockedServerResponse = mock(ServerResponse.class);
         mockedRouter = mock(Router.class);
         mockedRouterConfig = mock(RouterConfig.class);
         mockedFormattedResponse = "";
@@ -47,8 +45,7 @@ public class ServerTest {
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
         when(mockedRouter.route(mockedClientRequest)).thenReturn(mockedHandler);
-        when(mockedHandler.handle(mockedClientRequest)).thenReturn(mockedServerResponse);
-        when(mockedServerResponse.format(mockedClientRequest)).thenReturn(mockedFormattedResponse).thenReturn("Bye");
+        when(mockedHandler.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
         myServer.start();
 
@@ -57,7 +54,7 @@ public class ServerTest {
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
         verify(mockedRouter, atLeastOnce()).route(mockedClientRequest);
         verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
-        verify(mockedServerResponse, atLeastOnce()).format(mockedClientRequest);
+        verify(mockedHandler, atLeastOnce()).format();
         verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
     }
 }

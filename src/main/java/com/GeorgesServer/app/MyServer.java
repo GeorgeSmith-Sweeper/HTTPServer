@@ -28,9 +28,11 @@ public class MyServer {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             IHandler handler = router.route(clientRequest);
-            ServerResponse serverResponse = handler.handle(clientRequest);
-            formattedResponse = serverResponse.format(clientRequest);
+            handler.handle(clientRequest);
+            formattedResponse = handler.format();
             responseSender.send(formattedResponse, streams.getOut());
         }
     }
+
+
 }
