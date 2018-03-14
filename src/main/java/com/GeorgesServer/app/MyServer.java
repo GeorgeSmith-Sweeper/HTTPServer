@@ -2,7 +2,6 @@ package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
 public class MyServer {
     private StreamMaker streamMaker;
@@ -28,9 +27,11 @@ public class MyServer {
             Streams streams = streamMaker.connect();
             ClientRequest clientRequest = requestParser.parse(streams.getIn());
             IHandler handler = router.route(clientRequest);
-            ServerResponse serverResponse = handler.handle(clientRequest);
-            formattedResponse = serverResponse.format(clientRequest);
+            handler.handle(clientRequest);
+            formattedResponse = handler.format();
             responseSender.send(formattedResponse, streams.getOut());
         }
     }
+
+
 }

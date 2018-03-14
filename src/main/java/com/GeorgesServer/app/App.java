@@ -1,8 +1,6 @@
 package com.GeorgesServer.app;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
-
 import java.io.IOException;
 import java.net.ServerSocket;
 
@@ -14,14 +12,12 @@ public class App {
 
         HandlerCreator handlerCreator = new HandlerCreator(publicFolderPath);
         RouterConfig routerConfig = new RouterConfig(handlerCreator.getHandlers());
-
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
 
         MyServer server;
         ServerSocket serverSocket;
-
         try {
             serverSocket = new ServerSocket(port);
         } catch (IOException e) {

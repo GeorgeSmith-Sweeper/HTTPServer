@@ -2,22 +2,18 @@ package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.FormHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
-import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 class FormHandlerTest {
     private FormHandler subject;
     private ClientRequest mockClientRequest;
-    private String expectedCode = "200";
-    private String expectedMsg = "OK";
-    private String expectedVersion = "HTTP/1.1";
+    private String expectedOKResponse = "HTTP/1.1 200 OK\n";
 
     @BeforeEach
     public void setUp() {
@@ -29,32 +25,29 @@ class FormHandlerTest {
     void formHandlerCallsTheCorrectMethodsWhenGivenAGETRequest() {
         when(mockClientRequest.getMethod()).thenReturn("GET");
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedCode, result.getStatusCode());
-        assertEquals(expectedMsg, result.getStatusMsg());
-        assertEquals(expectedVersion, result.getHttpVersion());
+        assertEquals(expectedOKResponse, result);
     }
 
     @Test
     void formHandlerCallsTheCorrectMethodsWhenGivenAPOSTRequest() {
         when(mockClientRequest.getMethod()).thenReturn("POST");
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedCode, result.getStatusCode());
-        assertEquals(expectedMsg, result.getStatusMsg());
-        assertEquals(expectedVersion, result.getHttpVersion());
+        assertEquals(expectedOKResponse, result);
     }
 
     @Test
     void formHandlerCallsTheCorrectMethodsWhenGivenAPUTRequest() {
         when(mockClientRequest.getMethod()).thenReturn("PUT");
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedCode, result.getStatusCode());
-        assertEquals(expectedMsg, result.getStatusMsg());
-        assertEquals(expectedVersion, result.getHttpVersion());
+        assertEquals(expectedOKResponse, result);
     }
 }
