@@ -1,8 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-import com.GeorgesServer.app.com.GeorgesServer.response.HttpResponseBuilder;
-import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -10,29 +8,47 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.stream.StreamSupport;
 
 public class PartialContentHandler implements IHandler{
 
-    private HttpResponseBuilder responseBuilder;
     private String publicFolderPath;
+    private HashMap<String,String> headers;
+    private String status;
+    private String partialContent;
+    private String body;
 
     public PartialContentHandler(String publicFolderPath) {
         this.publicFolderPath = publicFolderPath;
-        responseBuilder = new HttpResponseBuilder();
     }
 
     @Override
-    public ServerResponse handle(ClientRequest clientRequest) {
-        responseBuilder.buildHttpVersion();
-        responseBuilder.build206Status();
+    public void handle(ClientRequest clientRequest) {
         String first = getBytePositions(clientRequest).get("first");
         String last = getBytePositions(clientRequest).get("last");
         String fileContents = getFileContents();
-        buildHeaders(first, last, fileContents);
-        return responseBuilder.getResponse();
+        setStatus();
+        setHeaders(first, last, fileContents);
+        setBody();
     }
+
+    public void setStatus() {
+        this.status = "HTTP/1.1 206 Partial Content";
+    }
+
+    @Override
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setBody() {
+        this.body = partialContent;
+    }
+
+    @Override
+    public String getBody() {
+        return this.body;
+    }
+
 
     public HashMap<String,String> getBytePositions(ClientRequest clientRequest) {
         HashMap<String, String> positions = new HashMap<>();
@@ -65,28 +81,48 @@ public class PartialContentHandler implements IHandler{
         return fileContents;
     }
 
-    private void buildHeaders(String first, String last, String fileContents) {
-        String partialContent;
-        
+    public String buildContentRangeHeader(String start, String end) {
+        return String.format(" bytes %s-%s", start, end);
+    }
+
+    public String buildContentLengthHeader(int length) {
+        return String.format(" %s", length);
+    }
+
+    private void setHeaders(String first, String last, String fileContents) {
+        this.headers = new HashMap<>();
         if (first.isEmpty()) {
             int convertedLast = Integer.parseInt(last);
             partialContent = fileContents.substring(fileContents.length()-convertedLast);
-            responseBuilder.buildContentLengthHeader(partialContent.length());
-            responseBuilder.buildContentRangeHeader(Integer.toString(fileContents.length()-convertedLast), Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(partialContent);
+            headers.put("Content-Range", buildContentRangeHeader(Integer.toString(fileContents.length()-convertedLast), Integer.toString(fileContents.length()-1)));
+            headers.put("Content-Length", buildContentLengthHeader(partialContent.length()));
         } else if (last.isEmpty()) {
             int convertedFirst = Integer.parseInt(first);
             partialContent = fileContents.substring(convertedFirst);
-            responseBuilder.buildContentLengthHeader(partialContent.length());
-            responseBuilder.buildContentRangeHeader(first, Integer.toString(fileContents.length()-1));
-            responseBuilder.buildBody(partialContent);
+            headers.put("Content-Range", buildContentRangeHeader(first, Integer.toString(fileContents.length()-1)));
+            headers.put("Content-Length", buildContentLengthHeader(partialContent.length()));
         } else {
             int convertedFirst = Integer.parseInt(first);
             int convertedLast = Integer.parseInt(last);
             partialContent = fileContents.substring(convertedFirst, convertedLast+1);
-            responseBuilder.buildContentLengthHeader(partialContent.length());
-            responseBuilder.buildContentRangeHeader(first, last);
-            responseBuilder.buildBody(partialContent);
+            headers.put("Content-Range", buildContentRangeHeader(first, last));
+            headers.put("Content-Length", buildContentLengthHeader(partialContent.length()));
         }
+    }
+
+    @Override
+    public HashMap<String, String> getHeaders() {
+        return this.headers;
+    }
+
+    public String format() {
+        StringBuilder response = new StringBuilder();
+        response.append(getStatus()).append("\n");
+        for (String key : getHeaders().keySet()) {
+            String value = getHeaders().get(key);
+            response.append(key).append(":").append(value).append("\n");
+        }
+        response.append("\n").append(getBody());
+        return response.toString();
     }
 }

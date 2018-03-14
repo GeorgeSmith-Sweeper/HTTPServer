@@ -1,7 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-import com.GeorgesServer.app.com.GeorgesServer.response.ServerResponse;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -37,6 +36,22 @@ class PartialContentHandlerTest {
     }
 
     @Test
+    void buildContentRangeHeaderBuildsAValidRange() {
+        String expectedRange = " bytes 0-4";
+        String result = subject.buildContentRangeHeader("0", "4");
+
+        assertEquals(expectedRange, result);
+    }
+
+    @Test
+    void buildContentLengthHeaderBuildsAValidLength() {
+        String expectedLength = " 5";
+        String result = subject.buildContentLengthHeader(5);
+
+        assertEquals(expectedLength, result);
+    }
+
+    @Test
     void getFileContentsCanReadTheEntireContentsOfATextFile() {
         String expectedContent = "This is a file that contains text to read part of in order to fulfill a 206.\n";
         String result = subject.getFileContents();
@@ -45,65 +60,55 @@ class PartialContentHandlerTest {
     }
 
     @Test
-    void handlerBuildsA206Status() {
-        String expectedCode = "206";
-        String expectedMsg = "Partial Content";
-        String expectedVersion = "HTTP/1.1";
-        String expectedBody = "This ";
-
+    void handlerBuildsCorrectResponseWhenRangeHasAStartAndEndingPosition() {
         ArrayList<String> headers = new ArrayList<>();
         headers.add("Range: bytes=0-4");
+        String status = "HTTP/1.1 206 Partial Content\n";
+        String contentRange = "Content-Range: bytes 0-4\n";
+        String contentLength = "Content-Length: 5\n";
+        String body = "\nThis ";
+        String expectedResponse = String.join("", status, contentRange, contentLength, body);
         when(mockClientRequest.getHeaders()).thenReturn(headers);
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedCode, result.getStatusCode());
-        assertEquals(expectedMsg, result.getStatusMsg());
-        assertEquals(expectedVersion, result.getHttpVersion());
-        assertEquals(expectedBody, result.getBody());
+        assertEquals(expectedResponse, result);
     }
 
-
     @Test
-    void handlerBuildsAContentRangeAndLengthHeaderWithNoEndRange() {
+    void handlerBuildsCorrectResponseWhenRangeDoesntHaveAnEndingPosition() {
         ArrayList<String> headers = new ArrayList<>();
         headers.add("Range: bytes=4- ");
+        String status = "HTTP/1.1 206 Partial Content\n";
+        String contentRange = "Content-Range: bytes 4-76\n";
+        String contentLength = "Content-Length: 73\n";
+        String body = "\n is a file that contains text to read part of in order to fulfill a 206.\n";
+        String expectedResponse = String.join("", status, contentRange, contentLength, body);
+
         when(mockClientRequest.getHeaders()).thenReturn(headers);
-        String expectedContentRange = "Content-Range: bytes 4-76";
-        String expectedContentLength = "Content-Length: 73";
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedContentRange, result.getContentRangeHeader());
-        assertEquals(expectedContentLength, result.getContentLengthHeader());
+        assertEquals(expectedResponse, result);
     }
 
     @Test
-    void handlerBuildsAContentRangeAndLengthHeaderWithNoStartRange() {
+    void handlerBuildsCorrectResponseWhenRangeDoesntHaveAStartingPosition() {
         ArrayList<String> headers = new ArrayList<>();
         headers.add("Range: bytes= -6");
+        String status = "HTTP/1.1 206 Partial Content\n";
+        String contentRange = "Content-Range: bytes 71-76\n";
+        String contentLength = "Content-Length: 6\n";
+        String body = "\n 206.\n";
+        String expectedResponse = String.join("", status, contentRange, contentLength, body);
+
         when(mockClientRequest.getHeaders()).thenReturn(headers);
-        String expectedContentRange = "Content-Range: bytes 71-76";
-        String expectedContentLength = "Content-Length: 6";
 
-        ServerResponse result = subject.handle(mockClientRequest);
+        subject.handle(mockClientRequest);
+        String result = subject.format();
 
-        assertEquals(expectedContentRange, result.getContentRangeHeader());
-        assertEquals(expectedContentLength, result.getContentLengthHeader());
+        assertEquals(expectedResponse, result);
     }
-
-    @Test
-    void handlerBuildsAContentRangeAndLengthHeaderWithStartRangeAndEndRange() {
-        ArrayList<String> headers = new ArrayList<>();
-        headers.add("Range: bytes=0-4");
-        when(mockClientRequest.getHeaders()).thenReturn(headers);
-        String expectedContentRange = "Content-Range: bytes 0-4";
-        String expectedContentLength = "Content-Length: 5";
-
-        ServerResponse result = subject.handle(mockClientRequest);
-
-        assertEquals(expectedContentRange, result.getContentRangeHeader());
-        assertEquals(expectedContentLength, result.getContentLengthHeader());
-    }
-
 }
