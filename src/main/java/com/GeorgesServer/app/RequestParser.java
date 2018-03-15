@@ -14,6 +14,7 @@ public class RequestParser {
     private String httpVersion;
     private ClientRequest clientRequest;
     private ArrayList<String> headers;
+    private String body;
 
     public RequestParser(RequestReader requestReader) {
         this.requestReader = requestReader;
@@ -24,6 +25,7 @@ public class RequestParser {
         String request = requestReader.read(reader);
         parseRequestStartLine(request);
         parseHeaders(request);
+        parseBody(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
@@ -48,6 +50,15 @@ public class RequestParser {
         }
     }
 
+    private void parseBody(String request) {
+        String[] lines = request.split("\n");
+        for (int index = 0; index < lines.length; index++) {
+            if (lines[index].isEmpty()) {
+                this.body = lines[index+1];
+            }
+        }
+    }
+
     public String getMethod() {
         return method;
     }
@@ -62,5 +73,9 @@ public class RequestParser {
 
     public ArrayList<String> getHeaders() {
         return headers;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

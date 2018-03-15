@@ -37,4 +37,13 @@ public class RequestParserTest {
 
         assertEquals("Range: bytes=1-4", subject.getHeaders().get(0));
     }
+
+    @Test
+    void requestParserCanParseTheRequestBody() {
+        String body = "\"My\"=\"Data\"";
+        when(mockedRequestReader.read(mockedStreams.getIn())).thenReturn("POST / HTTP/1.1\n" + "Content-Length: 11\n" + "\n" + body);
+        subject.parse(mockedStreams.getIn());
+
+        assertEquals(body, subject.getBody());
+    }
 }
