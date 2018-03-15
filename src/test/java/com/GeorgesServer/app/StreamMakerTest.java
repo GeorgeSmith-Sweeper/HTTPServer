@@ -35,7 +35,7 @@ public class StreamMakerTest {
 
         Streams result = subject.connect();
 
-        assertTrue(result.getIn() instanceof InputStreamReader);
+        assertTrue(result.getIn() instanceof InputStream);
         assertTrue(result.getOut() instanceof OutputStream);
     }
 }

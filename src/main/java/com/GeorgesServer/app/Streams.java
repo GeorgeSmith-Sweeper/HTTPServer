@@ -1,20 +1,20 @@
 package com.GeorgesServer.app;
 
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 public class Streams {
 
     private OutputStream outputStream;
-    private InputStreamReader inputStreamReader;
+    private InputStream inputStream;
 
-    public Streams(InputStreamReader inputStreamReader, OutputStream outputStream) {
-        this.inputStreamReader = inputStreamReader;
+    public Streams(InputStream inputStream, OutputStream outputStream) {
+        this.inputStream = inputStream;
         this.outputStream = outputStream;
     }
 
-    public InputStreamReader getIn() {
-        return this.inputStreamReader;
+    public InputStream getIn() {
+        return this.inputStream;
     }
 
     public OutputStream getOut() {

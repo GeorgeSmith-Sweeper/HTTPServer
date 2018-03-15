@@ -3,7 +3,7 @@ package com.GeorgesServer.app;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -11,12 +11,12 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 class RequestReaderTest {
-    private InputStreamReader mockedInputStreamReader;
+    private InputStream mockedInputStream;
     private RequestReader subject;
 
     @BeforeEach
     public void setUp() {
-        mockedInputStreamReader = mock(InputStreamReader.class);
+        mockedInputStream = mock(InputStream.class);
         subject = new RequestReader();
     }
 
@@ -25,10 +25,10 @@ class RequestReaderTest {
         int request = 71;
         int streamHasNotEnded = -1;
 
-        when(mockedInputStreamReader.read()).thenReturn(request).thenReturn(streamHasNotEnded);
-        when(mockedInputStreamReader.ready()).thenReturn(true);
+        when(mockedInputStream.read()).thenReturn(request).thenReturn(streamHasNotEnded);
+        when(mockedInputStream.available()).thenReturn(1);
 
-        String result = subject.read(mockedInputStreamReader);
+        String result = subject.read(mockedInputStream);
 
         assertEquals("G", result);
     }
