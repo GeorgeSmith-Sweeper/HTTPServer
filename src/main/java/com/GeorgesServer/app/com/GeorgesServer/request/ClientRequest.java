@@ -8,6 +8,7 @@ public class ClientRequest {
     private String method;
     private String url;
     private ArrayList<String> headers;
+    private String body;
 
     public void setHttpVersion(String httpVersion) {
         this.httpVersion = httpVersion;
@@ -39,5 +40,13 @@ public class ClientRequest {
 
     public ArrayList<String> getHeaders() {
         return headers;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

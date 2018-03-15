@@ -51,4 +51,13 @@ class ClientRequestTest {
 
         assertEquals(headers, subject.getHeaders());
     }
+
+    @Test
+    void setBodySetsTheBodyField() {
+        String body = "\"My\"=\"Data\"";
+
+        subject.setBody(body);
+
+        assertEquals(body, subject.getBody());
+    }
 }

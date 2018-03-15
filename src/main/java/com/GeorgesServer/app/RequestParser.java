@@ -30,6 +30,7 @@ public class RequestParser {
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
         clientRequest.setHeaders(getHeaders());
+        clientRequest.setBody(body);
         return clientRequest;
     }
     
