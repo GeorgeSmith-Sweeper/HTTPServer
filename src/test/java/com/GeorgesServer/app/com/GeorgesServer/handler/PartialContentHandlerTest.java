@@ -19,13 +19,13 @@ class PartialContentHandlerTest {
     public void setUp() {
         String publicFolderPath = "../cob_spec/public/";
         mockClientRequest = mock(ClientRequest.class);
-        subject = new PartialContentHandler(publicFolderPath);
+        subject = new PartialContentHandler(publicFolderPath, mockClientRequest);
     }
 
     @Test
     void getBytePositionsReturnsAFirstAndLastBytePosition() {
-        ArrayList<String> headers = new ArrayList<>();
-        headers.add("Range: bytes=0-4");
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Range", " bytes=0-4");
         String expectedFirstBytePosition = "0";
         String expectedLastBytePosition = "4";
         when(mockClientRequest.getHeaders()).thenReturn(headers);
@@ -61,8 +61,8 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeHasAStartAndEndingPosition() {
-        ArrayList<String> headers = new ArrayList<>();
-        headers.add("Range: bytes=0-4");
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Range", " bytes=0-4");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 0-4\n";
         String contentLength = "Content-Length: 5\n";
@@ -70,7 +70,7 @@ class PartialContentHandlerTest {
         String expectedResponse = String.join("", status, contentRange, contentLength, body);
         when(mockClientRequest.getHeaders()).thenReturn(headers);
 
-        subject.handle(mockClientRequest);
+        subject.handle();
         String result = subject.format();
 
         assertEquals(expectedResponse, result);
@@ -78,8 +78,8 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAnEndingPosition() {
-        ArrayList<String> headers = new ArrayList<>();
-        headers.add("Range: bytes=4- ");
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Range", " bytes=4- ");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 4-76\n";
         String contentLength = "Content-Length: 73\n";
@@ -88,7 +88,7 @@ class PartialContentHandlerTest {
 
         when(mockClientRequest.getHeaders()).thenReturn(headers);
 
-        subject.handle(mockClientRequest);
+        subject.handle();
         String result = subject.format();
 
         assertEquals(expectedResponse, result);
@@ -96,8 +96,8 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAStartingPosition() {
-        ArrayList<String> headers = new ArrayList<>();
-        headers.add("Range: bytes= -6");
+        HashMap<String, String> headers = new HashMap<>();
+        headers.put("Range", " bytes= -6");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 71-76\n";
         String contentLength = "Content-Length: 6\n";
@@ -106,7 +106,7 @@ class PartialContentHandlerTest {
 
         when(mockClientRequest.getHeaders()).thenReturn(headers);
 
-        subject.handle(mockClientRequest);
+        subject.handle();
         String result = subject.format();
 
         assertEquals(expectedResponse, result);
