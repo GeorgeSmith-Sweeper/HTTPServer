@@ -11,7 +11,6 @@ class PostHandlerTest {
     private PostHandler subject;
     private ClientRequest mockClientRequest;
 
-
     @BeforeEach
     public void setUp() {
         String publicFolderPath = "../cob_spec/public/";

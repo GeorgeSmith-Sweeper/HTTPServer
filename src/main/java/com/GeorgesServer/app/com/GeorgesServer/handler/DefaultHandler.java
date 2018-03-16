@@ -1,8 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
-
 import java.util.HashMap;
 
 public class DefaultHandler implements IHandler {
@@ -10,7 +8,7 @@ public class DefaultHandler implements IHandler {
     private String status;
     private HashMap<String,String> headers;
 
-    public void handle(ClientRequest clientRequest) {
+    public void handle() {
         setStatus();
     }
 

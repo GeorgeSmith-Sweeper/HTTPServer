@@ -22,7 +22,7 @@ class DefaultHandlerTest {
     void handlerCallsTheCorrectMethodsWhenBuildingARootResponse() {
         String expectedResponse = "HTTP/1.1 200 OK\n";
 
-        subject.handle(mockClientRequest);
+        subject.handle();
         String result = subject.format();
 
         assertEquals(expectedResponse, result);
