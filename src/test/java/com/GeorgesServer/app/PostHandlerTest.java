@@ -1,25 +1,25 @@
 package com.GeorgesServer.app;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 
-class DefaultHandlerTest {
-    private DefaultHandler subject;
+class PostHandlerTest {
+    private PostHandler subject;
     private ClientRequest mockClientRequest;
 
     @BeforeEach
     public void setUp() {
+        String publicFolderPath = "../cob_spec/public/";
         mockClientRequest = mock(ClientRequest.class);
-        subject = new DefaultHandler();
+        subject = new PostHandler(publicFolderPath, mockClientRequest);
     }
 
     @Test
-    void handlerCallsTheCorrectMethodsWhenBuildingARootResponse() {
+    void postRequestsRespondWithA200StatusCode() {
         String expectedResponse = "HTTP/1.1 200 OK\n";
 
         subject.handle();
@@ -28,4 +28,3 @@ class DefaultHandlerTest {
         assertEquals(expectedResponse, result);
     }
 }
-

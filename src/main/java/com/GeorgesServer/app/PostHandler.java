@@ -1,33 +1,31 @@
-package com.GeorgesServer.app.com.GeorgesServer.handler;
+package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.HashMap;
 
-public class FormHandler implements IHandler {
-
+public class PostHandler implements IHandler {
+    private String publicFolderPath;
+    private ClientRequest clientRequest;
     private String status;
     private HashMap<String,String> headers;
     private String body;
-    private HashMap<String, String> methods = new HashMap<>();
 
-    public FormHandler () {
-        this.methods.put("GET", "GET");
-        this.methods.put("POST", "POST");
-        this.methods.put("PUT", "PUT");
+    public PostHandler(String publicFolderPath, ClientRequest clientRequest) {
+        this.publicFolderPath = publicFolderPath;
+        this.clientRequest = clientRequest;
     }
 
     @Override
-    public void handle(ClientRequest clientRequest) {
-      if (this.methods.containsKey(clientRequest.getMethod())) {
-          setStatus();
-      }
+    public void handle() {
+        setStatus("HTTP/1.1 200 OK");
     }
-
-    private void setStatus() {
-        this.status = "HTTP/1.1 200 OK";
+    
+    public void setStatus(String status) {
+        this.status = status;
     }
-
+    
     @Override
     public String getStatus() {
         return this.status;
@@ -49,4 +47,6 @@ public class FormHandler implements IHandler {
         response.append(getStatus()).append("\n");
         return response.toString();
     }
+
+
 }

@@ -3,7 +3,7 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class RequestParser {
@@ -13,7 +13,8 @@ public class RequestParser {
     private String url;
     private String httpVersion;
     private ClientRequest clientRequest;
-    private ArrayList<String> headers;
+    private HashMap<String, String> headers;
+    private String body;
 
     public RequestParser(RequestReader requestReader) {
         this.requestReader = requestReader;
@@ -24,10 +25,12 @@ public class RequestParser {
         String request = requestReader.read(reader);
         parseRequestStartLine(request);
         parseHeaders(request);
+        parseBody(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
         clientRequest.setHeaders(getHeaders());
+        clientRequest.setBody(body);
         return clientRequest;
     }
     
@@ -40,10 +43,20 @@ public class RequestParser {
 
     private void parseHeaders(String request) {
         String[] lines = request.split("\n");
-        headers = new ArrayList<>();
+        headers = new HashMap<>();
         for (String line : lines) {
             if (line.contains(":")) {
-                headers.add(line);
+                String[] splitHeader = line.split(":");
+                headers.put(splitHeader[0], splitHeader[1]);
+            }
+        }
+    }
+
+    private void parseBody(String request) {
+        String[] lines = request.split("\n");
+        for (int index = 0; index < lines.length; index++) {
+            if (lines[index].isEmpty()) {
+                this.body = lines[index+1];
             }
         }
     }
@@ -60,7 +73,11 @@ public class RequestParser {
         return httpVersion;
     }
 
-    public ArrayList<String> getHeaders() {
+    public HashMap<String, String> getHeaders() {
         return headers;
+    }
+
+    public String getBody() {
+        return body;
     }
 }

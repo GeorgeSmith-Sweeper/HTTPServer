@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,10 +46,20 @@ class ClientRequestTest {
 
     @Test
     void setHeadersSetsTheFieldHeaders() {
-        ArrayList<String> headers = new ArrayList<>();
+        HashMap<String, String> headers = new HashMap<>();
+
 
         subject.setHeaders(headers);
 
         assertEquals(headers, subject.getHeaders());
+    }
+
+    @Test
+    void setBodySetsTheBodyField() {
+        String body = "\"My\"=\"Data\"";
+
+        subject.setBody(body);
+
+        assertEquals(body, subject.getBody());
     }
 }

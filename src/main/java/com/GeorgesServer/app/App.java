@@ -10,8 +10,7 @@ public class App {
         String publicFolderPath = args[3];
         int port = Integer.parseInt(args[1]);
 
-        HandlerCreator handlerCreator = new HandlerCreator(publicFolderPath);
-        RouterConfig routerConfig = new RouterConfig(handlerCreator.getHandlers());
+        Router router = new Router();
         ResponseSender responseSender = new ResponseSender();
         RequestReader requestReader = new RequestReader();
         RequestParser requestParser = new RequestParser(requestReader);
@@ -30,7 +29,8 @@ public class App {
                 streamMaker,
                 requestParser,
                 responseSender,
-                routerConfig);
+                router,
+                publicFolderPath);
 
         server.start();
     }

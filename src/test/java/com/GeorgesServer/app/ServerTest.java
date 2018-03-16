@@ -17,7 +17,7 @@ public class ServerTest {
     private ResponseSender mockedResponseSender;
     private String mockedFormattedResponse;
     private Router mockedRouter;
-    private RouterConfig mockedRouterConfig;
+    private String publicFolderPath = "";
 
     @BeforeEach
     public void setUp() {
@@ -28,7 +28,6 @@ public class ServerTest {
         mockedRequestParser = mock(RequestParser.class);
         mockedResponseSender = mock(ResponseSender.class);
         mockedRouter = mock(Router.class);
-        mockedRouterConfig = mock(RouterConfig.class);
         mockedFormattedResponse = "";
     }
     
@@ -38,21 +37,20 @@ public class ServerTest {
                 mockedStreamMaker,
                 mockedRequestParser,
                 mockedResponseSender,
-                mockedRouterConfig);
+                mockedRouter,
+                publicFolderPath);
 
-        when(mockedRouterConfig.getRouter()).thenReturn(mockedRouter);
         when(mockedStreamMaker.connect()).thenReturn(mockedStreams);
         when(mockedRequestParser.parse(mockedStreams.getIn())).thenReturn(mockedClientRequest);
-        when(mockedRouter.route(mockedClientRequest)).thenReturn(mockedHandler);
+        when(mockedRouter.route(publicFolderPath, mockedClientRequest)).thenReturn(mockedHandler);
         when(mockedHandler.format()).thenReturn(mockedFormattedResponse).thenReturn("Bye");
 
         myServer.start();
 
-        verify(mockedRouterConfig, atLeastOnce()).getRouter();
         verify(mockedStreamMaker, atLeastOnce()).connect();
         verify(mockedRequestParser, atLeastOnce()).parse(mockedStreams.getIn());
-        verify(mockedRouter, atLeastOnce()).route(mockedClientRequest);
-        verify(mockedHandler, atLeastOnce()).handle(mockedClientRequest);
+        verify(mockedRouter, atLeastOnce()).route(publicFolderPath, mockedClientRequest);
+        verify(mockedHandler, atLeastOnce()).handle();
         verify(mockedHandler, atLeastOnce()).format();
         verify(mockedResponseSender, atLeastOnce()).send(mockedFormattedResponse, mockedStreams.getOut());
     }
