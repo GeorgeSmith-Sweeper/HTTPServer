@@ -1,5 +1,6 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
@@ -15,17 +16,12 @@ public class Router {
     }
 
     public IHandler route(String publicFolderPath, ClientRequest request) {
-        if (isPartialContent(request.getUrl())) {
+        if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
         }
-        return routes.get(request.getUrl());
-    }
-
-    public void addRoute(String path, IHandler handler) {
-        routes.put(path, handler);
-    }
-
-    private boolean isPartialContent(String path) {
-        return path.equals("/partial_content.txt");
+        if (request.getMethod().equals("POST")) {
+            return new PostHandler(publicFolderPath, request);
+        }
+        return new DefaultHandler();
     }
 }
