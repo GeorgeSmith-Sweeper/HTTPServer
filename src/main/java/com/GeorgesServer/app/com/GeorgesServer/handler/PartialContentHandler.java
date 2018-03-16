@@ -6,25 +6,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
+
 import java.util.HashMap;
 
 public class PartialContentHandler implements IHandler{
 
+    private ClientRequest request;
     private String publicFolderPath;
     private HashMap<String,String> headers;
     private String status;
     private String partialContent;
     private String body;
 
-    public PartialContentHandler(String publicFolderPath) {
+    public PartialContentHandler(String publicFolderPath, ClientRequest request) {
+        this.request = request;
         this.publicFolderPath = publicFolderPath;
     }
 
     @Override
-    public void handle(ClientRequest clientRequest) {
-        String first = getBytePositions(clientRequest).get("first");
-        String last = getBytePositions(clientRequest).get("last");
+    public void handle() {
+        String first = getBytePositions(request).get("first");
+        String last = getBytePositions(request).get("last");
         String fileContents = getFileContents();
         setStatus();
         setHeaders(first, last, fileContents);
@@ -52,13 +54,9 @@ public class PartialContentHandler implements IHandler{
 
     public HashMap<String,String> getBytePositions(ClientRequest clientRequest) {
         HashMap<String, String> positions = new HashMap<>();
-        ArrayList<String> headers = clientRequest.getHeaders();
-        String rangeHeader = "";
-        for (String header : headers) {
-            if (header.contains("Range")) {
-                rangeHeader = header;
-            }
-        }
+        HashMap<String, String> headers = clientRequest.getHeaders();
+        String rangeHeader = headers.get("Range");
+
         int equalsLocation = rangeHeader.indexOf("=");
         String range = rangeHeader.substring(equalsLocation+1, rangeHeader.length());
         String[] contentRange = range.split("-");
