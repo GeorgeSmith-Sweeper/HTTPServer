@@ -3,7 +3,7 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.InputStream;
-import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class RequestParser {
@@ -13,7 +13,7 @@ public class RequestParser {
     private String url;
     private String httpVersion;
     private ClientRequest clientRequest;
-    private ArrayList<String> headers;
+    private HashMap<String, String> headers;
     private String body;
 
     public RequestParser(RequestReader requestReader) {
@@ -43,10 +43,11 @@ public class RequestParser {
 
     private void parseHeaders(String request) {
         String[] lines = request.split("\n");
-        headers = new ArrayList<>();
+        headers = new HashMap<>();
         for (String line : lines) {
             if (line.contains(":")) {
-                headers.add(line);
+                String[] splitHeader = line.split(":");
+                headers.put(splitHeader[0], splitHeader[1]);
             }
         }
     }
@@ -72,7 +73,7 @@ public class RequestParser {
         return httpVersion;
     }
 
-    public ArrayList<String> getHeaders() {
+    public HashMap<String, String> getHeaders() {
         return headers;
     }
 

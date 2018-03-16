@@ -1,13 +1,13 @@
 package com.GeorgesServer.app.com.GeorgesServer.request;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 public class ClientRequest {
 
     private String httpVersion;
     private String method;
     private String url;
-    private ArrayList<String> headers;
+    private HashMap<String, String> headers;
     private String body;
 
     public void setHttpVersion(String httpVersion) {
@@ -34,11 +34,11 @@ public class ClientRequest {
         return method;
     }
 
-    public void setHeaders(ArrayList<String> headers) {
+    public void setHeaders(HashMap<String, String> headers) {
         this.headers = headers;
     }
 
-    public ArrayList<String> getHeaders() {
+    public HashMap<String, String> getHeaders() {
         return headers;
     }
 
