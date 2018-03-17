@@ -19,11 +19,13 @@ public class PostHandler implements IHandler {
 
     @Override
     public void handle() {
-        setStatus("HTTP/1.1 200 OK");
+        setStatus();
+//        setHeaders();
+        setBody();
     }
     
-    public void setStatus(String status) {
-        this.status = status;
+    public void setStatus() {
+        this.status = "HTTP/1.1 200 OK";
     }
     
     @Override
@@ -36,15 +38,29 @@ public class PostHandler implements IHandler {
         return this.headers;
     }
 
+    public void setHeaders() {
+        headers = new HashMap<>();
+        headers.put("Content-Length", Integer.toString(clientRequest.getBody().length()));
+    }
+
     @Override
     public String getBody() {
         return this.body;
+    }
+
+    public void setBody() {
+       this.body = clientRequest.getBody();
     }
 
     @Override
     public String format() {
         StringBuilder response = new StringBuilder();
         response.append(getStatus()).append("\n");
+        for (String key : getHeaders().keySet()) {
+            String value = getHeaders().get(key);
+            response.append(key).append(":").append(value).append("\n");
+        }
+        response.append("\n").append(getBody());
         return response.toString();
     }
 
