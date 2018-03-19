@@ -1,10 +1,7 @@
 package com.GeorgesServer.app;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.FourOhFourHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.OptionsHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.*;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +16,7 @@ import static org.mockito.Mockito.when;
 class RouterTest {
     private Router subject;
     private ClientRequest mockedClientRequest;
-    private String publicFolderPath = "";
+    private String publicFolderPath = "../cob_spec/public/";
 
     @BeforeEach
     private void setUp() {
@@ -64,6 +61,16 @@ class RouterTest {
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
         assertTrue(result instanceof FourOhFourHandler);
+    }
+
+    @Test
+    void routerChoosesFilesHandlerWhenAFileExistsInTheDirectory() {
+        when(mockedClientRequest.getUrl()).thenReturn("/file1");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof FilesHandler);
     }
 
 }

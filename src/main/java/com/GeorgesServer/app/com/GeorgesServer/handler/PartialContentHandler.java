@@ -11,6 +11,7 @@ import java.util.HashMap;
 
 public class PartialContentHandler implements IHandler{
 
+    private Path file;
     private ClientRequest request;
     private String publicFolderPath;
     private HashMap<String,String> headers;
@@ -19,6 +20,7 @@ public class PartialContentHandler implements IHandler{
     private String body;
 
     public PartialContentHandler(String publicFolderPath, ClientRequest request) {
+        this.file = Paths.get(publicFolderPath + request.getUrl());
         this.request = request;
         this.publicFolderPath = publicFolderPath;
     }
@@ -68,8 +70,6 @@ public class PartialContentHandler implements IHandler{
     }
 
     public String getFileContents() {
-        String fileWeWant = "/partial_content.txt";
-        Path file = Paths.get(publicFolderPath + fileWeWant);
         String fileContents = "";
         try {
             fileContents = new String(Files.readAllBytes(file));

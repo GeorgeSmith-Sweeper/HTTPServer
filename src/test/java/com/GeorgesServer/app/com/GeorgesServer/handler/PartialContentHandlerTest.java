@@ -14,17 +14,21 @@ import static org.mockito.Mockito.when;
 class PartialContentHandlerTest {
     private PartialContentHandler subject;
     private ClientRequest mockClientRequest;
+    private HashMap<String, String> headers;
 
     @BeforeEach
     public void setUp() {
         String publicFolderPath = "../cob_spec/public/";
+        headers = new HashMap<>();
         mockClientRequest = mock(ClientRequest.class);
+        when(mockClientRequest.getUrl()).thenReturn("/partial_content.txt");
+
         subject = new PartialContentHandler(publicFolderPath, mockClientRequest);
     }
 
     @Test
     void getBytePositionsReturnsAFirstAndLastBytePosition() {
-        HashMap<String, String> headers = new HashMap<>();
+
         headers.put("Range", " bytes=0-4");
         String expectedFirstBytePosition = "0";
         String expectedLastBytePosition = "4";
@@ -61,7 +65,6 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeHasAStartAndEndingPosition() {
-        HashMap<String, String> headers = new HashMap<>();
         headers.put("Range", " bytes=0-4");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 0-4\n";
@@ -78,7 +81,6 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAnEndingPosition() {
-        HashMap<String, String> headers = new HashMap<>();
         headers.put("Range", " bytes=4- ");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 4-76\n";
@@ -96,7 +98,6 @@ class PartialContentHandlerTest {
 
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAStartingPosition() {
-        HashMap<String, String> headers = new HashMap<>();
         headers.put("Range", " bytes= -6");
         String status = "HTTP/1.1 206 Partial Content\n";
         String contentRange = "Content-Range: bytes 71-76\n";
