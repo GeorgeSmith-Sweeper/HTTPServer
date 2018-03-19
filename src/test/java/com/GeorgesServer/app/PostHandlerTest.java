@@ -20,34 +20,21 @@ class PostHandlerTest {
     }
 
     @Test
-    void postRequestsRespondWithA200StatusCode() {
-        String expectedResponse = "HTTP/1.1 200 OK";
+    void postRequestBuildsAFullResponse() {
+        String expectedStatus = "HTTP/1.1 200 OK";
+        String expectedBody = "\"My\"=\"Data\"";
+        String expectedHeaders = "11";
+
+        when(mockClientRequest.getBody()).thenReturn(expectedBody);
 
         subject.handle();
-        String result = subject.getStatus();
+        String status = subject.getStatus();
+        String headers = subject.getHeaders().get("Content-Length");
+        String body = subject.getBody();
 
-        assertEquals(expectedResponse, result);
-    }
 
-    @Test
-    void postRequestSetsTheBodyOfResponse() {
-        String body = "\"My\"=\"Data\"";
-        when(mockClientRequest.getBody()).thenReturn(body);
-        subject.handle();
-
-        String result = subject.getBody();
-
-        assertEquals(body, result);
-    }
-
-    @Test
-    void postRequestSetsContentLenghToTheLengthOfTheBody() {
-        String body = "\"My\"=\"Data\"";
-        when(mockClientRequest.getBody()).thenReturn(body);
-        subject.handle();
-
-        String result = subject.getHeaders().get("Content-Length");
-
-        assertEquals("11", result);
+        assertEquals(expectedStatus, status);
+        assertEquals(expectedBody, body);
+        assertEquals(expectedHeaders, headers);
     }
 }

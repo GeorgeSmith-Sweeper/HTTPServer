@@ -20,8 +20,8 @@ public class PostHandler implements IHandler {
     @Override
     public void handle() {
         setStatus();
-//        setHeaders();
         setBody();
+        setHeaders();
     }
     
     public void setStatus() {
@@ -58,11 +58,10 @@ public class PostHandler implements IHandler {
         response.append(getStatus()).append("\n");
         for (String key : getHeaders().keySet()) {
             String value = getHeaders().get(key);
-            response.append(key).append(":").append(value).append("\n");
+            response.append(key).append(": ").append(value).append("\n");
         }
         response.append("\n").append(getBody());
+        System.out.println(response.toString());
         return response.toString();
     }
-
-
 }
