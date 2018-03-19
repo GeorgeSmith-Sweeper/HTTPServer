@@ -1,18 +1,23 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 
 import java.util.HashMap;
 
 public class FourOhFourHandler implements IHandler{
+    private String status;
+
     @Override
     public void handle() {
+        setStatus();
+    }
 
+    private void setStatus() {
+        this.status = "HTTP/1.1 404 Not Found";
     }
 
     @Override
     public String getStatus() {
-        return null;
+        return this.status;
     }
 
     @Override
@@ -22,11 +27,13 @@ public class FourOhFourHandler implements IHandler{
 
     @Override
     public String getBody() {
-        return null;
+        return "";
     }
 
     @Override
     public String format() {
-        return null;
+        StringBuilder response = new StringBuilder();
+        response.append(getStatus()).append("\n");
+        return response.toString();
     }
 }
