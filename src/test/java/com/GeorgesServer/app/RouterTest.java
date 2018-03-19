@@ -2,6 +2,7 @@ package com.GeorgesServer.app;
 
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.OptionsHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -43,6 +44,15 @@ class RouterTest {
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
         assertTrue(result instanceof PostHandler);
+    }
+
+    @Test
+    void routerChoosesOptionsHandlerWhenTheUrlIsMethod_Options() {
+        when(mockedClientRequest.getMethod()).thenReturn("OPTIONS");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof OptionsHandler);
     }
 
 }
