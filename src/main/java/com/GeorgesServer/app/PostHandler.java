@@ -61,7 +61,6 @@ public class PostHandler implements IHandler {
             response.append(key).append(": ").append(value).append("\n");
         }
         response.append("\n").append(getBody());
-        System.out.println(response.toString());
         return response.toString();
     }
 }

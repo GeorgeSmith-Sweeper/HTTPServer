@@ -57,7 +57,6 @@ public class OptionsHandler implements IHandler {
             String value = getHeaders().get(key);
             response.append(key).append(": ").append(value).append("\n");
         }
-        System.out.println(response.toString());
         return response.toString();
     }
 }
