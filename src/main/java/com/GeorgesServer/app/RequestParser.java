@@ -5,7 +5,6 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import java.io.InputStream;
 import java.util.HashMap;
 
-
 public class RequestParser {
 
     private RequestReader requestReader;
@@ -30,7 +29,7 @@ public class RequestParser {
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());
         clientRequest.setHeaders(getHeaders());
-        clientRequest.setBody(body);
+        clientRequest.setBody(getBody());
         return clientRequest;
     }
     
@@ -54,10 +53,9 @@ public class RequestParser {
 
     private void parseBody(String request) {
         String[] lines = request.split("\n");
-        for (int index = 0; index < lines.length; index++) {
-            if (lines[index].isEmpty()) {
-                this.body = lines[index+1];
-            }
+        String lastLine = lines[lines.length - 1];
+        if (!lastLine.isEmpty()) {
+            this.body = lastLine;
         }
     }
 

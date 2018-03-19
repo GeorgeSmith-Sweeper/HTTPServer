@@ -1,36 +1,42 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.HashMap;
 
-public class PostHandler implements IHandler {
-    private String publicFolderPath;
-    private ClientRequest clientRequest;
+public class OptionsHandler implements IHandler {
+
+    private ClientRequest request;
     private String status;
     private HashMap<String,String> headers;
-    private String body;
 
-    public PostHandler(String publicFolderPath, ClientRequest clientRequest) {
-        this.publicFolderPath = publicFolderPath;
-        this.clientRequest = clientRequest;
+    public OptionsHandler(ClientRequest request) {
+        this.request = request;
     }
 
     @Override
     public void handle() {
         setStatus();
-        setBody();
         setHeaders();
     }
-    
-    public void setStatus() {
+
+    private void setStatus() {
         this.status = "HTTP/1.1 200 OK";
     }
-    
+
     @Override
     public String getStatus() {
         return this.status;
+    }
+
+    public void setHeaders() {
+        headers = new HashMap<>();
+        if (request.getUrl().equals("/method_options2")) {
+            headers.put("Allow", "GET,OPTIONS");
+        } else {
+            headers.put("Allow", "GET,HEAD,POST,OPTIONS,PUT");
+        }
     }
 
     @Override
@@ -38,18 +44,9 @@ public class PostHandler implements IHandler {
         return this.headers;
     }
 
-    public void setHeaders() {
-        headers = new HashMap<>();
-        headers.put("Content-Length", Integer.toString(clientRequest.getBody().length()));
-    }
-
     @Override
     public String getBody() {
-        return this.body;
-    }
-
-    public void setBody() {
-       this.body = clientRequest.getBody();
+        return "";
     }
 
     @Override
@@ -60,7 +57,6 @@ public class PostHandler implements IHandler {
             String value = getHeaders().get(key);
             response.append(key).append(": ").append(value).append("\n");
         }
-        response.append("\n").append(getBody());
         return response.toString();
     }
 }

@@ -2,6 +2,7 @@ package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.DefaultHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.OptionsHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
@@ -21,6 +22,9 @@ public class Router {
         }
         if (request.getMethod().equals("POST")) {
             return new PostHandler(publicFolderPath, request);
+        }
+        if (request.getMethod().equals("OPTIONS")) {
+            return new OptionsHandler(request);
         }
         return new DefaultHandler();
     }
