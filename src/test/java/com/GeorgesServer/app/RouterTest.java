@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 class RouterTest {
     private Router subject;
     private ClientRequest mockedClientRequest;
-    private String publicFolderPath = "";
+    private String publicFolderPath = "../cob_spec/public/";
 
     @BeforeEach
     private void setUp() {
@@ -64,6 +64,16 @@ class RouterTest {
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
         assertTrue(result instanceof FourOhFourHandler);
+    }
+
+    @Test
+    void routerChoosesFilesHandlerWhenAFileExistsInTheDirectory() {
+        when(mockedClientRequest.getUrl()).thenReturn("/file1");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof FilesHandler);
     }
 
 }

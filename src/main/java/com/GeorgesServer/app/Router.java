@@ -3,17 +3,15 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.handler.*;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
-import java.util.HashMap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class Router {
 
-    private HashMap<String, IHandler> routes;
-
-    public Router() {
-        routes = new HashMap<>();
-    }
-
     public IHandler route(String publicFolderPath, ClientRequest request) {
+        Path path = Paths.get(publicFolderPath + request.getUrl());
+
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
         }
@@ -25,6 +23,10 @@ public class Router {
         }
         if (request.getUrl().equals("/foobar") && !request.getMethod().isEmpty()) {
             return new FourOhFourHandler();
+        }
+
+        if (Files.exists(path)) {
+            return new FilesHandler(publicFolderPath, request);
         }
         return new DefaultHandler();
     }
