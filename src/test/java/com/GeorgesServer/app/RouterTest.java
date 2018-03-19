@@ -1,10 +1,7 @@
 package com.GeorgesServer.app;
 
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.FourOhFourHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.OptionsHandler;
-import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
+import com.GeorgesServer.app.com.GeorgesServer.handler.*;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
