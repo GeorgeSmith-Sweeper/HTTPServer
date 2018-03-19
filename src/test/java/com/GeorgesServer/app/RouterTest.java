@@ -1,6 +1,7 @@
 package com.GeorgesServer.app;
 
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.FourOhFourHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.OptionsHandler;
 import com.GeorgesServer.app.com.GeorgesServer.handler.PartialContentHandler;
@@ -53,6 +54,16 @@ class RouterTest {
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
         assertTrue(result instanceof OptionsHandler);
+    }
+
+    @Test
+    void routerChooses404HandlerWhenTheUrlIsFoobar() {
+        when(mockedClientRequest.getUrl()).thenReturn("/foobar");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof FourOhFourHandler);
     }
 
 }
