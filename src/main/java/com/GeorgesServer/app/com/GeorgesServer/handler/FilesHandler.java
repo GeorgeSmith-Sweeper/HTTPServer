@@ -43,7 +43,7 @@ public class FilesHandler implements IHandler{
     private void setBody() {
         String fileContents = "";
         try {
-            fileContents = new String(Files.readAllBytes(path));
+            fileContents = new String(Files.readAllBytes(path), "ISO-8859-1");
         } catch (IOException e) {
             e.printStackTrace();
         }
