@@ -31,4 +31,28 @@ class FilesHandlerTest {
 
         assertEquals(expectedBody, result);
     }
+
+    @Test
+    void filesHandlerAddsTheContentTypeToTheHeaders() {
+        String expectedContentType = "image/jpeg";
+        when(mockClientRequest.getUrl()).thenReturn("/image.jpeg");
+        subject = new FilesHandler(publicFolderPath, mockClientRequest);
+
+        subject.handle();
+        String result = subject.getHeaders().get("Content-Type");
+
+        assertEquals(expectedContentType, result);
+    }
+
+    @Test
+    void filesHandlerContentTypeDefaultsToTEXTHTTP() {
+        String expectedContentType = "text/http";
+        when(mockClientRequest.getUrl()).thenReturn("/file1");
+        subject = new FilesHandler(publicFolderPath, mockClientRequest);
+
+        subject.handle();
+        String result = subject.getHeaders().get("Content-Type");
+
+        assertEquals(expectedContentType, result);
+    }
 }
