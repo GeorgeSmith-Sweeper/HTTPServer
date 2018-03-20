@@ -15,7 +15,7 @@ class AuthHandlerTest {
     @BeforeEach
     public void setUp() {
         mockClientRequest = mock(ClientRequest.class);
-        subject = new AuthHandler(mockClientRequest);
+        subject = new AuthHandler(publicFolderPath, mockClientRequest);
     }
 
     @Test
