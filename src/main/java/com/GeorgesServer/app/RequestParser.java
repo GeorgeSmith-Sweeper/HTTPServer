@@ -25,6 +25,7 @@ public class RequestParser {
         parseRequestStartLine(request);
         parseHeaders(request);
         parseBody(request);
+        System.out.println(request);
         clientRequest.setMethod(getMethod());
         clientRequest.setUrl(getUrl());
         clientRequest.setHttpVersion(getHttpVersion());

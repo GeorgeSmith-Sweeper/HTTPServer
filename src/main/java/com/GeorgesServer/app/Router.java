@@ -28,7 +28,7 @@ public class Router {
             return new FilesHandler(publicFolderPath, request);
         }
         if (request.getUrl().equals("/logs")) {
-            return new AuthHandler();
+            return new AuthHandler(request);
         }
         return new DefaultHandler();
     }
