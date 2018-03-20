@@ -24,9 +24,11 @@ public class Router {
         if (request.getUrl().equals("/foobar") && !request.getMethod().isEmpty()) {
             return new FourOhFourHandler();
         }
-
         if (Files.exists(path)) {
             return new FilesHandler(publicFolderPath, request);
+        }
+        if (request.getUrl().equals("/logs")) {
+            return new AuthHandler();
         }
         return new DefaultHandler();
     }

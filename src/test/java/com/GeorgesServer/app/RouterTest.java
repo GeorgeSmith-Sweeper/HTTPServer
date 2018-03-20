@@ -73,4 +73,14 @@ class RouterTest {
         assertTrue(result instanceof FilesHandler);
     }
 
+    @Test
+    void routerChoosesAuthenticationHandlerWhen() {
+        when(mockedClientRequest.getUrl()).thenReturn("/logs");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof AuthHandler);
+    }
+
 }
