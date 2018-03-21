@@ -18,7 +18,6 @@ public class Router {
     public IHandler route(String publicFolderPath, ClientRequest request) {
         Path path = Paths.get(publicFolderPath + request.getUrl());
         requestLogger.log(request);
-        System.out.println(requestLogger.getLogs().get(0));
 
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
@@ -36,7 +35,7 @@ public class Router {
             return new FilesHandler(publicFolderPath, request);
         }
         if (request.getUrl().equals("/logs")) {
-            return new AuthHandler(publicFolderPath, request);
+            return new AuthHandler(request, requestLogger);
         }
         return new DefaultHandler();
     }

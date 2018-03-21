@@ -1,32 +1,38 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.RequestLogger;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Base64;
+import static javax.xml.bind.DatatypeConverter.parseBase64Binary;
 
 public class AuthHandler implements IHandler{
 
-    private String publicFolderPath;
-    private final String requestBody;
-    private final HashMap<String, String> requestHeaders;
-    private final String requestMethod;
-    private final String requestUrl;
+    private ClientRequest request;
+    private RequestLogger requestLogger;
     private HashMap<String, String> headers;
     private String status;
     private String body;
 
-    public AuthHandler(String publicFolderPath, ClientRequest request) {
-        this.publicFolderPath = publicFolderPath;
-        this.requestBody = request.getBody();
-        this.requestHeaders = request.getHeaders();
-        this.requestMethod = request.getMethod();
-        this.requestUrl = request.getUrl();
+    public AuthHandler(ClientRequest request, RequestLogger requestLogger) {
+        this.request = request;
+        this.requestLogger = requestLogger;
     }
 
     @Override
     public void handle() {
+        setBody();
+        setStatus();
         setHeaders();
+    }
+
+    private void setStatus() {
+        if (isAuthorized()) {
+            this.status = "HTTP/1.1 200 OK";
+        } else {
+            this.status = "HTTP/1.1 401 Unauthorized";
+        }
     }
 
     @Override
@@ -36,16 +42,35 @@ public class AuthHandler implements IHandler{
 
     private void setHeaders() {
         headers = new HashMap<>();
-        if (!requestHeaders.containsKey("Authorization")) {
+        if (!isAuthorized()) {
             headers.put("WWW-Authenticate", "Basic realm=WallyWorld");
-            this.status = "HTTP/1.1 401 Unauthorized";
-            this.body = "";
+        }
+    }
+
+    public boolean isAuthorized() {
+        try {
+            String credentials = request.getHeaders().get("Authorization");
+            String encoded = credentials.replace("Basic ", "");
+            byte[] decoded = parseBase64Binary(encoded);
+            return (Arrays.equals("admin:hunter2".getBytes(), decoded));
+        } catch (NullPointerException e) {
+            return false;
         }
     }
 
     @Override
     public HashMap<String, String> getHeaders() {
         return this.headers;
+    }
+
+    private void setBody() {
+        if (isAuthorized()) {
+            for (String log : requestLogger.getLogs()) {
+                this.body += log + "\n";
+            }
+        } else {
+            this.body = "";
+        }
     }
 
     @Override
