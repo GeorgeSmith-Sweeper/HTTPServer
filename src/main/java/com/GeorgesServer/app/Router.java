@@ -19,6 +19,14 @@ public class Router {
         Path path = Paths.get(publicFolderPath + request.getUrl());
         requestLogger.log(request);
 
+        System.out.println(Files.isDirectory(path));
+
+        if (Files.isDirectory(path)) {
+            return new DirectoryHandler(publicFolderPath, request);
+        }
+        if (Files.exists(path)) {
+            return new FilesHandler(publicFolderPath, request);
+        }
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
         }
@@ -31,12 +39,11 @@ public class Router {
         if (request.getUrl().equals("/foobar") && !request.getMethod().isEmpty()) {
             return new FourOhFourHandler();
         }
-        if (Files.exists(path)) {
-            return new FilesHandler(publicFolderPath, request);
-        }
+
         if (request.getUrl().equals("/logs")) {
             return new AuthHandler(request, requestLogger);
         }
+
         return new DefaultHandler();
     }
 }

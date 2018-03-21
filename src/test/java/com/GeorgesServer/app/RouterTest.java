@@ -74,13 +74,23 @@ class RouterTest {
     }
 
     @Test
-    void routerChoosesAuthenticationHandlerWhen() {
+    void routerChoosesAuthHandlerWhenAProtectedUrlIsRequested() {
         when(mockedClientRequest.getUrl()).thenReturn("/logs");
         when(mockedClientRequest.getMethod()).thenReturn("GET");
 
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
         assertTrue(result instanceof AuthHandler);
+    }
+
+    @Test
+    void routerChoosesDirectoryHandlerWhenADirectoryIsRequested() {
+        when(mockedClientRequest.getUrl()).thenReturn("/");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof DirectoryHandler);
     }
 
 }
