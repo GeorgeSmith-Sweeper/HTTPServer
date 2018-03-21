@@ -62,4 +62,13 @@ class ClientRequestTest {
 
         assertEquals(body, subject.getBody());
     }
+
+    @Test
+    void setStartLineSetsTheStartLineField() {
+        String startLine = "GET / HTTP/1.1";
+
+        subject.setStartLine(startLine);
+
+        assertEquals(startLine, subject.getStartLine());
+    }
 }

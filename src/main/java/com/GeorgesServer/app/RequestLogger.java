@@ -13,9 +13,7 @@ public class RequestLogger {
     }
 
     public void log(ClientRequest clientRequest) {
-        String request = clientRequest.getMethod() + " " +
-                clientRequest.getUrl() + " " +
-                clientRequest.getHttpVersion();
+        String request = clientRequest.getStartLine();
         logs.add(request);
     }
 

@@ -9,8 +9,16 @@ import java.nio.file.Paths;
 
 public class Router {
 
+    private RequestLogger requestLogger;
+
+    public Router() {
+        this.requestLogger = new RequestLogger();
+    }
+
     public IHandler route(String publicFolderPath, ClientRequest request) {
         Path path = Paths.get(publicFolderPath + request.getUrl());
+        requestLogger.log(request);
+        System.out.println(requestLogger.getLogs().get(0));
 
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);

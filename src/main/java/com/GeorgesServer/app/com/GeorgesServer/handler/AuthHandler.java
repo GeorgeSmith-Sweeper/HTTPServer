@@ -4,7 +4,6 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.HashMap;
 import java.util.Base64;
-import java.util.logging.Logger;
 
 public class AuthHandler implements IHandler{
 
@@ -43,6 +42,7 @@ public class AuthHandler implements IHandler{
             this.body = "";
         }
     }
+
     @Override
     public HashMap<String, String> getHeaders() {
         return this.headers;

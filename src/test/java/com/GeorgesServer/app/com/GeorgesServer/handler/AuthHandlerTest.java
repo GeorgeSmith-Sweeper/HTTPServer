@@ -30,5 +30,4 @@ class AuthHandlerTest {
         assertEquals(expectedHeader, header);
         assertEquals(expectedStatus, status);
     }
-
 }

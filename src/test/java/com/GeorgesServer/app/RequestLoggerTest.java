@@ -21,9 +21,7 @@ class RequestLoggerTest {
 
     @Test
     void requestLoggerStoresEachClientRequestStartLine() {
-        when(mockClientRequest.getMethod()).thenReturn("GET");
-        when(mockClientRequest.getUrl()).thenReturn("/");
-        when(mockClientRequest.getHttpVersion()).thenReturn("HTTP/1.1");
+        when(mockClientRequest.getStartLine()).thenReturn("GET / HTTP/1.1");
 
         subject.log(mockClientRequest);
 
