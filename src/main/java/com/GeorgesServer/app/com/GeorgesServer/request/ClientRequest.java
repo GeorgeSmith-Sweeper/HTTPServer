@@ -9,6 +9,7 @@ public class ClientRequest {
     private String url;
     private HashMap<String, String> headers;
     private String body;
+    private String startLine;
 
     public void setHttpVersion(String httpVersion) {
         this.httpVersion = httpVersion;
@@ -48,5 +49,13 @@ public class ClientRequest {
 
     public String getBody() {
         return body;
+    }
+
+    public void setStartLine(String startLine) {
+        this.startLine = startLine;
+    }
+
+    public String getStartLine() {
+        return startLine;
     }
 }

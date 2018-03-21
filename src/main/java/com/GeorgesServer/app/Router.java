@@ -9,8 +9,15 @@ import java.nio.file.Paths;
 
 public class Router {
 
+    private RequestLogger requestLogger;
+
+    public Router() {
+        this.requestLogger = new RequestLogger();
+    }
+
     public IHandler route(String publicFolderPath, ClientRequest request) {
         Path path = Paths.get(publicFolderPath + request.getUrl());
+        requestLogger.log(request);
 
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
@@ -24,9 +31,11 @@ public class Router {
         if (request.getUrl().equals("/foobar") && !request.getMethod().isEmpty()) {
             return new FourOhFourHandler();
         }
-
         if (Files.exists(path)) {
             return new FilesHandler(publicFolderPath, request);
+        }
+        if (request.getUrl().equals("/logs")) {
+            return new AuthHandler(request, requestLogger);
         }
         return new DefaultHandler();
     }

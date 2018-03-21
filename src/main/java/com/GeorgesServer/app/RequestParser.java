@@ -14,6 +14,7 @@ public class RequestParser {
     private ClientRequest clientRequest;
     private HashMap<String, String> headers;
     private String body;
+    private String startLine;
 
     public RequestParser(RequestReader requestReader) {
         this.requestReader = requestReader;
@@ -30,14 +31,17 @@ public class RequestParser {
         clientRequest.setHttpVersion(getHttpVersion());
         clientRequest.setHeaders(getHeaders());
         clientRequest.setBody(getBody());
+        clientRequest.setStartLine(getStartLine());
         return clientRequest;
     }
     
     private void parseRequestStartLine(String request) {
         String[] splitRequest = request.split(" ");
+        String startLine = request.split("\n")[0];
         this.method = splitRequest[0];
         this.url = splitRequest[1];
         this.httpVersion = splitRequest[2];
+        this.startLine = startLine;
     }
 
     private void parseHeaders(String request) {
@@ -77,5 +81,9 @@ public class RequestParser {
 
     public String getBody() {
         return body;
+    }
+
+    public String getStartLine() {
+        return startLine;
     }
 }

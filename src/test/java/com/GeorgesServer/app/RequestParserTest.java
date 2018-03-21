@@ -28,6 +28,7 @@ public class RequestParserTest {
         assertEquals("GET", subject.getMethod());
         assertEquals("/", subject.getUrl());
         assertEquals("HTTP/1.1", subject.getHttpVersion());
+        assertEquals("GET / HTTP/1.1", subject.getStartLine());
     }
 
     @Test
