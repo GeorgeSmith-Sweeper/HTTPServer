@@ -14,6 +14,8 @@ public class ParameterHandler implements IHandler {
     private String status;
     private String[] queries;
     private HashMap<String, String> parameters;
+    private String body;
+    private HashMap<String,String> headers;
 
     public ParameterHandler(String publicFolderPath, ClientRequest request) {
         this.publicFolderPath = publicFolderPath;
@@ -25,6 +27,27 @@ public class ParameterHandler implements IHandler {
         setStatus();
         setQueries();
         parseParameters();
+        setBody();
+    }
+
+
+    private void setStatus() {
+        this.status = "HTTP/1.1 200 OK";
+    }
+
+    @Override
+    public String getStatus() {
+        return this.status;
+    }
+
+    private void setQueries() {
+        int questionMarkLocation = request.getUrl().indexOf("?");
+        String subRequest = request.getUrl().substring(questionMarkLocation+1);
+        queries = subRequest.split("&");
+    }
+
+    public String[] getQueries() {
+        return queries;
     }
 
     private void parseParameters() {
@@ -40,41 +63,34 @@ public class ParameterHandler implements IHandler {
         }
     }
 
-    private void setStatus() {
-        this.status = "HTTP/1.1 200 OK";
-    }
-
-    @Override
-    public String getStatus() {
-        return null;
+    public HashMap<String,String> getParameters() {
+        return parameters;
     }
 
     @Override
     public HashMap<String, String> getHeaders() {
-        return null;
+        return this.headers;
+    }
+
+    private void setBody() {
+        StringBuilder content = new StringBuilder();
+        for (String key : parameters.keySet()) {
+            String value = parameters.get(key);
+            content.append(key).append(" = ").append(value);
+        }
+        this.body = content.toString();
     }
 
     @Override
     public String getBody() {
-        return null;
+        return this.body;
     }
 
     @Override
     public String format() {
-        return getStatus() + "\n";
-    }
-
-    private void setQueries() {
-        int questionMarkLocation = request.getUrl().indexOf("?");
-        String subRequest = request.getUrl().substring(questionMarkLocation+1);
-        queries = subRequest.split("&");
-    }
-
-    public String[] getQueries() {
-        return queries;
-    }
-
-    public HashMap<String,String> getParameters() {
-        return parameters;
+        StringBuilder response = new StringBuilder();
+        response.append(getStatus()).append("\n");
+        response.append("\n").append(body);
+        return response.toString();
     }
 }
