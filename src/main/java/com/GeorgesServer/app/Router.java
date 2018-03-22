@@ -22,6 +22,12 @@ public class Router {
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
         }
+        if (Files.isDirectory(path)) {
+            return new DirectoryHandler(publicFolderPath, request);
+        }
+        if (Files.exists(path)) {
+            return new FilesHandler(publicFolderPath, request);
+        }
         if (request.getMethod().equals("POST")) {
             return new PostHandler(publicFolderPath, request);
         }
@@ -31,12 +37,11 @@ public class Router {
         if (request.getUrl().equals("/foobar") && !request.getMethod().isEmpty()) {
             return new FourOhFourHandler();
         }
-        if (Files.exists(path)) {
-            return new FilesHandler(publicFolderPath, request);
-        }
+
         if (request.getUrl().equals("/logs")) {
             return new AuthHandler(request, requestLogger);
         }
+
         return new DefaultHandler();
     }
 }
