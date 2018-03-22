@@ -9,6 +9,8 @@ public class ParameterHandler implements IHandler {
 
     private String publicFolderPath;
     private ClientRequest request;
+    private String status;
+    private String[] queries;
 
     public ParameterHandler(String publicFolderPath, ClientRequest request) {
         this.publicFolderPath = publicFolderPath;
@@ -17,7 +19,12 @@ public class ParameterHandler implements IHandler {
 
     @Override
     public void handle() {
+        setStatus();
+        setQueries();
+    }
 
+    private void setStatus() {
+        this.status = "HTTP/1.1 200 OK";
     }
 
     @Override
@@ -37,6 +44,16 @@ public class ParameterHandler implements IHandler {
 
     @Override
     public String format() {
-        return null;
+        return getStatus() + "\n";
+    }
+
+    private void setQueries() {
+        int questionMarkLocation = request.getUrl().indexOf("?");
+        String subRequest = request.getUrl().substring(questionMarkLocation+1);
+        queries = subRequest.split("&");
+    }
+
+    public String[] getQueries() {
+        return queries;
     }
 }
