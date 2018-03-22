@@ -19,16 +19,14 @@ public class Router {
         Path path = Paths.get(publicFolderPath + request.getUrl());
         requestLogger.log(request);
 
-        System.out.println(Files.isDirectory(path));
-
+        if (request.getHeaders().containsKey("Range")) {
+            return new PartialContentHandler(publicFolderPath, request);
+        }
         if (Files.isDirectory(path)) {
             return new DirectoryHandler(publicFolderPath, request);
         }
         if (Files.exists(path)) {
             return new FilesHandler(publicFolderPath, request);
-        }
-        if (request.getHeaders().containsKey("Range")) {
-            return new PartialContentHandler(publicFolderPath, request);
         }
         if (request.getMethod().equals("POST")) {
             return new PostHandler(publicFolderPath, request);

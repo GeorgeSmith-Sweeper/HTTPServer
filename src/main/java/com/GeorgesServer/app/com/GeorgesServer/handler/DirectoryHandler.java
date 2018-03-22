@@ -1,6 +1,5 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.File;
@@ -10,8 +9,8 @@ import java.util.HashMap;
 
 public class DirectoryHandler implements IHandler {
 
+    private String publicFolderPath;
     private Path path;
-    private ClientRequest request;
     private String status;
     private String body;
     private HashMap<String, String> headers;
@@ -19,14 +18,15 @@ public class DirectoryHandler implements IHandler {
 
     public DirectoryHandler(String publicFolderPath, ClientRequest request) {
         this.path = Paths.get(publicFolderPath + request.getUrl());
-        this.request = request;
+        this.publicFolderPath = publicFolderPath;
     }
 
     @Override
     public void handle() {
+        setFiles();
         setStatus();
         setHeaders();
-        setFiles();
+        setBody();
     }
 
     private void setFiles() {
@@ -35,6 +35,16 @@ public class DirectoryHandler implements IHandler {
 
     public File[] getFiles() {
         return files;
+    }
+
+    public String createLinks() {
+        StringBuilder links = new StringBuilder();
+
+        for (File file : files) {
+            String relativePath = file.getPath().split(publicFolderPath)[1];
+            links.append("<a href=\"/" + relativePath + "\">" + file.getName() + "</a><br>");
+        }
+        return links.toString();
     }
 
     private void setStatus() {
@@ -51,10 +61,13 @@ public class DirectoryHandler implements IHandler {
         headers.put("Content-Type", "text/html");
     }
 
-
     @Override
     public HashMap<String, String> getHeaders() {
         return this.headers;
+    }
+
+    public void setBody () {
+        this.body = createLinks();
     }
 
     @Override
@@ -70,6 +83,8 @@ public class DirectoryHandler implements IHandler {
             String value = getHeaders().get(key);
             response.append(key).append(":").append(value).append("\n");
         }
+        response.append("\n").append(getBody());
         return response.toString();
     }
+
 }
