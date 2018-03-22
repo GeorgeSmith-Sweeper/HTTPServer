@@ -40,7 +40,7 @@ public class Router {
         if (request.getUrl().equals("/logs")) {
             return new AuthHandler(request, requestLogger);
         }
-        if (request.getUrl().contains("?")) {
+        if (request.getUrl().contains("?") && request.getUrl().contains("parameters")) {
             return new ParameterHandler(publicFolderPath, request);
         }
 

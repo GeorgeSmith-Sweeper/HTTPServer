@@ -43,7 +43,7 @@ class ParameterHandlerTest {
 
         HashMap<String, String> result = subject.getParameters();
 
-        assertEquals("jaguar" ,result.get("car"));
+        assertEquals("jaguar", result.get("car"));
     }
 
     @Test
@@ -55,6 +55,7 @@ class ParameterHandlerTest {
 
         HashMap<String, String> result = subject.getParameters();
 
-        assertEquals(expectedValue ,result.get("car"));
+        assertEquals(expectedValue, result.get("car"));
     }
+
 }

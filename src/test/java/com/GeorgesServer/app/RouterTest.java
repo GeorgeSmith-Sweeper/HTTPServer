@@ -94,8 +94,8 @@ class RouterTest {
     }
 
     @Test
-    void routerChoosesParmeterHandlerWhenAUrlContainsAQuestionMark() {
-        when(mockedClientRequest.getUrl()).thenReturn("/hello?foo=bar");
+    void routerChoosesParameterHandlerWhenAUrlContainsAQuestionMark() {
+        when(mockedClientRequest.getUrl()).thenReturn("/parameters?foo=bar");
         when(mockedClientRequest.getMethod()).thenReturn("GET");
 
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
