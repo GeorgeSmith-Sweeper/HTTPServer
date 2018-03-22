@@ -3,6 +3,8 @@ package com.GeorgesServer.app;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.HashMap;
 
 public class ParameterHandler implements IHandler {
@@ -27,9 +29,14 @@ public class ParameterHandler implements IHandler {
 
     private void parseParameters() {
         parameters = new HashMap<>();
-        for (String query : queries) {
-            String[] splitQuery = query.split("=");
-            parameters.put(splitQuery[0], splitQuery[1]);
+        try {
+            for (String query : queries) {
+                String[] splitQuery = query.split("=");
+                String decodedValue= URLDecoder.decode(splitQuery[1], "UTF-8");
+                parameters.put(splitQuery[0], decodedValue);
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
     }
 
