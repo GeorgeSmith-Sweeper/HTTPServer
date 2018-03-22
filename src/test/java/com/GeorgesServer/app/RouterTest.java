@@ -93,4 +93,14 @@ class RouterTest {
         assertTrue(result instanceof DirectoryHandler);
     }
 
+    @Test
+    void routerChoosesParmeterHandlerWhenAUrlContainsAQuestionMark() {
+        when(mockedClientRequest.getUrl()).thenReturn("/hello?foo=bar");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof ParameterHandler);
+    }
+
 }
