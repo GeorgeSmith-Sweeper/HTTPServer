@@ -4,6 +4,8 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -31,5 +33,19 @@ class ParameterHandlerTest {
 
         assertEquals(firstQuery, result[0]);
         assertEquals(secondQuery, result[1]);
+    }
+
+    @Test
+    void parameterParserAssignsValuesToKeysFromTheQuery() {
+        String[] queries = new String[1];
+        queries[0] = "car=jaguar";
+        String expectedValue = "jaguar";
+        when(mockedClientRequest.getUrl()).thenReturn("/hello?car=jaguar");
+
+        subject.handle();
+
+        HashMap<String, String> result = subject.getParameters();
+
+        assertEquals("jaguar" ,result.get("car"));
     }
 }

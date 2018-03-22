@@ -11,6 +11,7 @@ public class ParameterHandler implements IHandler {
     private ClientRequest request;
     private String status;
     private String[] queries;
+    private HashMap<String, String> parameters;
 
     public ParameterHandler(String publicFolderPath, ClientRequest request) {
         this.publicFolderPath = publicFolderPath;
@@ -21,6 +22,15 @@ public class ParameterHandler implements IHandler {
     public void handle() {
         setStatus();
         setQueries();
+        parseParameters();
+    }
+
+    private void parseParameters() {
+        parameters = new HashMap<>();
+        for (String query : queries) {
+            String[] splitQuery = query.split("=");
+            parameters.put(splitQuery[0], splitQuery[1]);
+        }
     }
 
     private void setStatus() {
@@ -55,5 +65,9 @@ public class ParameterHandler implements IHandler {
 
     public String[] getQueries() {
         return queries;
+    }
+
+    public HashMap<String,String> getParameters() {
+        return parameters;
     }
 }
