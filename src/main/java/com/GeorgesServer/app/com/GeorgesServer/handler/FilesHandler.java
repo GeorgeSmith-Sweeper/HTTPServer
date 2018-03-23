@@ -4,6 +4,7 @@ import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.IOException;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -51,19 +52,7 @@ public class FilesHandler implements IHandler{
     }
 
     private String applyContentType() {
-        if (requestUrl.contains("txt")) {
-            return "text/plain";
-        }
-        if (requestUrl.contains(".png")) {
-            return "image/png";
-        }
-        if (requestUrl.contains(".gif")) {
-            return "image/gif";
-        }
-        if (requestUrl.contains(".jpeg")) {
-            return "image/jpeg";
-        }
-        return "text/http";
+        return URLConnection.guessContentTypeFromName(requestUrl);
     }
 
 

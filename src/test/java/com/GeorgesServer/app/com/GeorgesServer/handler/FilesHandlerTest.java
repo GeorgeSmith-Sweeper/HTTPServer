@@ -42,16 +42,4 @@ class FilesHandlerTest {
 
         assertEquals(expectedContentType, result);
     }
-
-    @Test
-    void filesHandlerContentTypeDefaultsToTEXTHTTP() {
-        String expectedContentType = "text/http";
-        when(mockClientRequest.getUrl()).thenReturn("/file1");
-        subject = new FilesHandler(publicFolderPath, mockClientRequest);
-
-        subject.handle();
-        String result = subject.getHeaders().get("Content-Type");
-
-        assertEquals(expectedContentType, result);
-    }
 }
