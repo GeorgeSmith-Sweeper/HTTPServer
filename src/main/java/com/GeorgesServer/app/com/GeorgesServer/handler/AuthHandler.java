@@ -2,6 +2,7 @@ package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.StatusCodes;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -29,9 +30,9 @@ public class AuthHandler implements IHandler{
 
     private void setStatus() {
         if (isAuthorized()) {
-            this.status = "HTTP/1.1 200 OK";
+            this.status = StatusCodes.OK;
         } else {
-            this.status = "HTTP/1.1 401 Unauthorized";
+            this.status = StatusCodes.UNAUTHORIZED;
         }
     }
 

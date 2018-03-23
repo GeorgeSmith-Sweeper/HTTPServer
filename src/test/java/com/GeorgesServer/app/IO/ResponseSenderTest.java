@@ -1,4 +1,4 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.IO;
 
 import com.GeorgesServer.app.com.GeorgesServer.IO.ResponseSender;
 import org.junit.jupiter.api.BeforeEach;

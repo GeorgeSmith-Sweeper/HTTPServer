@@ -1,4 +1,4 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.request;
 
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
