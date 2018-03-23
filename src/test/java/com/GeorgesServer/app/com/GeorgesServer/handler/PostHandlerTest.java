@@ -5,6 +5,9 @@ import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -19,6 +22,7 @@ class PostHandlerTest {
     public void setUp() {
         mockClientRequest = mock(ClientRequest.class);
         when(mockClientRequest.getUrl()).thenReturn("/form");
+        when(mockClientRequest.getBody()).thenReturn("My=Data");
         subject = new PostHandler(filesPath, mockClientRequest);
     }
 
@@ -31,5 +35,16 @@ class PostHandlerTest {
 
 
         assertEquals(expectedStatus, status);
+    }
+
+    @Test
+    void postRequestCreatesANewFileThatContainsTheBodyContent() throws Exception {
+        String expectedBody = "My = Data";
+
+        subject.handle();
+
+        String body = new String(Files.readAllBytes(Paths.get("../HTTPServer/src/test/form")));
+
+        assertEquals(expectedBody, body);
     }
 }
