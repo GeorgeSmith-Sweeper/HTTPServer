@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ class FourOhFourHandlerTest {
 
     @Test
     void FourOhFourSendRespondsWithA404StatusAndNoBody() {
-        String expectedStatus = "HTTP/1.1 404 Not Found";
+        String expectedStatus = StatusCodes.NOT_FOUND;
 
         subject.handle();
         String status = subject.getStatus();

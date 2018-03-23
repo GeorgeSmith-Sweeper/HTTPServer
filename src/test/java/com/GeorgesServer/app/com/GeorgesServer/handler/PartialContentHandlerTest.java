@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -66,7 +67,7 @@ class PartialContentHandlerTest {
     @Test
     void handlerBuildsCorrectResponseWhenRangeHasAStartAndEndingPosition() {
         headers.put("Range", " bytes=0-4");
-        String status = "HTTP/1.1 206 Partial Content\n";
+        String status = StatusCodes.PARTIAL_CONTENT + "\n";
         String contentRange = "Content-Range: bytes 0-4\n";
         String contentLength = "Content-Length: 5\n";
         String body = "\nThis ";
@@ -82,7 +83,7 @@ class PartialContentHandlerTest {
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAnEndingPosition() {
         headers.put("Range", " bytes=4- ");
-        String status = "HTTP/1.1 206 Partial Content\n";
+        String status = StatusCodes.PARTIAL_CONTENT + "\n";
         String contentRange = "Content-Range: bytes 4-76\n";
         String contentLength = "Content-Length: 73\n";
         String body = "\n is a file that contains text to read part of in order to fulfill a 206.\n";
@@ -99,7 +100,7 @@ class PartialContentHandlerTest {
     @Test
     void handlerBuildsCorrectResponseWhenRangeDoesntHaveAStartingPosition() {
         headers.put("Range", " bytes= -6");
-        String status = "HTTP/1.1 206 Partial Content\n";
+        String status = StatusCodes.PARTIAL_CONTENT + "\n";
         String contentRange = "Content-Range: bytes 71-76\n";
         String contentLength = "Content-Length: 6\n";
         String body = "\n 206.\n";

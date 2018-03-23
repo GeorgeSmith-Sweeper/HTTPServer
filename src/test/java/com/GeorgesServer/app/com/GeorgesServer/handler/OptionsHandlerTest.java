@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ class OptionsHandlerTest {
 
     @Test
     void optionsHandlerReturnsWhichMethodsAreAllowedOnMethod_OptionsURL() {
-        String expectedStatus = "HTTP/1.1 200 OK";
+        String expectedStatus = StatusCodes.OK;
         String expectedHeaders = "GET,HEAD,POST,OPTIONS,PUT";
 
         when(mockClientRequest.getUrl()).thenReturn("/method_options");
@@ -36,7 +37,7 @@ class OptionsHandlerTest {
 
     @Test
     void optionsHandlerReturnsWhichMethodsAreAllowedOnMethod_Options2URL() {
-        String expectedStatus = "HTTP/1.1 200 OK";
+        String expectedStatus = StatusCodes.OK;
         String expectedHeaders = "GET,OPTIONS";
 
         when(mockClientRequest.getUrl()).thenReturn("/method_options2");

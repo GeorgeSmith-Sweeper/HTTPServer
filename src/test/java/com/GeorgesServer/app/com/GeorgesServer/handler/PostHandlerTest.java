@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,7 +28,7 @@ class PostHandlerTest {
 
     @Test
     void postRequestBuildsAFullResponse() {
-        String expectedStatus = "HTTP/1.1 200 OK";
+        String expectedStatus = StatusCodes.OK;
 
         subject.handle();
         String status = subject.getStatus();

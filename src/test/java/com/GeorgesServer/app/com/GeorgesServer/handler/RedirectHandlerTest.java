@@ -1,6 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.RedirectHandler;
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ class RedirectHandlerTest {
 
     @Test
     void redirectSetsA302Status() {
-        String expectedStatus = "HTTP/1.1 302 Found";
+        String expectedStatus = StatusCodes.FOUND;
         subject.handle();
 
         String result = subject.getStatus();

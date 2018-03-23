@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,7 +29,7 @@ class AuthHandlerTest {
 
     @Test
     void AuthHandlerSetsA401StatusWhenARequestIsUnauthorized() {
-        String expectedStatus = "HTTP/1.1 401 Unauthorized";
+        String expectedStatus = StatusCodes.UNAUTHORIZED;
 
         subject.handle();
         String status = subject.getStatus();
@@ -39,7 +40,7 @@ class AuthHandlerTest {
 
     @Test
     void AuthHandlerSetsA200StatusCorrectCredentialsAreProvided() {
-        String expectedStatus = "HTTP/1.1 200 OK";
+        String expectedStatus = StatusCodes.OK;
         HashMap<String, String> headers = new HashMap<>();
         headers.put("Authorization", "Basic YWRtaW46aHVudGVyMg==");
         when(mockClientRequest.getHeaders()).thenReturn(headers);
