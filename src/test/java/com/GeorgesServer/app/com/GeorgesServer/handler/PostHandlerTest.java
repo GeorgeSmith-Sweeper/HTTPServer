@@ -1,6 +1,5 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.PostHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

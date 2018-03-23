@@ -1,6 +1,5 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.HashMap;

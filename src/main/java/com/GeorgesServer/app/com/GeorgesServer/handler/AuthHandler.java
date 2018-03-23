@@ -1,6 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
-import com.GeorgesServer.app.RequestLogger;
+import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.Arrays;

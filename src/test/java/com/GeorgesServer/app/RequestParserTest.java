@@ -1,5 +1,8 @@
 package com.GeorgesServer.app;
 
+import com.GeorgesServer.app.com.GeorgesServer.IO.RequestReader;
+import com.GeorgesServer.app.com.GeorgesServer.IO.Streams;
+import com.GeorgesServer.app.com.GeorgesServer.request.RequestParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +17,7 @@ public class RequestParserTest {
     private Streams mockedStreams;
 
     @BeforeEach
-    public void setUp() {
+    private void setUp() {
         mockedRequestReader = mock(RequestReader.class);
         mockedStreams = mock(Streams.class);
         subject = new RequestParser(mockedRequestReader);

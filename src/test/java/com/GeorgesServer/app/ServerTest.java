@@ -2,8 +2,12 @@ package com.GeorgesServer.app;
 
 import static org.mockito.Mockito.*;
 
+import com.GeorgesServer.app.com.GeorgesServer.IO.ResponseSender;
+import com.GeorgesServer.app.com.GeorgesServer.IO.StreamMaker;
+import com.GeorgesServer.app.com.GeorgesServer.IO.Streams;
 import com.GeorgesServer.app.com.GeorgesServer.handler.IHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.request.RequestParser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,7 +24,7 @@ public class ServerTest {
     private String publicFolderPath = "";
 
     @BeforeEach
-    public void setUp() {
+    private void setUp() {
         mockedStreamMaker = mock(StreamMaker.class);
         mockedHandler = mock(IHandler.class);
         mockedClientRequest = mock(ClientRequest.class);

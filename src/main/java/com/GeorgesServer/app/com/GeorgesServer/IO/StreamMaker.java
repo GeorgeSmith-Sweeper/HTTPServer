@@ -1,4 +1,4 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.IO;
 
 import java.io.*;
 import java.net.ServerSocket;

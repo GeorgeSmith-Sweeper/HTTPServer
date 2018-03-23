@@ -1,12 +1,12 @@
-package com.GeorgesServer.app;
+package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.com.GeorgesServer.handler.RedirectHandler;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 class RedirectHandlerTest {
     private RedirectHandler subject;

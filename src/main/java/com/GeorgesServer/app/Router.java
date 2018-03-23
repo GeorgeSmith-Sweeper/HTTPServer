@@ -2,6 +2,7 @@ package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.handler.*;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

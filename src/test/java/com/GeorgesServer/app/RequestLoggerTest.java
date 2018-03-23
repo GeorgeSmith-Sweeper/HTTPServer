@@ -1,6 +1,7 @@
 package com.GeorgesServer.app;
 
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
+import com.GeorgesServer.app.com.GeorgesServer.request.RequestLogger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,7 @@ class RequestLoggerTest {
     String publicFolderPath = "../cob_spec/public/";
 
     @BeforeEach
-    public void setUp() {
+    private void setUp() {
         mockClientRequest = mock(ClientRequest.class);
         subject = new RequestLogger();
     }
