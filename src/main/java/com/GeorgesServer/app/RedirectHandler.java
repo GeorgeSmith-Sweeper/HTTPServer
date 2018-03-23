@@ -33,7 +33,7 @@ public class RedirectHandler implements IHandler {
 
     private void setHeaders() {
         headers = new HashMap<>();
-        headers.put("Location", "http://localhost:5000/");
+        headers.put("Location", "/");
     }
 
     @Override
@@ -43,17 +43,17 @@ public class RedirectHandler implements IHandler {
 
     @Override
     public String getBody() {
-        return null;
+        return "";
     }
 
     @Override
     public String format() {
         StringBuilder response = new StringBuilder();
         response.append(getStatus()).append("\n");
-//        for (String key : getHeaders().keySet()) {
-//            String value = getHeaders().get(key);
-//            response.append(key).append(":").append(value).append("\n");
-//        }
+        for (String key : getHeaders().keySet()) {
+            String value = getHeaders().get(key);
+            response.append(key).append(":").append(value).append("\n");
+        }
         response.append("\n").append(getBody());
         return response.toString();
     }

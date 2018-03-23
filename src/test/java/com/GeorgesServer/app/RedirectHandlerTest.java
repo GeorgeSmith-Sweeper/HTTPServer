@@ -31,7 +31,7 @@ class RedirectHandlerTest {
 
     @Test
     void redirectSetsALocationHeaderToTheRoot() {
-        String expectedLocation = "http://localhost:5000/";
+        String expectedLocation = "/";
         subject.handle();
 
         String result = subject.getHeaders().get("Location");
