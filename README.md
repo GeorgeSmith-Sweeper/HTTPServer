@@ -39,6 +39,7 @@ The server jar needs to take two command line arguments.
 - `-p` which specifies the port to listen on. Default is `5000`.
 - `-d` which specifies the directory to serve files from. 
 
-You can get the server up and running 
+You can get the server up and running with the command below.
+
 `java -jar target/HttpServer-1.0-SNAPSHOT.jar -p 5000 -d <Path to cob_spec public folder>`
 
