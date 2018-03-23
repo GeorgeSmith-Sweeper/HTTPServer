@@ -16,17 +16,10 @@ public class Router {
     }
 
     public IHandler route(String publicFolderPath, ClientRequest request) {
-        Path path = Paths.get(publicFolderPath + request.getUrl());
         requestLogger.log(request);
 
         if (request.getHeaders().containsKey("Range")) {
             return new PartialContentHandler(publicFolderPath, request);
-        }
-        if (Files.isDirectory(path)) {
-            return new DirectoryHandler(publicFolderPath, request);
-        }
-        if (Files.exists(path)) {
-            return new FilesHandler(publicFolderPath, request);
         }
         if (request.getMethod().equals("POST")) {
             return new PostHandler(publicFolderPath, request);
@@ -44,6 +37,13 @@ public class Router {
             return new ParameterHandler(publicFolderPath, request);
         }
 
+        Path path = Paths.get(publicFolderPath + request.getUrl());
+        if (Files.isDirectory(path)) {
+            return new DirectoryHandler(publicFolderPath, request);
+        }
+        if (Files.exists(path)) {
+            return new FilesHandler(publicFolderPath, request);
+        }
         return new DefaultHandler();
     }
 }
