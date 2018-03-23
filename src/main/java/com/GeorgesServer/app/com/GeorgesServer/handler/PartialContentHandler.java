@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.IOException;
@@ -36,7 +37,7 @@ public class PartialContentHandler implements IHandler{
     }
 
     public void setStatus() {
-        this.status = "HTTP/1.1 206 Partial Content";
+        this.status = StatusCodes.PARTIAL_CONTENT;
     }
 
     @Override

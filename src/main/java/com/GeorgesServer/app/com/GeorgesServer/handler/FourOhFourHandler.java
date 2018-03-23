@@ -1,6 +1,8 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 
+import com.GeorgesServer.app.StatusCodes;
+
 import java.util.HashMap;
 
 public class FourOhFourHandler implements IHandler{
@@ -12,7 +14,7 @@ public class FourOhFourHandler implements IHandler{
     }
 
     private void setStatus() {
-        this.status = "HTTP/1.1 404 Not Found";
+        this.status = StatusCodes.NOT_FOUND;
     }
 
     @Override

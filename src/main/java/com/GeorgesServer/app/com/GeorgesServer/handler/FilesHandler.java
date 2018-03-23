@@ -1,5 +1,6 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.io.IOException;
@@ -67,7 +68,7 @@ public class FilesHandler implements IHandler{
 
 
     private void setStatus() {
-        this.status = "HTTP/1.1 200 OK";
+        this.status = StatusCodes.OK;
     }
 
     @Override

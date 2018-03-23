@@ -1,6 +1,7 @@
 package com.GeorgesServer.app.com.GeorgesServer.handler;
 
 
+import com.GeorgesServer.app.StatusCodes;
 import com.GeorgesServer.app.com.GeorgesServer.request.ClientRequest;
 
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class OptionsHandler implements IHandler {
     }
 
     private void setStatus() {
-        this.status = "HTTP/1.1 200 OK";
+        this.status = StatusCodes.OK;
     }
 
     @Override
