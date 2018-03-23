@@ -40,7 +40,6 @@ public class PostHandler implements IHandler {
 
     public void setHeaders() {
         headers = new HashMap<>();
-        headers.put("Content-Length", Integer.toString(clientRequest.getBody().length()));
     }
 
     @Override
