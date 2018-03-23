@@ -45,7 +45,7 @@ class RouterTest {
     }
 
     @Test
-    void routerChoosesOptionsHandlerWhenTheUrlIsMethod_Options() {
+    void routerChoosesOptionsHandlerWhenTheMethodIsOptions() {
         when(mockedClientRequest.getMethod()).thenReturn("OPTIONS");
 
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
@@ -95,6 +95,16 @@ class RouterTest {
 
     @Test
     void routerChoosesParameterHandlerWhenAUrlContainsAQuestionMark() {
+        when(mockedClientRequest.getUrl()).thenReturn("/parameters?foo=bar");
+        when(mockedClientRequest.getMethod()).thenReturn("GET");
+
+        IHandler result = subject.route(publicFolderPath, mockedClientRequest);
+
+        assertTrue(result instanceof ParameterHandler);
+    }
+
+    @Test
+    void routerChoosesTepotHandlerWhenAUrlContainsAQuestionMark() {
         when(mockedClientRequest.getUrl()).thenReturn("/parameters?foo=bar");
         when(mockedClientRequest.getMethod()).thenReturn("GET");
 
