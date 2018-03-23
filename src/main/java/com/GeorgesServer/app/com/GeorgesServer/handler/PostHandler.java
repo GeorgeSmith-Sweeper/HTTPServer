@@ -56,7 +56,6 @@ public class PostHandler implements IHandler {
        this.body = "";
     }
 
-
     private void createFile() {
         try {
             File file = new File(publicFolderPath + clientRequest.getUrl());

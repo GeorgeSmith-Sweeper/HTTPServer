@@ -36,6 +36,9 @@ public class Router {
         if (request.getUrl().contains("?") && request.getUrl().contains("parameters")) {
             return new ParameterHandler(publicFolderPath, request);
         }
+        if (request.getUrl().equals("/redirect")) {
+            return new RedirectHandler(publicFolderPath, request);
+        }
 
         Path path = Paths.get(publicFolderPath + request.getUrl());
         if (Files.isDirectory(path)) {

@@ -104,13 +104,12 @@ class RouterTest {
     }
 
     @Test
-    void routerChoosesTepotHandlerWhenAUrlContainsAQuestionMark() {
-        when(mockedClientRequest.getUrl()).thenReturn("/parameters?foo=bar");
+    void routerRedirectsWhenAUrlContainsRedirect() {
+        when(mockedClientRequest.getUrl()).thenReturn("/redirect");
         when(mockedClientRequest.getMethod()).thenReturn("GET");
 
         IHandler result = subject.route(publicFolderPath, mockedClientRequest);
 
-        assertTrue(result instanceof ParameterHandler);
+        assertTrue(result instanceof RedirectHandler);
     }
-
 }

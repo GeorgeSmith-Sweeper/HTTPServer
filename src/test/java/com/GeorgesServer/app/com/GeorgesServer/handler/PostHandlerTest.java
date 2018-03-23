@@ -33,7 +33,6 @@ class PostHandlerTest {
         subject.handle();
         String status = subject.getStatus();
 
-
         assertEquals(expectedStatus, status);
     }
 
