@@ -29,5 +29,15 @@ class RedirectHandlerTest {
         assertEquals(expectedStatus, result);
     }
 
+    @Test
+    void redirectSetsALocationHeaderToTheRoot() {
+        String expectedLocation = "http://localhost:5000/";
+        subject.handle();
+
+        String result = subject.getHeaders().get("Location");
+
+        assertEquals(expectedLocation, result);
+    }
+
 
 }

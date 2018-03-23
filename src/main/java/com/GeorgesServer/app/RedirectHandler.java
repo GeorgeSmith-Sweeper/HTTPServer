@@ -9,6 +9,7 @@ public class RedirectHandler implements IHandler {
     private String publicFolderPath;
     private ClientRequest request;
     private String status;
+    private HashMap<String,String> headers;
 
     public RedirectHandler(String publicFolderPath, ClientRequest request) {
         this.publicFolderPath = publicFolderPath;
@@ -18,6 +19,7 @@ public class RedirectHandler implements IHandler {
     @Override
     public void handle() {
         setStatus();
+        setHeaders();
     }
 
     private void setStatus() {
@@ -29,9 +31,14 @@ public class RedirectHandler implements IHandler {
         return this.status;
     }
 
+    private void setHeaders() {
+        headers = new HashMap<>();
+        headers.put("Location", "http://localhost:5000/");
+    }
+
     @Override
     public HashMap<String, String> getHeaders() {
-        return null;
+        return this.headers;
     }
 
     @Override
@@ -41,6 +48,13 @@ public class RedirectHandler implements IHandler {
 
     @Override
     public String format() {
-        return null;
+        StringBuilder response = new StringBuilder();
+        response.append(getStatus()).append("\n");
+//        for (String key : getHeaders().keySet()) {
+//            String value = getHeaders().get(key);
+//            response.append(key).append(":").append(value).append("\n");
+//        }
+        response.append("\n").append(getBody());
+        return response.toString();
     }
 }
